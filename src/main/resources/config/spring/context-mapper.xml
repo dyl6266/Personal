@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- MyBatis + Spring 연동에서 커넥션을 생성하고 처리 / DB 커넥션 및 SQL 실행에 대한 모든 것을 가진 객체 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath:mapper/**/*_SQL.xml" />
+		<!-- <property name="configLocation" value="classpath:/mybatis-config.xml"/> -->
+	</bean>
+
+	<!-- DB와의 연결을 맺고, 작업이 완료된 후에 close()하는 작업을 자동으로 처리 -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<!-- 스프링에서 스캔할 패키지 설정 -->
+	<context:component-scan base-package="com.dy.dao" />
+	<context:component-scan base-package="com.dy.service" />
+
+</beans>

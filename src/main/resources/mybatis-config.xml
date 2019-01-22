@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<typeAliases>
+		<!-- <package name="com.dy.domain" /> -->
+		<!-- 게시판 -->
+		<typeAlias type="com.dy.domain.BoardVO" alias="BoardVO" />
+		<!-- 댓글 -->
+		<typeAlias type="com.dy.domain.CommentVO" alias="CommentVO" />
+		<!-- 회원 -->
+		<typeAlias type="com.dy.domain.MemberVO" alias="MemberVO" />
+	</typeAliases>
+
+</configuration>
