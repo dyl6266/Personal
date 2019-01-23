@@ -4,13 +4,10 @@
 <configuration>
 
 	<typeAliases>
-		<!-- <package name="com.dy.domain" /> -->
-		<!-- 게시판 -->
-		<typeAlias type="com.dy.domain.BoardVO" alias="BoardVO" />
-		<!-- 댓글 -->
+		<package name="com.dy.domain" />
+		<!-- <typeAlias alias="BoardVO" type="com.dy.domain.BoardVO" />
 		<typeAlias type="com.dy.domain.CommentVO" alias="CommentVO" />
-		<!-- 회원 -->
-		<typeAlias type="com.dy.domain.MemberVO" alias="MemberVO" />
+		<typeAlias type="com.dy.domain.MemberVO" alias="MemberVO" /> -->
 	</typeAliases>
 
 </configuration>

@@ -14,6 +14,11 @@ public class AbstractDAO {
 	@Autowired
 	private SqlSession sqlSession;
 
+	/**
+	 * 쿼리 아이디 출력
+	 * 
+	 * @param queryId
+	 */
 	private void printQueryId(String queryId) {
 		logger.info("QueryId ::: " + queryId);
 	}

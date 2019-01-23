@@ -10,8 +10,8 @@
 	<!-- MyBatis + Spring 연동에서 커넥션을 생성하고 처리 / DB 커넥션 및 SQL 실행에 대한 모든 것을 가진 객체 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="mapperLocations" value="classpath:mapper/**/*_SQL.xml" />
-		<!-- <property name="configLocation" value="classpath:/mybatis-config.xml"/> -->
+		<property name="mapperLocations" value="classpath:/mappers/**/*_SQL.xml" />
+		<property name="configLocation" value="classpath:/mybatis-config.xml"/>
 	</bean>
 
 	<!-- DB와의 연결을 맺고, 작업이 완료된 후에 close()하는 작업을 자동으로 처리 -->

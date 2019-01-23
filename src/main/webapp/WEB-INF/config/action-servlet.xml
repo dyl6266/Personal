@@ -16,7 +16,7 @@
 
 	<!-- jsp 파일의 접두사/접미사 설정 -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="prefix" value="/WEB-INF/jsp/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 
@@ -29,6 +29,12 @@
 			<beans:ref bean="loggerInterceptor" />
 		</interceptor>
 	</interceptors>
+
+	<!-- 파일 업로드로 들어오는 데이터를 처리하는 객체 -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="10485760" />
+		<beans:property name="maxInMemorySize" value="10485760" />
+	</beans:bean>
 
 	<context:component-scan base-package="com.dy.controller" />
 

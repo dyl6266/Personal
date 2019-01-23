@@ -1,0 +1,173 @@
+<!-- <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+	Board 테이블 프로퍼티 매핑
+	<resultMap 	id="boardResultMap" 	type="com.dy.domain.BoardVO">
+		<id 	property="idx" 			column="idx" />
+		<result property="title" 		column="title" />
+		<result property="content" 		column="content" />
+		<result property="writer" 		column="writer" />
+		<result property="useYn" 		column="use_yn" />
+		<result property="noticeYn" 	column="notice_yn" />
+		<result property="secretYn" 	column="secret_yn" />
+		<result property="insertTime" 	column="insert_time" />
+		<result property="updateTime" 	column="update_time" />
+		<result property="viewCnt" 		column="view_cnt" />
+	</resultMap>
+
+	Board 테이블 컬럼 리스트
+	<sql id="boardColumns">
+		  idx
+		, title
+		, content
+		, writer
+		, use_yn
+		, notice_yn
+		, secret_yn
+		, insert_time
+		, update_time
+		, view_cnt
+	</sql>
+
+	LIKE문 공백 처리
+	<sql id="removeSpace">
+		LIKE CONCAT('%', REPLACE(#{searchKeyword}, ' ', ''), '%')
+	</sql>
+
+	검색 조건
+	<sql id="searchCriteria">
+		<if test="@com.dy.common.MyBatisUtil@isEmpty(searchType)">
+			<if test="!@com.dy.common.MyBatisUtil@isEmpty(searchKeyword)">
+				AND (
+						title LIKE CONCAT('%', #{searchKeyword}, '%')
+						OR content LIKE CONCAT('%', #{searchKeyword}, '%')
+						OR writer LIKE CONCAT('%', #{searchKeyword}, '%')
+					)
+			</if>
+		</if>
+		<if test="!@com.dy.common.MyBatisUtil@isEmpty(searchType)">
+			<if test="!@com.dy.common.MyBatisUtil@isEmpty(searchKeyword)">
+				<if test='"title".equals(searchType)'>
+					AND title LIKE CONCAT('%', #{searchKeyword}, '%')
+				</if>
+				<if test='"content".equals(searchType)'>
+					AND content LIKE CONCAT('%', #{searchKeyword}, '%')
+				</if>
+				<if test='"writer".equals(searchType)'>
+					AND writer LIKE CONCAT('%', #{searchKeyword}, '%')
+				</if>
+			</if>
+		</if>
+	</sql>
+
+	게시글을 등록한다. (PK : auto_increment)
+	<insert id="insertBoard" parameterType="BoardVO">
+		INSERT INTO BOARD (
+			  title
+			, content
+			, writer
+			, use_yn
+			, notice_yn
+			, secret_yn
+			, insert_time
+			, view_cnt
+		) VALUES (
+			  #{title}
+			, #{content}
+			, #{writer}
+			, 'Y'
+			, #{noticeYn}
+			, #{secretYn}
+			, NOW()
+			, 0
+		)
+
+	</insert>
+
+	해당 게시글의 정보를 조회한다.
+	<select id="getBoardDetail" parameterType="Integer" resultMap="resultBoard">
+		SELECT
+				<include refid="columnList" />
+		FROM
+				board
+		WHERE
+				board_no = #{boardNo}
+		AND
+				use_yn = 'Y'
+	</select>
+
+	해당 게시글의 정보를 수정한다.
+	<update id="updateBoard" parameterType="BoardVO">
+		UPDATE
+				board
+		SET
+			<if test="!@com.dy.common.MyBatisUtil@isEmpty(title)">
+				title = #{title}
+			</if>
+			<if test="!@com.dy.common.MyBatisUtil@isEmpty(content)">
+			  , content = #{content}
+			</if>
+			<if test="!@com.dy.common.MyBatisUtil@isEmpty(noticeYn)">
+			  , notice_yn = #{noticeYn}
+			</if>
+			<if test="!@com.dy.common.MyBatisUtil@isEmpty(secretYn)">
+			  , secret_yn = #{secretYn}
+			</if>
+			  , update_time = NOW()
+		WHERE
+				board_no = #{boardNo}
+	</update>
+
+	게시글을 삭제한다. (사용여부 변경)
+	<update id="deleteBoard" parameterType="Integer">
+		UPDATE
+				board
+		SET
+				use_yn = 'N'
+		WHERE
+				board_no = #{boardNo}
+	</update>
+
+	게시글 리스트를 가져온다.
+	<select id="getBoardList" parameterType="BoardVO" resultMap="resultBoard">
+		<![CDATA[
+		SELECT
+		]]>
+				<include refid="columnList" />
+		<![CDATA[
+		FROM
+				board
+		WHERE
+				use_yn = 'Y'
+		]]>
+
+		<include refid="searchCriteria" />
+		
+		<![CDATA[
+		ORDER BY
+				notice_yn DESC,
+				board_no DESC,
+				insert_time DESC
+		LIMIT
+				#{startPage}, #{perPageNo}
+		]]>
+	</select>
+
+	게시글 개수를 카운트한다.
+	<select id="getTotalCount" parameterType="BoardVO" resultType="int">
+		<![CDATA[
+		SELECT
+				COUNT(*)
+		FROM
+				board
+		WHERE
+				use_yn = 'Y'
+		]]>
+
+		<include refid="searchCriteria" />
+	</select>
+
+</mapper>
+ -->
