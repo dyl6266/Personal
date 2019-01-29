@@ -15,8 +15,8 @@ public class BoardDAO extends AbstractDAO {
 	/**
 	 * 게시글 등록
 	 * 
-	 * @param params - Class
-	 * @return 쿼리 실행 횟수
+	 * @param params - VO 클래스
+	 * @return int - 쿼리 실행 횟수
 	 */
 	public int insertBoard(BoardVO params) {
 		return insert(namespace + ".insertBoard", params);
@@ -26,7 +26,7 @@ public class BoardDAO extends AbstractDAO {
 	 * 게시글 상세 조회
 	 * 
 	 * @param idx - PK
-	 * @return 게시글 상세 정보 - Class
+	 * @return BoardVO - VO 클래스
 	 */
 	public BoardVO selectBoardDetail(Integer idx) {
 		return (BoardVO) selectOne(namespace + ".selectBoardDetail", idx);
@@ -35,8 +35,8 @@ public class BoardDAO extends AbstractDAO {
 	/**
 	 * 게시글 수정
 	 * 
-	 * @param params - Class
-	 * @return 쿼리 실행 횟수
+	 * @param params - VO 클래스
+	 * @return int - 쿼리 실행 횟수
 	 */
 	public int updateBoard(BoardVO params) {
 		return update(namespace + ".updateBoard", params);
@@ -46,7 +46,7 @@ public class BoardDAO extends AbstractDAO {
 	 * 게시글 삭제 (사용 여부 변경)
 	 * 
 	 * @param idx - PK
-	 * @return 쿼리 실행 횟수
+	 * @return int - 쿼리 실행 횟수
 	 */
 	public int deleteBoard(Integer idx) {
 		return update(namespace + ".deleteBoard", idx);
@@ -55,8 +55,8 @@ public class BoardDAO extends AbstractDAO {
 	/**
 	 * 게시글 리스트 조회
 	 * 
-	 * @param board - Class
-	 * @return 게시글 리스트
+	 * @param params - VO 클래스
+	 * @return List - 게시글 리스트
 	 */
 	@SuppressWarnings("unchecked")
 	public List<BoardVO> selectBoardList(BoardVO params) {
@@ -66,8 +66,8 @@ public class BoardDAO extends AbstractDAO {
 	/**
 	 * 게시글 전체 개수 조회
 	 * 
-	 * @param board - Class
-	 * @return 게시글 개수
+	 * @param params - VO 클래스
+	 * @return int - 게시글 개수
 	 */
 	public int selectTotalCount(BoardVO params) {
 		return (int) selectOne(namespace + ".selectTotalCount", params);

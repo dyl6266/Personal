@@ -11,7 +11,7 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="mapperLocations" value="classpath:/mappers/**/*_SQL.xml" />
-		<property name="configLocation" value="classpath:/mybatis-config.xml"/>
+		<property name="configLocation" value="classpath:/mybatis-config.xml" />
 	</bean>
 
 	<!-- DB와의 연결을 맺고, 작업이 완료된 후에 close()하는 작업을 자동으로 처리 -->
@@ -21,6 +21,7 @@
 
 	<!-- 스프링에서 스캔할 패키지 설정 -->
 	<context:component-scan base-package="com.dy.dao" />
+	<context:component-scan base-package="com.dy.common" />
 	<context:component-scan base-package="com.dy.service" />
 
 </beans>

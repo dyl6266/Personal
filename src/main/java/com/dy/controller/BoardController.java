@@ -1,21 +1,17 @@
 package com.dy.controller;
 
-import java.util.HashMap;
 import java.util.List;
 
-import org.json.simple.JSONObject;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dy.domain.BoardVO;
 import com.dy.service.BoardService;
@@ -73,53 +69,91 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/board/process.do", method = RequestMethod.POST)
-	@ResponseBody
-	public ResponseEntity<HashMap<String, Object>> processingBoard(@RequestParam(value = "type", required = false) String type, // 프로세스 타입
-																   @RequestParam(value = "idxs", required = false) String idxs, // 삭제에 사용되는 파라미터
-																   @RequestBody BoardVO params) { // 등록에 사용되는 파라미터
+	public String processingBoard(HttpServletRequest request,
+			@RequestParam(value = "type", required = false) String type, // 프로세스 유형
+			@RequestParam(value = "idxs", required = false) String idxs, // 삭제에 사용되는 파라미터
+			BoardVO params) { // 등록에 사용되는 파라미터
 
-		ResponseEntity<HashMap<String, Object>> entity = null;
-
-		HashMap<String, Object> resultMap = new HashMap<>();
-
-		if (StringUtils.isEmpty(type) || ObjectUtils.isEmpty(params)) {
-			resultMap.put("MESSAGE", "FAIL");
-			resultMap.put("ERROR", "NPE1");
-			entity = new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
-		} else {
-			try {
-				/* 쿼리 실행 횟수 */
-				int queryCnt = 0;
-
-				/* 등록의 경우 */
-				if ("register".equals(type)) {
-					queryCnt = boardService.registerBoard(params);
-				/* 삭제의 경우 */
-				} else if ("delete".equals(type)) {
-					queryCnt = boardService.deleteBoard(idxs);
-				}
-
-				if (queryCnt > 0) {
-					resultMap.put("MESSAGE", "OK");
-					entity = new ResponseEntity<>(resultMap, HttpStatus.OK);
-				} else {
-					resultMap.put("MESSAGE", "FAIL");
-					resultMap.put("ERROR", "NOT RUNNING");
-				}
-			} catch (NullPointerException e) {
-				resultMap.put("MESSAGE", "FAIL");
-				resultMap.put("ERROR", "NPE2");
-				entity = new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
-				e.printStackTrace();
-			} catch (Exception e) {
-				resultMap.put("MESSAGE", "FAIL");
-				resultMap.put("ERROR", "UNKNOWN");
-				entity = new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
-				e.printStackTrace();
-			}
+		if (StringUtils.isEmpty(type)) {
+			// 오류 리다이렉트
 		}
 
-		return entity;
+		try {
+			/* 쿼리 실행 횟수 */
+			int queryCnt = 0;
+
+			/* 등록의 경우 */
+			if ("register".equals(type)) {
+				queryCnt = boardService.registerBoard(params, request);
+			} else if ("delete".equals(type)) {
+				queryCnt = boardService.deleteBoard(idxs);
+			}
+
+			if (queryCnt > 0) {
+				// 실패 리다이렉트
+			} else {
+				// 성공 리다이렉트
+			}
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			// 실패 리다이렉트
+		} catch (Exception e) {
+			e.printStackTrace();
+			// 실패 리다이렉트
+		}
+
+		return "redirect:/board/list.do";
 	}
+
+//	@RequestMapping(value = "/board/process.do", method = RequestMethod.POST)
+//	@ResponseBody
+//	public ResponseEntity<HashMap<String, Object>> processingBoard(MultipartHttpServletRequest request, // 파일 업로드 처리
+//																   @RequestParam(value = "type", required = false) String type, // 프로세스 타입
+//																   @RequestParam(value = "idxs", required = false) String idxs, // 삭제에 사용되는 파라미터
+//																   @RequestBody BoardVO params) { // 등록에 사용되는 파라미터
+//
+//		ResponseEntity<HashMap<String, Object>> entity = null;
+//
+//		HashMap<String, Object> resultMap = new HashMap<>();
+//
+//		if (StringUtils.isEmpty(type) || ObjectUtils.isEmpty(params)) {
+//			resultMap.put("MESSAGE", "FAIL");
+//			resultMap.put("ERROR", "NPE1");
+//			entity = new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
+//		} else {
+//			try {
+//				/* 쿼리 실행 횟수 */
+//				int queryCnt = 0;
+//
+//				/* 등록의 경우 */
+//				if ("register".equals(type)) {
+//					queryCnt = boardService.registerBoard(params, request);
+//				/* 삭제의 경우 */
+//				} else if ("delete".equals(type)) {
+//					queryCnt = boardService.deleteBoard(idxs);
+//				}
+//
+//				if (queryCnt > 0) {
+//					resultMap.put("MESSAGE", "OK");
+//					entity = new ResponseEntity<>(resultMap, HttpStatus.OK);
+//				} else {
+//					resultMap.put("MESSAGE", "FAIL");
+//					resultMap.put("ERROR", "NOT RUNNING");
+//				}
+//			} catch (NullPointerException e) {
+//				resultMap.put("MESSAGE", "FAIL");
+//				resultMap.put("ERROR", "NPE2");
+//				entity = new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
+//				e.printStackTrace();
+//			} catch (Exception e) {
+//				resultMap.put("MESSAGE", "FAIL");
+//				resultMap.put("ERROR", "UNKNOWN");
+//				entity = new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
+//				e.printStackTrace();
+//			}
+//		}
+//
+//		return entity;
+//	}
 
 }

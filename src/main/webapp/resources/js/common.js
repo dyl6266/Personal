@@ -10,7 +10,7 @@ function isEmpty(value) {
 }
 
 /**
- * 문자열의 마지막 문자의 종성 반환 
+ * 문자열의 마지막 문자의 종성 반환
  */
 function charToUnicode(str) {
 	return (str.charCodeAt(str.length - 1) - 0xAC00) % 28;
@@ -20,7 +20,7 @@ function charToUnicode(str) {
  * 필드의 값이 비어있으면 메시지를 출력한 다음, 해당 필드로 focus
  */
 function checkField(field, fieldName) {
-	if ( isEmpty($(field).val()) ) {
+	if (isEmpty($(field).val())) {
 		/* alert 메시지 */
 		var message = "";
 		/* 종성으로 을 / 를 구분 */
@@ -40,7 +40,7 @@ function checkField(field, fieldName) {
  * value1의 값이 비어있으면 value2를, 그렇지 않으면 value1을 반환
  */
 function nvl(value1, value2) {
-	if ( isEmpty(value1) ) {
+	if (isEmpty(value1)) {
 		return value2;
 	} else {
 		return value1;

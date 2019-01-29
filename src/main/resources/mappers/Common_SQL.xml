@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace를 통해 Query ID 매핑 -->
+<mapper namespace="common">
+
+	<!-- Attach 테이블 프로퍼티, 컬럼 결과 매핑 -->
+	<resultMap id="attachResultMap" 	type="AttachVO">
+		<id 	property="idx" 			column="idx" />
+		<result property="boardIdx" 	column="board_idx" />
+		<result property="originalName"	column="original_name" />
+		<result property="storedName" 	column="stored_name" />
+		<result property="fileSize" 	column="file_size" />
+		<result property="useYn" 		column="use_yn" />
+		<result property="insertTime" 	column="insert_time" />
+		<result property="updateTime" 	column="update_time" />
+	</resultMap>
+
+	<!-- Board 테이블 컬럼 리스트 -->
+	<sql id="attachColumns">
+		  idx
+		, board_idx
+		, original_name
+		, stored_name
+		, file_size
+		, use_yn
+		, insert_time
+		, update_time
+	</sql>
+
+	<!-- 해당하는 테이블의 마지막 PK + 1의 값을 반환 -->
+	<select id="selectNextIdx" parameterType="string" resultType="integer">
+		SELECT
+			a.next_seq
+		FROM
+			(
+				SELECT
+					CASE COUNT(next_seq)
+						WHEN 0 THEN 1
+						ELSE MAX(next_seq) + 1
+					END AS next_seq
+				FROM
+					sequence
+				WHERE
+					table_name = #{tableName}
+			) a
+	</select>
+
+	<!-- 해당하는 테이블의 마지막 PK + 1의 값으로 업데이트 -->
+	<update id="updateNextIdx" parameterType="hashmap">
+		UPDATE sequence
+		SET
+			next_seq = #{nextIdx} + 1
+		WHERE
+			table_name = #{tableName}
+	</update>
+
+	<!-- 파일 등록 -->
+	<insert id="insertAttach" parameterType="AttachVO">
+		INSERT INTO attach (
+			  board_idx
+			, original_name
+			, stored_name
+			, file_size
+			, use_yn
+			, insert_time
+		) VALUES (
+			  #{boardIdx}
+			, #{originalName}
+			, #{storedName}
+			, #{fileSize}
+			, 'Y'
+			, NOW()
+		)
+	</insert>
+
+</mapper>
