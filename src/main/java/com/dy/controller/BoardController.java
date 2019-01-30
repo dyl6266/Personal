@@ -1,5 +1,7 @@
 package com.dy.controller;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,22 +45,27 @@ public class BoardController {
 
 	@RequestMapping(value = "/board/write.do")
 	public String openBoardWrite(@RequestParam(value = "type", defaultValue = "insert") String type,
-			@RequestParam(value = "idx", required = false) Integer idx, Model model) {
-
-		BoardVO board = null;
+								 @RequestParam(value = "idx", required = false) Integer idx,
+								 Model model) {
 
 		if ("update".equals(type)) {
-			if (idx == null || idx < 1) {
+			if (idx == null) {
 				// 리다이렉트 처리
-			} else {
-				/* 게시글 상세 정보 */
-				board = boardService.selectBoardDetail(idx);
+			}
 
-				if (ObjectUtils.isEmpty(board)) {
-					// 리다이렉트 처리
-				} else {
-					model.addAttribute("board", board);
+			/* 게시글 상세 정보, 첨부 파일 리스트 */
+			HashMap<String, Object> hashMap = boardService.selectBoardDetailWithAttachList(idx);
+			if ( ObjectUtils.isEmpty(hashMap) ) {
+				// 오류 리다이렉트 처리
+			} else {
+				Iterator<String> iterator = hashMap.keySet().iterator();
+				
+				while ( iterator.hasNext() ) {
+					String key = iterator.next();
+					model.addAttribute(key, hashMap.get(key));
+					System.out.println( "keys : " + key );
 				}
+				// end of while
 			}
 		}
 
@@ -84,7 +91,7 @@ public class BoardController {
 
 			/* 등록의 경우 */
 			if ("register".equals(type)) {
-				queryCnt = boardService.registerBoard(params, request);
+				queryCnt = boardService.registerBoard(request, params);
 			} else if ("delete".equals(type)) {
 				queryCnt = boardService.deleteBoard(idxs);
 			}

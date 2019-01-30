@@ -22,7 +22,7 @@
 		, board_idx
 		, original_name
 		, stored_name
-		, file_size
+		, ROUND(file_size / 1024, 1) AS file_size
 		, use_yn
 		, insert_time
 		, update_time
@@ -55,7 +55,7 @@
 			table_name = #{tableName}
 	</update>
 
-	<!-- 파일 등록 -->
+	<!-- 첨부 파일 등록 -->
 	<insert id="insertAttach" parameterType="AttachVO">
 		INSERT INTO attach (
 			  board_idx
@@ -73,5 +73,44 @@
 			, NOW()
 		)
 	</insert>
+
+	<!-- 첨부 파일 상세 조회 -->
+	<select id="selectAttachDetail" parameterType="integer" resultMap="attachResultMap">
+		SELECT
+			<include refid="attachColumns" />
+		FROM
+			attach
+		WHERE
+			use_yn = 'Y'
+		AND
+			idx = #{idx}
+	</select>
+
+	<!-- 첨부 파일 리스트 조회 -->
+	<select id="selectAttachList" parameterType="integer" resultMap="attachResultMap">
+		SELECT
+			<include refid="attachColumns" />
+		FROM
+			attach
+		WHERE
+			use_yn = 'Y'
+		AND
+			board_idx = #{boardIdx}
+		ORDER BY
+			idx DESC,
+			insert_time DESC
+	</select>
+
+	<!-- 첨부 파일 전체 개수 조회 -->
+	<select id="selectTotalCount" parameterType="integer" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			attach
+		WHERE
+			use_yn = 'Y'
+		AND
+			board_idx = #{boardIdx}
+	</select>
 
 </mapper>

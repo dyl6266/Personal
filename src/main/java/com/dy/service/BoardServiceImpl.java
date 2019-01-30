@@ -1,6 +1,5 @@
 package com.dy.service;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,8 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
-import com.dy.common.CommonDAO;
-import com.dy.common.FileUtils;
+import com.dy.common.dao.CommonDAO;
+import com.dy.common.utils.FileUtils;
 import com.dy.dao.BoardDAO;
 import com.dy.domain.AttachVO;
 import com.dy.domain.BoardVO;
@@ -21,10 +20,10 @@ import com.dy.domain.BoardVO;
 public class BoardServiceImpl implements BoardService {
 
 	@Autowired
-	private CommonDAO commonDAO;
+	private FileUtils fileUtils;
 
 	@Autowired
-	private FileUtils fileUtils;
+	private CommonDAO commonDAO;
 
 	@Autowired
 	private BoardDAO boardDAO;
@@ -34,11 +33,9 @@ public class BoardServiceImpl implements BoardService {
 	 * 
 	 * @param params - VO 클래스
 	 * @return int - 쿼리 실행 횟수
-	 * @throws IOException
-	 * @throws IllegalStateException
 	 */
 	@Override
-	public int registerBoard(BoardVO params, HttpServletRequest request) {
+	public int registerBoard(HttpServletRequest request, BoardVO params) {
 
 		int queryCnt = 0;
 
@@ -49,29 +46,16 @@ public class BoardServiceImpl implements BoardService {
 		params.setSecretYn(secretYn);
 
 		/* 등록의 경우 */
-		Integer nextIdx = null;
-		if (params.getIdx() == null || params.getIdx() < 1) {
-			/* 다음 PK 번호 */
-			nextIdx = commonDAO.selectNextIdx("board");
-			params.setIdx(nextIdx);
-
+		if (params.getIdx() == null) {
 			queryCnt = boardDAO.insertBoard(params);
-
-			/* sequence 테이블 업데이트 */
-			HashMap<String, Object> hashMap = new HashMap<>();
-			hashMap.put("nextIdx", nextIdx);
-			hashMap.put("tableName", String.valueOf("board"));
-			commonDAO.updateNextIdx(hashMap);
-
-		/* 수정의 경우 */
+			/* 수정의 경우 */
 		} else {
 			queryCnt = boardDAO.updateBoard(params);
 		}
 
-		Integer boardIdx = params.getIdx() == null ? nextIdx : params.getIdx();
-
-		List<AttachVO> fileList = fileUtils.insertFileInfo(request, boardIdx);
-		if ( !ObjectUtils.isEmpty(fileList) && fileList.size() > 0 ) {
+		/* 업로드한 파일 리스트 */
+		List<AttachVO> fileList = fileUtils.insertFileInfo(request, params.getIdx());
+		if (ObjectUtils.isEmpty(fileList) == false && fileList.size() > 0) {
 			for (AttachVO attach : fileList) {
 				commonDAO.insertAttach(attach);
 			}
@@ -81,21 +65,33 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	/**
-	 * 게시글 상세 조회
+	 * 게시글 상세 정보 및 첨부 파일 리스트 조회
 	 * 
 	 * @param idx - PK
-	 * @return BoardVO - VO 클래스
+	 * @return HashMap - (VO 클래스, 첨부 파일 리스트)
 	 */
 	@Override
-	public BoardVO selectBoardDetail(Integer idx) {
+	public HashMap<String, Object> selectBoardDetailWithAttachList(Integer idx) {
 
-		BoardVO board = null;
+		HashMap<String, Object> hashMap = null;
 
-		if (idx != null && idx > 0) {
-			board = boardDAO.selectBoardDetail(idx);
+		if (idx != null) {
+			hashMap = new HashMap<>();
+
+			/* 게시글 상세 정보 */
+			BoardVO board = boardDAO.selectBoardDetail(idx);
+			if (ObjectUtils.isEmpty(board) == false) {
+				hashMap.put("board", board);
+			}
+
+			/* 첨부 파일 리스트 */
+			List<AttachVO> attachList = commonDAO.selectAttachList(idx);
+			if (ObjectUtils.isEmpty(attachList) == false) {
+				hashMap.put("attachList", attachList);
+			}
 		}
 
-		return board;
+		return hashMap;
 	}
 
 	/**
@@ -109,7 +105,7 @@ public class BoardServiceImpl implements BoardService {
 
 		int queryCnt = 0;
 
-		if (!StringUtils.isEmpty(idxs)) {
+		if (StringUtils.isEmpty(idxs) == false) {
 			String[] idxArray = idxs.split("|");
 
 			for (String idx : idxArray) {

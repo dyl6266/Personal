@@ -33,24 +33,20 @@
 	</sql>
 
 	<!-- 게시글 등록 -->
-	<insert id="insertBoard" parameterType="BoardVO">
+	<!-- 오라클과 같이 auto_increment 기능이 없는 경우엔, selectKey 구문을 사용해야 함 -->
+	<insert id="insertBoard" parameterType="BoardVO" useGeneratedKeys="true" keyProperty="idx">
 		INSERT INTO board (
-			  title
-			, content
-			, writer
-			, use_yn
-			, notice_yn
-			, secret_yn
-			, insert_time
-			, view_cnt
+			<include refid="boardColumns" />
 		) VALUES (
-			  #{title}
+			  #{idx}
+			, #{title}
 			, #{content}
 			, #{writer}
 			, 'Y'
 			, #{noticeYn}
 			, #{secretYn}
 			, NOW()
+			, NULL
 			, 0
 		)
 	</insert>

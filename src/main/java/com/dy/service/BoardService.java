@@ -1,5 +1,6 @@
 package com.dy.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,15 +15,15 @@ public interface BoardService {
 	 * @param params - VO 클래스
 	 * @return int - 쿼리 실행 횟수
 	 */
-	public int registerBoard(BoardVO params, HttpServletRequest request);
+	public int registerBoard(HttpServletRequest request, BoardVO params);
 
 	/**
-	 * 게시글 상세 조회
+	 * 게시글 상세 정보 및 첨부 파일 리스트 조회
 	 * 
 	 * @param idx - PK
-	 * @return BoardVO - VO 클래스
+	 * @return HashMap - (VO 클래스, 첨부 파일 리스트)
 	 */
-	public BoardVO selectBoardDetail(Integer idx);
+	public HashMap<String, Object> selectBoardDetailWithAttachList(Integer idx);
 
 	/**
 	 * 게시글 삭제 (사용 여부 변경)

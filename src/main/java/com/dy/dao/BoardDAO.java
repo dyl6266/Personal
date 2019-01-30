@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.dy.common.AbstractDAO;
+import com.dy.common.dao.AbstractDAO;
 import com.dy.domain.BoardVO;
 
 @Repository("boardDAO")

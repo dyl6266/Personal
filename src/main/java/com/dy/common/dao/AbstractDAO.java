@@ -1,4 +1,4 @@
-package com.dy.common;
+package com.dy.common.dao;
 
 import java.util.List;
 

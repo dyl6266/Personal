@@ -47,9 +47,25 @@
 						<textarea name="content" id="content" rows="10" cols="100">${board.content }</textarea>
 					</td>
 				</tr>
+				<tr>
+					<th>첨부 파일</th>
+					<td colspan="4">
+						<input type="file" name="attachFile" /><br /><br />
+						<c:choose>
+							<c:when test="${empty attachList == false }">
+								<c:forEach var="row" items="${attachList }" varStatus="status">
+									<a href="<c:url value="/common/downAttachFile.do?idx=${row.idx }" />">${row.originalName } (${row.fileSize }KB)</a><br />
+									<%-- <a href="javascript:void(0);" onclick="downAttachFile(${row.idx });">${row.originalName } (${row.fileSize }KB)</a><br /> --%>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								첨부된 파일이 없습니다.
+							</c:otherwise>
+						</c:choose>
+					</td>
+				</tr>
 			</tbody>
 		</table>
-		<input type="file" name="file" />
 
 		<input type="submit" class="btn" value="등록하기" />
 		<a href="<c:url value="/board/list.do" />" class="btn">뒤로가기</a>
@@ -59,13 +75,13 @@
 		function checkForm(obj) {
 
 			/* 공지글, 비밀글 설정 */
-			if ( obj.noticeYn.checked == true ) {
+			if ( obj.noticeYn.checked ) {
 				obj.noticeYn.value = 'Y';
 			} else {
 				obj.noticeYn.value = 'N';
 			}
 			
-			if ( obj.secretYn.checked == true ) {
+			if ( obj.secretYn.checked ) {
 				obj.secretYn.value = 'Y';
 			} else {
 				obj.secretYn.value = 'N';
@@ -75,51 +91,10 @@
 				 && checkField(obj.writer, "작성자")
 				 && checkField(obj.content, "내용"));
 		}
-
-// 		function register(type) {
-// 			var idx = "${idx }";
-// 			var title = $( "#title" );
-// 			var content = $( "#content" );
-// 			var writer = $( "#writer" );
-// 			var noticeYn = $( "#noticeYn" );
-// 			var secretYn = $( "#secretYn" );
-
-// 			/* 공지글, 비밀글 설정 */
-// 			noticeYn.val( nvl($("#noticeYn:checked").val(), 'N') );
-// 			secretYn.val( nvl($("#secretYn:checked").val(), 'N') );
-
-// 			var uri = '<c:url value="/board/process.do?type=register" />';
-// 			var params = {
-// 				"type" : type,
-// // 				"idx" : idx,
-// 				"title" : title.val(),
-// 				"content" : content.val(),
-// 				"writer" : writer.val(),
-// 				"noticeYn" : noticeYn.val(),
-// 				"secretYn" : secretYn.val()
-// 			};
-
-// 			$.ajax({
-// 				url : uri,
-// 				type : "post",
-// 				enctype : "multipart/form-data",
-// // 				dataType : "json",
-// 				headers : {
-// 					"Content-Type" : "application/json",
-// 					"X-HTTP-Method-Override" : "post"
-// 				},
-// 				data : JSON.stringify(params),
-// 				success : function(response) {
-// 					if ( !isEmpty(response) && response.MESSAGE == "OK" ) {
-// 						alert("게시글이 정상적으로 등록되었습니다.");
-// 					} else {
-// 						alert("알 수 없는 오류가 발생했습니다. 다시 시도해 주세요.");
-// 					}
-
-// 					location.href = '<c:url value="/board/list.do" />';
-// 				}
-// 			});
-// 		}
+		
+		function downAttachFile(idx) {
+			
+		}
 	</script>
 
 <%@include file="/WEB-INF/include/footer.jsp"%>
