@@ -12,4 +12,11 @@ public interface CommonService {
 	 */
 	public AttachVO selectAttachDetail(Integer idx);
 
+	/**
+	 * 첨부 파일 삭제 (사용 여부 변경)
+	 * 
+	 * @param idx
+	 */
+	public int deleteAttach(Integer idx);
+
 }

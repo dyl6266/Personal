@@ -2,11 +2,7 @@
 
 <%@include file="/WEB-INF/include/header.jsp"%>
 
-	<h2>board write</h2>
-
-	<form name="writeForm" id="writeForm" action="<c:url value="/board/process.do" />?type=register" method="post" enctype="multipart/form-data" onsubmit="return checkForm(this)">
-		<input type="hidden" name="idx" id="idx" value="${board.idx }" />
-
+	<h2>board view</h2>
 		<table class="board_view">
 			<colgroup>
 				<col width="15%" />
@@ -26,31 +22,30 @@
 				</c:if>
 				<tr>
 					<th>제목</th>
-					<td><input type="text" name="title" id="title" value="${board.title }" class="wdp_90" /></td>
+					<td>${board.title }</td>
 	
 					<th>작성자</th>
-					<td><input type="text" name="writer" id="writer" value="${board.writer }" class="wdp_90" /></td>
+					<td>${board.writer }</td>
 				</tr>
 				<tr>
 					<th>게시글 유형</th>
 					<td>
-						<input type="checkbox" name="noticeYn" id="noticeYn" value="${board.noticeYn }" <c:if test="${board.noticeYn eq 'Y' }">checked</c:if> />
+						<input type="checkbox" <c:if test="${board.noticeYn eq 'Y' }">checked</c:if> disabled />
 						<label for="noticeYn">공지글</label>
 						&emsp;
-						<input type="checkbox" name="secretYn" id="secretYn" value="${board.secretYn }" <c:if test="${board.secretYn eq 'Y' }">checked</c:if> />
+						<input type="checkbox" <c:if test="${board.secretYn eq 'Y' }">checked</c:if> disabled />
 						<label for="secretYn">비밀글</label>
 					</td>
 				</tr>
 				<tr>
 					<th>내용</th>
-					<td colspan="4" class="view_text">
-						<textarea name="content" id="content" rows="10" cols="100">${board.content }</textarea>
+					<td colspan="3" class="view_text">
+						<textarea rows="10" cols="100" readonly>${board.content }</textarea>
 					</td>
 				</tr>
 				<tr>
 					<th>첨부 파일</th>
-					<td colspan="4">
-						<input type="file" name="attachFile1" /><br /><br />
+					<td colspan="3">
 						<c:choose>
 							<c:when test="${empty attachList == false }">
 								<c:forEach var="row" items="${attachList }" varStatus="status">
@@ -69,32 +64,12 @@
 			</tbody>
 		</table>
 
-		<input type="submit" class="btn" value="파일추가" />
-		<input type="submit" class="btn" value="등록하기" />
-		<a href="<c:url value="/board/list.do" />" class="btn">뒤로가기</a>
-	</form>
+		<div>
+			<a href="<c:url value="/board/write.do?idx=${board.idx }" />" class="btn">수정하기</a>
+			<a href="<c:url value="/board/list.do" />" class="btn">뒤로가기</a>
+		</div>
 
 	<script>
-		function checkForm(obj) {
-
-			/* 공지글, 비밀글 설정 */
-			if ( obj.noticeYn.checked ) {
-				obj.noticeYn.value = 'Y';
-			} else {
-				obj.noticeYn.value = 'N';
-			}
-			
-			if ( obj.secretYn.checked ) {
-				obj.secretYn.value = 'Y';
-			} else {
-				obj.secretYn.value = 'N';
-			}
-
-			return (checkField(obj.title, "제목")
-				 && checkField(obj.writer, "작성자")
-				 && checkField(obj.content, "내용"));
-		}
-
 		function deleteAttachFile(idx, obj) {
 			if (confirm("파일을 정말 삭제하시겠어요?")) {
 				var uri = '<c:url value="/common/deleteAttachFile.do" />';

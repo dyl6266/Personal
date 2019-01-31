@@ -42,6 +42,15 @@ public class CommonDAO extends AbstractDAO {
 	}
 
 	/**
+	 * 첨부 파일 삭제 (사용 여부 변경)
+	 * 
+	 * @param idx
+	 */
+	public int deleteAttach(Integer idx) {
+		return update(namespace + ".deleteAttach", idx);
+	}
+
+	/**
 	 * 첨부 파일 상세 조회
 	 * 
 	 * @param idx - PK

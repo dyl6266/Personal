@@ -19,9 +19,10 @@ import com.dy.domain.AttachVO;
 public class FileUtils {
 
 	/* 현재 시간 (19-01-01 형식) */
-	private static final String currentTime = CommonUtils.getCurrentTime().substring(2, 10);
+//	private static final String currentTime = CommonUtils.getCurrentTime().substring(2, 10);
+	
 	/* 업로드 경로 */
-	private static final String filePath = "C:\\workspace\\upload\\" + currentTime + "\\";
+	private static final String filePath = "C:\\workspace\\upload\\";
 
 	/**
 	 * 업로드한 파일 리스트 반환

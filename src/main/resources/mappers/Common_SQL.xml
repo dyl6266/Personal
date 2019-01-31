@@ -74,6 +74,15 @@
 		)
 	</insert>
 
+	<!-- 첨부 파일 삭제 (사용 여부 변경) -->
+	<update id="deleteAttach" parameterType="integer">
+		UPDATE attach
+		SET
+			use_yn = 'N'
+		WHERE
+			idx = #{idx}
+	</update>
+
 	<!-- 첨부 파일 상세 조회 -->
 	<select id="selectAttachDetail" parameterType="integer" resultMap="attachResultMap">
 		SELECT

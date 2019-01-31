@@ -29,7 +29,7 @@ public class BoardController {
 	 * 게시글 리스트 페이지
 	 * 
 	 * @param params - 페이징 정보
-	 * @return 페이지
+	 * @return String - 페이지
 	 */
 	@RequestMapping(value = "/board/list.do")
 	public String openBoardList(@RequestParam(value = "params", required = false) BoardVO params, Model model) {
@@ -43,6 +43,13 @@ public class BoardController {
 		return "/board/list";
 	}
 
+	/**
+	 * 게시글 등록 페이지
+	 * 
+	 * @param type - insert/update 구분
+	 * @param idx - 게시글 PK
+	 * @return String - 페이지
+	 */
 	@RequestMapping(value = "/board/write.do")
 	public String openBoardWrite(@RequestParam(value = "type", defaultValue = "insert") String type,
 								 @RequestParam(value = "idx", required = false) Integer idx,
@@ -63,7 +70,6 @@ public class BoardController {
 				while ( iterator.hasNext() ) {
 					String key = iterator.next();
 					model.addAttribute(key, hashMap.get(key));
-					System.out.println( "keys : " + key );
 				}
 				// end of while
 			}
@@ -73,6 +79,32 @@ public class BoardController {
 		model.addAttribute("type", type);
 
 		return "/board/write";
+	}
+	
+	/**
+	 * 게시글 상세 페이지
+	 * 
+	 * @param idx - 게시글 PK
+	 * @return String - 페이지
+	 */
+	@RequestMapping(value = "/board/view.do")
+	public String openBoardView(@RequestParam(value = "idx", required = false) Integer idx, Model model) {
+
+		/* 게시글 상세 정보, 첨부 파일 리스트 */
+		HashMap<String, Object> hashMap = boardService.selectBoardDetailWithAttachList(idx);
+		if ( ObjectUtils.isEmpty(hashMap) ) {
+			// 오류 리다이렉트
+		} else {
+			Iterator<String> iterator = hashMap.keySet().iterator();
+
+			while ( iterator.hasNext() ) {
+				String key = iterator.next();
+				model.addAttribute(key, hashMap.get(key));
+			}
+			// end of while
+		}
+
+		return "/board/view";
 	}
 
 	@RequestMapping(value = "/board/process.do", method = RequestMethod.POST)

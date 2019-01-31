@@ -28,7 +28,7 @@
 						<tr>
 							<td>${row.idx }</td>
 							<td class="title">
-								<a href="<c:url value="/board/write.do?type=update&amp;idx=${row.idx }" />">${row.title }</a>
+								<a href="<c:url value="/board/view.do?idx=${row.idx }" />">${row.title }</a>
 							</td>
 							<td>${row.writer }</td>
 							<td>

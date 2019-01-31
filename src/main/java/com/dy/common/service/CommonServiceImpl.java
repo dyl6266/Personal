@@ -23,4 +23,14 @@ public class CommonServiceImpl implements CommonService {
 		return commonDAO.selectAttachDetail(idx);
 	}
 
+	/**
+	 * 첨부 파일 삭제 (사용 여부 변경)
+	 * 
+	 * @param idx
+	 */
+	@Override
+	public int deleteAttach(Integer idx) {
+		return commonDAO.deleteAttach(idx);
+	}
+
 }
