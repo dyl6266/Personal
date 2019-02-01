@@ -49,28 +49,31 @@
 				</tr>
 				<tr>
 					<th>첨부 파일</th>
-					<td colspan="4">
-						<input type="file" name="attachFile1" /><br /><br />
-						<c:choose>
-							<c:when test="${empty attachList == false }">
-								<c:forEach var="row" items="${attachList }" varStatus="status">
-									<div id="fileDiv${status.count }">
-										<a href="<c:url value="/common/downAttachFile.do?idx=${row.idx }" />">${row.originalName } (${row.fileSize }KB)</a>
-										<a href="javascript:void(0);" onclick="deleteAttachFile(${row.idx}, this);">삭제하기</a><br />
-									</div>
-								</c:forEach>
-							</c:when>
-							<c:otherwise>
-								첨부된 파일이 없습니다.
-							</c:otherwise>
-						</c:choose>
+					<td colspan="3">
+						<div id="filesDiv">
+							<c:choose>
+								<c:when test="${type eq 'update' && empty attachList == false }">
+									<c:forEach var="row" items="${attachList }" varStatus="status">
+											<span>
+												<a href="javascript:void(0);">${row.originalName } (${row.fileSize }KB)</a>
+												<a href="javascript:void(0);" onclick="deleteAttachFile(${row.idx }, this);">&emsp;삭제하기</a><br />
+											</span>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<span>
+										<input type="file" name="attachFile" /><br /><br />
+									</span>
+								</c:otherwise>
+							</c:choose>
+						</div>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 
-		<input type="submit" class="btn" value="파일추가" />
 		<input type="submit" class="btn" value="등록하기" />
+		<input type="button" class="btn" value="파일추가" onclick="addAttachFile(this);" />
 		<a href="<c:url value="/board/list.do" />" class="btn">뒤로가기</a>
 	</form>
 
@@ -95,35 +98,58 @@
 				 && checkField(obj.content, "내용"));
 		}
 
-		function deleteAttachFile(idx, obj) {
-			if (confirm("파일을 정말 삭제하시겠어요?")) {
-				var uri = '<c:url value="/common/deleteAttachFile.do" />';
+		/**
+		 * 첨부 파일 추가
+		 */
+		var fileCnt = 1; // 파일 개수 카운트용 전역 변수
 
-				$.ajax({
-					url : uri,
-					type : "POST",
-					dataType : "json",
-					data : { "idx" : idx },
-					success : function(response) {
-						console.log(response);
-						if ( response.MESSAGE == "OK" ) {
-							$(obj).parent().remove();
-							alert("정상적으로 처리되었습니다.");
-							return false;
-						} else {
-							alert("다시 시도해 주세요.");
-							return false;
-						}
-					},
-					error : function(request, status, error) {
-						console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-						alert("다시 시도해 주세요.");
-						return false;
-			        }
-				});
-			} else {
-				return false;
-			}
+		function addAttachFile(obj) {
+			var filesDiv = $(obj).parent().find("div");
+			var html = "";
+			html += '<span>';
+				html += '<input type="file" name="attachFile'+(fileCnt++)+'" />';
+				html += '<a href="javascript:void(0);" onclick="removeInput(this);">삭제하기</a><br />';
+			html += '</span>';
+
+			filesDiv.append(html);
+		}
+
+		/**
+		 *
+		 */
+        function deleteAttachFile(idx, obj) {
+            if (confirm("파일을 정말 삭제하시겠어요?")) {
+                var uri = '<c:url value="/common/deleteAttachFile.do" />';
+
+                $.ajax({
+                    url : uri,
+                    type : "POST",
+                    dataType : "json",
+                    data : { "idx" : idx },
+                    success : function(response) {
+                        console.log(response);
+                        if ( response.MESSAGE == "OK" ) {
+                            $(obj).parent().remove();
+                            alert("정상적으로 처리되었습니다.");
+                            return false;
+                        } else {
+                            alert("다시 시도해 주세요.");
+                            return false;
+                        }
+                    },
+                    error : function(request, status, error) {
+                        console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                        alert("다시 시도해 주세요.");
+                        return false;
+                    }
+                });
+            } else {
+                return false;
+            }
+        }
+
+		function removeInput(obj) {
+			$(obj).parent().remove();
 		}
 	</script>
 

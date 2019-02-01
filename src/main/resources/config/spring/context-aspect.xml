@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+	<!-- root-context, servlet-context 차이 떄문에 action-servlet.xml에서 설정했던 것을 다시 한 번 설정 -->
+	<aop:aspectj-autoproxy />
+	<beans:bean id="loggerAspect" class="com.dy.common.LoggerAspect" />
+
+</beans:beans>

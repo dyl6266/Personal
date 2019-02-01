@@ -39,7 +39,7 @@ public class BoardVO {
 	}
 
 	public void setIdx(Integer idx) {
-		if (idx < 1) {
+		if (idx != null && idx < 1) {
 			this.idx = 1;
 			return;
 		}

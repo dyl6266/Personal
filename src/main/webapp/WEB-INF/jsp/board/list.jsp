@@ -48,5 +48,6 @@
 	</table>
 
 	<a href="<c:url value="/board/write.do?type=insert" />" class="btn">글쓰기</a>
-
+	<a href="javascript:void(0);" class="btn" onclick="test();">테스트</a>
+	
 <%@include file="/WEB-INF/include/footer.jsp"%>

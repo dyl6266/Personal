@@ -106,8 +106,8 @@
 		AND
 			board_idx = #{boardIdx}
 		ORDER BY
-			idx DESC,
-			insert_time DESC
+			idx ASC,
+			insert_time ASC
 	</select>
 
 	<!-- 첨부 파일 전체 개수 조회 -->

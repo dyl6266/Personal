@@ -47,13 +47,12 @@ public class BoardController {
 	 * 게시글 등록 페이지
 	 * 
 	 * @param type - insert/update 구분
-	 * @param idx - 게시글 PK
+	 * @param idx  - 게시글 PK
 	 * @return String - 페이지
 	 */
 	@RequestMapping(value = "/board/write.do")
 	public String openBoardWrite(@RequestParam(value = "type", defaultValue = "insert") String type,
-								 @RequestParam(value = "idx", required = false) Integer idx,
-								 Model model) {
+			@RequestParam(value = "idx", required = false) Integer idx, Model model) {
 
 		if ("update".equals(type)) {
 			if (idx == null) {
@@ -62,12 +61,12 @@ public class BoardController {
 
 			/* 게시글 상세 정보, 첨부 파일 리스트 */
 			HashMap<String, Object> hashMap = boardService.selectBoardDetailWithAttachList(idx);
-			if ( ObjectUtils.isEmpty(hashMap) ) {
+			if (ObjectUtils.isEmpty(hashMap)) {
 				// 오류 리다이렉트 처리
 			} else {
 				Iterator<String> iterator = hashMap.keySet().iterator();
-				
-				while ( iterator.hasNext() ) {
+
+				while (iterator.hasNext()) {
 					String key = iterator.next();
 					model.addAttribute(key, hashMap.get(key));
 				}
@@ -80,7 +79,7 @@ public class BoardController {
 
 		return "/board/write";
 	}
-	
+
 	/**
 	 * 게시글 상세 페이지
 	 * 
@@ -92,12 +91,12 @@ public class BoardController {
 
 		/* 게시글 상세 정보, 첨부 파일 리스트 */
 		HashMap<String, Object> hashMap = boardService.selectBoardDetailWithAttachList(idx);
-		if ( ObjectUtils.isEmpty(hashMap) ) {
+		if (ObjectUtils.isEmpty(hashMap)) {
 			// 오류 리다이렉트
 		} else {
 			Iterator<String> iterator = hashMap.keySet().iterator();
 
-			while ( iterator.hasNext() ) {
+			while (iterator.hasNext()) {
 				String key = iterator.next();
 				model.addAttribute(key, hashMap.get(key));
 			}
@@ -143,56 +142,5 @@ public class BoardController {
 
 		return "redirect:/board/list.do";
 	}
-
-//	@RequestMapping(value = "/board/process.do", method = RequestMethod.POST)
-//	@ResponseBody
-//	public ResponseEntity<HashMap<String, Object>> processingBoard(MultipartHttpServletRequest request, // 파일 업로드 처리
-//																   @RequestParam(value = "type", required = false) String type, // 프로세스 타입
-//																   @RequestParam(value = "idxs", required = false) String idxs, // 삭제에 사용되는 파라미터
-//																   @RequestBody BoardVO params) { // 등록에 사용되는 파라미터
-//
-//		ResponseEntity<HashMap<String, Object>> entity = null;
-//
-//		HashMap<String, Object> resultMap = new HashMap<>();
-//
-//		if (StringUtils.isEmpty(type) || ObjectUtils.isEmpty(params)) {
-//			resultMap.put("MESSAGE", "FAIL");
-//			resultMap.put("ERROR", "NPE1");
-//			entity = new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
-//		} else {
-//			try {
-//				/* 쿼리 실행 횟수 */
-//				int queryCnt = 0;
-//
-//				/* 등록의 경우 */
-//				if ("register".equals(type)) {
-//					queryCnt = boardService.registerBoard(params, request);
-//				/* 삭제의 경우 */
-//				} else if ("delete".equals(type)) {
-//					queryCnt = boardService.deleteBoard(idxs);
-//				}
-//
-//				if (queryCnt > 0) {
-//					resultMap.put("MESSAGE", "OK");
-//					entity = new ResponseEntity<>(resultMap, HttpStatus.OK);
-//				} else {
-//					resultMap.put("MESSAGE", "FAIL");
-//					resultMap.put("ERROR", "NOT RUNNING");
-//				}
-//			} catch (NullPointerException e) {
-//				resultMap.put("MESSAGE", "FAIL");
-//				resultMap.put("ERROR", "NPE2");
-//				entity = new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
-//				e.printStackTrace();
-//			} catch (Exception e) {
-//				resultMap.put("MESSAGE", "FAIL");
-//				resultMap.put("ERROR", "UNKNOWN");
-//				entity = new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
-//				e.printStackTrace();
-//			}
-//		}
-//
-//		return entity;
-//	}
 
 }

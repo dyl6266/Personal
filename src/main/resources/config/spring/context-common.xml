@@ -2,12 +2,26 @@
 <beans:beans
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+	<!-- 최상단 컨텍스트 -->
+	<!-- 서로 다른 서블릿 컨텍스트에 공유하는 bean을 등록 -->
+	<!-- 웹에서 사용되는 컨트롤러 등을 등록 -->
+	<!-- 서블릿 컨텍스트에서 등록된 bean을 사용할 수 없으며, 서블릿 컨텍스트와 루트 컨텍스트에서 동일한 bean을 설정할 경우, 서블릿 컨텍스트에서 설정한 bean만 작동 -->
 
 	<!-- 파일 업로드를 통해 들어오는 데이터를 처리하는 객체 -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="maxUploadSize" value="10485760" />
 		<beans:property name="maxInMemorySize" value="10485760" />
 	</beans:bean>
+
+	<!-- action-servlet.xml과 달리, exclude-filter를 사용하여 @Controller를 제외한 나머지 영역을 bean으로 등록하는 역할을 함 -->
+	<context:component-scan base-package="com.dy" use-default-filters="false">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
 
 </beans:beans>

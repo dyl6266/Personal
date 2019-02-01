@@ -67,10 +67,10 @@
 	<update id="updateBoard" parameterType="BoardVO">
 		UPDATE board
 		SET
-			title = #{title}
-		  , content = #{content}
-		  , notice_yn = #{noticeYn}
-		  , secret_yn = #{secretYn}
+			<if test="!@com.dy.common.utils.MyBatisUtils@isEmpty(title)">title = #{title}</if>
+		  ,	<if test="!@com.dy.common.utils.MyBatisUtils@isEmpty(content)">content = #{content}</if>
+		  ,	<if test="!@com.dy.common.utils.MyBatisUtils@isEmpty(noticeYn)">notice_yn = #{noticeYn}</if>
+		  ,	<if test="!@com.dy.common.utils.MyBatisUtils@isEmpty(secretYn)">secret_yn = #{secretYn}</if>
 		  , update_time = NOW()
 		WHERE
 			idx = #{idx}

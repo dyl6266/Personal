@@ -11,15 +11,13 @@
 				<col width="35%" />
 			</colgroup>
 			<tbody>
-				<c:if test="${type eq 'update' }">
-					<tr>
-						<th>작성일</th>
-						<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.insertTime }" /></td>
-	
-						<th>조회수</th>
-						<td>${board.viewCnt }</td>
-					</tr>
-				</c:if>
+				<tr>
+					<th>작성일</th>
+					<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.insertTime }" /></td>
+
+					<th>조회수</th>
+					<td>${board.viewCnt }</td>
+				</tr>
 				<tr>
 					<th>제목</th>
 					<td>${board.title }</td>
@@ -51,7 +49,6 @@
 								<c:forEach var="row" items="${attachList }" varStatus="status">
 									<div id="fileDiv${status.count }">
 										<a href="<c:url value="/common/downAttachFile.do?idx=${row.idx }" />">${row.originalName } (${row.fileSize }KB)</a>
-										<a href="javascript:void(0);" onclick="deleteAttachFile(${row.idx}, this);">삭제하기</a><br />
 									</div>
 								</c:forEach>
 							</c:when>
@@ -65,41 +62,8 @@
 		</table>
 
 		<div>
-			<a href="<c:url value="/board/write.do?idx=${board.idx }" />" class="btn">수정하기</a>
+			<a href="<c:url value="/board/write.do?type=update&amp;idx=${board.idx }" />" class="btn">수정하기</a>
 			<a href="<c:url value="/board/list.do" />" class="btn">뒤로가기</a>
 		</div>
-
-	<script>
-		function deleteAttachFile(idx, obj) {
-			if (confirm("파일을 정말 삭제하시겠어요?")) {
-				var uri = '<c:url value="/common/deleteAttachFile.do" />';
-
-				$.ajax({
-					url : uri,
-					type : "POST",
-					dataType : "json",
-					data : { "idx" : idx },
-					success : function(response) {
-						console.log(response);
-						if ( response.MESSAGE == "OK" ) {
-							$(obj).parent().remove();
-							alert("정상적으로 처리되었습니다.");
-							return false;
-						} else {
-							alert("다시 시도해 주세요.");
-							return false;
-						}
-					},
-					error : function(request, status, error) {
-						console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-						alert("다시 시도해 주세요.");
-						return false;
-			        }
-				});
-			} else {
-				return false;
-			}
-		}
-	</script>
 
 <%@include file="/WEB-INF/include/footer.jsp"%>

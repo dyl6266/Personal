@@ -31,8 +31,7 @@ public class CommonController {
 	 * 첨부 파일 다운로드
 	 */
 	@RequestMapping(value = "/common/downAttachFile.do")
-	public void downloadAttachFile(HttpServletResponse response,
-			@RequestParam(value = "idx", required = false) Integer idx) {
+	public void downloadAttachFile(HttpServletResponse response, @RequestParam(value = "idx", required = false) Integer idx) {
 
 		if (idx == null) {
 			return;
@@ -55,8 +54,8 @@ public class CommonController {
 				response.setContentType("application/octet-stream");
 				response.setContentLength(fileByte.length);
 				/*
-				 * Content-Disposition 속성을 이용하여 해당 패킷이 어떤 형태의 데이터인지 알 수 있음 fileName = 첨부 파일의 이름을
-				 * 지정, fileName을 다른 이름으로 한다면, 첨부 파일은 그 이름으로 저장이 됨
+				 * Content-Disposition 속성을 이용하여 해당 패킷이 어떤 형태의 데이터인지 알 수 있음
+				 * fileName = 첨부 파일의 이름을 지정, fileName을 다른 이름으로 한다면, 첨부 파일은 그 이름으로 저장이 됨
 				 */
 				response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(attach.getOriginalName(), "UTF-8") + "\";");
 				response.setHeader("Content-Transfer-Encoding", "binary");
