@@ -20,6 +20,8 @@
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
+			<!-- *-servlet.xml과 같은 형식의 파일들을 참조 -->
+			<!-- 파일 안에 정의된 객체들을 로딩 -->
 			<param-value>/WEB-INF/config/*-servlet.xml</param-value>
 		</init-param>
 		<!-- 가장 첫 번째 우선순위를 뜻함 -->
@@ -55,6 +57,17 @@
 
 	<filter-mapping>
 		<filter-name>hiddenHttpMethodFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+
+	<!-- 스프링 시큐리티 -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
 

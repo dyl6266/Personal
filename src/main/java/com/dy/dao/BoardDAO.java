@@ -10,7 +10,7 @@ import com.dy.domain.BoardVO;
 @Repository("boardDAO")
 public class BoardDAO extends AbstractDAO {
 
-	private static String namespace = "board";
+	private static final String namespace = "board";
 
 	/**
 	 * 게시글 등록

@@ -3,6 +3,18 @@
 <%@include file="/WEB-INF/include/header.jsp"%>
 
 	<h2>board list</h2>
+	<div class="search">
+		<form name="searchForm" action="<c:url value="/board/list.do" />" method="get">
+			<select name="searchType">
+				<option value="">선택하기</option>
+				<option value="title">제목</option>
+				<option value="content">내용</option>
+				<option value="writer">작성자</option>
+			</select>
+			<input type="search" name="searchKeyword" value="" />
+			<input type="submit" class="btn" value="검색" maxlength="20" placeholder="검색어를 입력해 주세요." />
+		</form>
+	</div>
 	
 	<table class="board_list">
 		<colgroup>
