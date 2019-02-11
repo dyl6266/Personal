@@ -3,6 +3,7 @@
 <%@include file="/WEB-INF/include/header.jsp"%>
 
 	<h2>board list</h2>
+	<span>${username }</span>zz
 	<div class="search">
 		<form name="searchForm" action="<c:url value="/board/list.do" />" method="get">
 			<select name="searchType">

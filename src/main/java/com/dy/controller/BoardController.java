@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,8 +33,11 @@ public class BoardController {
 	 * @return String - 페이지
 	 */
 	@RequestMapping(value = "/board/list.do")
-	public String openBoardList(@RequestParam(value = "params", required = false) BoardVO params, Model model) {
+	public String openBoardList(HttpServletRequest request, @RequestParam(value = "params", required = false) BoardVO params, Model model) {
 
+		HttpSession session = request.getSession();
+		System.out.println(session.getId());
+		
 		List<BoardVO> boardList = boardService.selectBoardList(params);
 
 		if (!ObjectUtils.isEmpty(boardList) && boardList.size() > 0) {

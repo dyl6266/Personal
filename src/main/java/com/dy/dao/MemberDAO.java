@@ -25,11 +25,11 @@ public class MemberDAO extends AbstractDAO {
 	/**
 	 * 회원 상세 정보 조회
 	 * 
-	 * @param idx - PK
+	 * @param memberId - PK
 	 * @return MemberVO - VO 클래스
 	 */
-	public MemberVO selectMemberDetail(Integer idx) {
-		return (MemberVO) selectOne(namespace + ".selectMemberDetail", idx);
+	public MemberVO selectMemberDetail(String memberId) {
+		return (MemberVO) selectOne(namespace + ".selectMemberDetail", memberId);
 	}
 
 	/**

@@ -33,6 +33,17 @@
 	<!-- 회원 등록 -->
 	<!-- 오라클과 같이 auto_increment 기능이 없는 경우엔, selectKey 구문을 사용해야 함 -->
 	<insert id="insertMember" parameterType="MemberVO" useGeneratedKeys="true" keyProperty="idx">
+		<selectKey keyProperty="idx" resultType="integer" order="BEFORE">
+			SELECT 
+			    CASE COUNT(next_seq)
+			        WHEN 0 THEN 1
+			        ELSE MAX(next_seq) + 1
+			    END AS next_seq
+			FROM
+			    sequence
+			WHERE
+			    table_name = 'member'
+		</selectKey>
 		INSERT INTO member (
 			<include refid="memberColumns" />
 		) VALUES (
@@ -49,7 +60,7 @@
 	</insert>
 
 	<!-- 회원 상세 정보 조회 -->
-	<select id="selectMemberDetail" parameterType="integer" resultMap="memberResultMap">
+	<select id="selectMemberDetail" parameterType="string" resultMap="memberResultMap">
 		SELECT
 			<include refid="memberColumns" />
 		FROM
@@ -57,7 +68,7 @@
 		WHERE
 			status = 'Y'
 		AND
-			idx = #{idx}
+			member_id = #{memberId}
 	</select>
 
 	<!-- 회원 정보 수정 -->
