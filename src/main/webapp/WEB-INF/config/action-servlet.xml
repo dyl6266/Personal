@@ -35,6 +35,10 @@
 	<interceptors>
 		<interceptor>
 			<mapping path="/**" />
+
+			<!-- 인터셉터를 거치지 않고 예외 시킬 URI -->
+			<exclude-mapping path="/login.do"/>
+
 			<beans:ref bean="loggerInterceptor" />
 		</interceptor>
 	</interceptors>

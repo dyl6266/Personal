@@ -21,11 +21,10 @@
         <security:form-login
             login-page="/login.do"
             login-processing-url="/auth.do"
-            default-target-url="/board/list.do"
+            authentication-success-handler-ref="loginSuccessHandler"
             username-parameter="username"
             password-parameter="password"
             authentication-failure-url="/login.do?error"
-            always-use-default-target="true"
         />
 
         <!-- 로그아웃 시 세션 초기화 -->
@@ -40,6 +39,11 @@
         <!-- username, password를 제공해줄 서비스 등록 -->
         <security:authentication-provider user-service-ref="userService" />
     </security:authentication-manager>
+
+	<beans:bean id="loginSuccessHandler" class="com.dy.common.security.LoginSuccessHandler">
+		<beans:property name="defaultTargetUrl" value="/board/list.do" />
+		<beans:property name="alwaysUseDefaultTargetUrl" value="true" />
+	</beans:bean>
 
     <beans:bean id="userService" class="com.dy.service.UserService" />
 

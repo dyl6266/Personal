@@ -5,9 +5,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
@@ -16,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.dy.common.utils.CommonUtils;
 import com.dy.domain.BoardVO;
 import com.dy.service.BoardService;
 
 @Controller
-// util class 상속하기
-public class BoardController {
+public class BoardController extends CommonUtils {
 
 	@Autowired
 	private BoardService boardService;
@@ -35,9 +36,13 @@ public class BoardController {
 	@RequestMapping(value = "/board/list.do")
 	public String openBoardList(HttpServletRequest request, @RequestParam(value = "params", required = false) BoardVO params, Model model) {
 
-		HttpSession session = request.getSession();
-		System.out.println(session.getId());
-		
+		System.out.println( CommonUtils.getLoginId() );
+		/* 로그인 사용자 정보 (애너테이션으로 대체 가능, 그러나 xml 설정이 필요한듯) */
+//		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		if ( ObjectUtils.isEmpty(user) == false ) {
+//			model.addAttribute("");
+//		}
+
 		List<BoardVO> boardList = boardService.selectBoardList(params);
 
 		if (!ObjectUtils.isEmpty(boardList) && boardList.size() > 0) {
