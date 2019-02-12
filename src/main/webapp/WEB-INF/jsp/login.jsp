@@ -13,8 +13,8 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td><input type="text" name="username" /></td>
-				<td><input type="password" name="password" /></td>
+				<td><input type="text" name="memberId" /></td>
+				<td><input type="password" name="memberPw" /></td>
 			</tr>
 		</tbody>
 	</table>
@@ -24,8 +24,8 @@
 
 <script>
 	function checkForm(obj) {
-		return (checkField(obj.username, "아이디")
-			 && checkField(obj.password, "패스워드"));
+		return (checkField(obj.memberId, "아이디")
+			 && checkField(obj.memberPw, "패스워드"));
 	}
 </script>
 
