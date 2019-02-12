@@ -44,9 +44,9 @@
     	<security:authentication-provider ref="customAuthenticationProvider" />
 
         <!-- username, password를 제공해줄 서비스 등록 -->
-    	<security:authentication-provider user-service-ref="memberAuthService">
+    	<!-- <security:authentication-provider user-service-ref="memberAuthService">
     		<security:password-encoder ref="passwordEncoder" />
-    	</security:authentication-provider>
+    	</security:authentication-provider> -->
     </security:authentication-manager>
 
 	<beans:bean id="loginSuccessHandler" class="com.dy.common.security.LoginSuccessHandler">
@@ -54,7 +54,7 @@
 		<beans:property name="alwaysUseDefaultTargetUrl" value="true" />
 	</beans:bean>
 
-    <beans:bean id="memberAuthService" class="com.dy.common.security.MemberAuthService" />
+    <!-- <beans:bean id="memberAuthService" class="com.dy.common.security.MemberAuthService" /> -->
     <beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
 </beans:beans>

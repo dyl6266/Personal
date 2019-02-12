@@ -20,7 +20,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
-		/* 로그인 정보 */
+		/* 로그인 정보 (애너테이션으로 처리 가능) */
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		if (ObjectUtils.isEmpty(user) == false) {
