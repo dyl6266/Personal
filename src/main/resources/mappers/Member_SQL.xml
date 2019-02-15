@@ -11,7 +11,6 @@
 		<result property="memberPw" 	column="member_pw" />
 		<result property="memberName" 	column="member_name" />
 		<result property="memberPhone" 	column="member_phone" />
-		<result property="memberEmail" 	column="member_email" />
 		<result property="status" 		column="status" />
 		<result property="insertTime" 	column="insert_time" />
 		<result property="updateTime" 	column="update_time" />
@@ -24,7 +23,6 @@
 		, member_pw
 		, member_name
 		, member_phone
-		, member_email
 		, status
 		, insert_time
 		, update_time
@@ -52,8 +50,7 @@
 			, #{memberPw}
 			, #{memberName}
 			, #{memberPhone}
-			, #{memberEmail}
-			, #{status}
+			, 'N'
 			, NOW()
 			, NULL
 		)
@@ -78,7 +75,6 @@
 			<if test="!@com.dy.common.utils.MyBatisUtils@isEmpty(memberPw)">member_pw = #{memberPw}</if>
 		  ,	<if test="!@com.dy.common.utils.MyBatisUtils@isEmpty(memberName)">member_name = #{memberName}</if>
 		  ,	<if test="!@com.dy.common.utils.MyBatisUtils@isEmpty(memberPhone)">member_phone = #{memberPhone}</if>
-		  ,	<if test="!@com.dy.common.utils.MyBatisUtils@isEmpty(memberEmail)">member_email = #{memberEmail}</if>
 		  , update_time = NOW()
 		WHERE
 			idx = #{idx}

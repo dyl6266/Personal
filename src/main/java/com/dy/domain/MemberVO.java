@@ -17,8 +17,8 @@ public class MemberVO extends CommonVO {
 	/* 회원 휴대폰 번호 */
 	private String memberPhone;
 
-	/* 회원 이메일 */
-	private String memberEmail;
+	/* 회원가입 인증번호 */
+	private String authKey;
 
 	public Integer getIdx() {
 		return idx;
@@ -60,12 +60,12 @@ public class MemberVO extends CommonVO {
 		this.memberPhone = memberPhone;
 	}
 
-	public String getMemberEmail() {
-		return memberEmail;
+	public String getAuthKey() {
+		return authKey;
 	}
 
-	public void setMemberEmail(String memberEmail) {
-		this.memberEmail = memberEmail;
+	public void setAuthKey(String authKey) {
+		this.authKey = authKey;
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.dy.test;
 
+import java.util.Random;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.dy.common.domain.Status;
+import com.dy.common.domain.YesNo;
 import com.dy.dao.MemberDAO;
 import com.dy.domain.MemberVO;
 
@@ -24,13 +26,12 @@ public class DAOTest {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
-	@Test
 	public void test() {
-		String test1 = "vpsxkzhem";
-		String test2 = passwordEncoder.encode(test1);
-		
-		
+		Random random = new Random();
+		int test = random.nextInt(100);
+		System.out.println(test);
 	}
+	
 	
 	@Test
 	public void testInsert() {
@@ -40,8 +41,7 @@ public class DAOTest {
 			vo.setMemberPw(passwordEncoder.encode("ehdud123"));
 			vo.setMemberName("도영");
 			vo.setMemberPhone("01033282436");
-			vo.setMemberEmail("dyl6266@naver.com");
-			vo.setStatus(Status.Y);
+			vo.setStatus(YesNo.Y);
 			dao.insertMember(vo);
 //		}
 	}
@@ -68,7 +68,6 @@ public class DAOTest {
 		vo.setMemberPw("vpsxkzhem");
 		vo.setMemberName("도영도영");
 		vo.setMemberPhone("01033280000");
-		vo.setMemberEmail("dyl6266@pentachord.com");
 		dao.updateMember(vo);
 	}
 	

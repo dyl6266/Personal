@@ -1,22 +1,922 @@
-@charset "UTF-8";
+@import url(basic.css); /* 초기화 */
 
-a:link, a:visited { text-decoration: none; color: #656565; }
-.board_list { width: 100%; border-top: 2px solid #252525; border-bottom: 1px solid #ccc }
-.board_list thead th:first-child { background-image: none }
-.board_list thead th { border-bottom: 1px solid #ccc; padding: 12px 0 13px 0; color: #3b3a3a; vertical-align: middle }
-.board_list tbody td { border-top: 1px solid #ccc; padding: 10px 0; text-align: center; vertical-align: middle }
-.board_list tbody tr:first-child td { border: none }
-.board_list tbody td.title { text-align: left; padding-left: 20px }
-.board_list tbody td a { display: inline-block }
+/************************************************************************************
+Header st.
+*************************************************************************************/
+header {position: absolute; top: 0; left: 0; right: 0; z-index: 10;}
+.header_wrap {background: #fff; border-bottom: 1px solid #ddd; transition: all.2s ease;}
 
-.board_view { width: 50%; border-top: 2px solid #252525; border-bottom: 1px solid #ccc }
-.board_view tbody th { text-align: left; background: #f7f7f7; color: #3b3a3a }
-.board_view tbody th.list_tit { font-size: 13px; color: #000; letter-spacing: 0.1px }
-.board_view tbody .no_line_b th, .board_view tbody .no_line_b td { border-bottom: none }
-.board_view tbody th, .board_view tbody td { padding: 15px 0 16px 16px; border-bottom: 1px solid #ccc }
-.board_view tbody td.view_text { border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 45px 18px 45px 18px }
-.board_view tbody th.th_file { padding: 0 0 0 15px; vertical-align: middle }
+.header_wrap.main_header {background: none; border-bottom: 1px solid rgba(255, 255, 252, 0.3);}
+/*.header_wrap.main_header.open,
+.header_wrap.main_header.active {background: #fff; border-bottom: 1px solid #ddd;} */
 
-.wdp_90 { width: 90% }
-.btn { border-radius: 3px; padding: 5px 11px; color: #fff !important; display: inline-block; background-color: #6b9ab8; border: 1px solid #56819d; vertical-align: middle }
-.search { width: 100%; text-align: right; }
+/* logo */
+.header_wrap .logo {display: inline-block; width: 140px; height: 80px; background: url('/resources/images/common/logo_black.png') center center no-repeat;}
+
+.header_wrap.main_header .logo {background: url('/resources/images/common/logo.png') center center no-repeat;}
+/* .header_wrap.main_header.open .logo,
+.header_wrap.main_header.active .logo {background: url('/resources/images/common/logo_black.png') center center no-repeat;} */
+
+/* gnb */
+.header_wrap .gnb_wrap {}
+.header_wrap .gnb_wrap .depth1>li {position: relative; display: inline-block; vertical-align: top;}
+.header_wrap .gnb_wrap .depth1>li>a {display: block; height: 80px; padding: 0 45px; line-height: 80px; font-size: 19px; color: #333;}
+.header_wrap .gnb_wrap .depth1>li.artAvenue>a {padding: 0 40px; color: #2b9a9d; border-left: 1px solid rgba(255, 255, 252, 0.3);}
+.header_wrap .gnb_wrap .depth1>li.utill>a {width: 80px; height: 80px; padding: 0;}
+.header_wrap .gnb_wrap .depth1>li.utill>a.login {background: #2b9a9d url('/resources/images/common/ic_people.png') center center no-repeat;} /* login */
+.header_wrap .gnb_wrap .depth1>li.utill>a.logout {background: #2b9a9d url(/resources/images/common/ic_lock.png') center center no-repeat;} /* logout */
+
+.header_wrap.main_header .gnb_wrap .depth1>li>a,
+.header_wrap.main_header .gnb_wrap .depth1>li>a  {color: #fff;}
+
+/* .header_wrap.main_header.open .gnb_wrap .depth1>li>a,
+.header_wrap.main_header.active .gnb_wrap .depth1>li>a  {color: #333;}
+.header_wrap.main_header.open .gnb_wrap .depth1>li.artAvenue>a,
+.header_wrap.main_header.active .gnb_wrap .depth1>li.artAvenue>a {color: #2b9a9d; border-color: #ddd;} */
+
+.header_wrap .gnb_wrap .depth2 {display: none; position: absolute; top: 100%; left: 0; right: 0; padding: 20px 0; text-align: center; z-index: 2;}
+.header_wrap .gnb_wrap .depth2>li {display: block;}
+.header_wrap .gnb_wrap .depth2>li>a {display: block; font-size: 17px; line-height: 40px;}
+.header_wrap .gnb_wrap .depth2>li:hover>a {color: #1ba9ad;}
+.header_wrap.open .gnb_wrap ul {display: block;}
+
+.header_wrap .gnb_wrap .depth3>li>a {display: block; font-size: 15px; color: #999; line-height: 30px;}
+.header_wrap .gnb_wrap .depth3>li:hover>a {color: #1ba9ad;}
+
+.header_wrap .gnb_bg {display: none; position: absolute; top: 80px; left: 0; right: 0; height: 250px; background: #fff; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; z-index: 1;}
+.header_wrap .gnb_bg div {height: 250px; background: url('/resources/images/common/bg_gnb.png') left bottom no-repeat;}
+.header_wrap.open .gnb_wrap .gnb_bg {display: block;}
+
+
+
+
+
+/************************************************************************************
+Footer st.
+*************************************************************************************/
+footer {}
+.footer_wrap {background: #27252a;}
+
+.footer_wrap .logo {display: inline-block; width: 117px; height: 96px; margin-right: 25px; background: url('/resources/images/common/foot_logo.png') center center no-repeat;}
+
+.footer_wrap .foot_menu {margin-top: 27px;}
+.footer_wrap .foot_menu li a {display: block; height: 13px; padding: 0 13px; font-size: 13px; line-height: 13px; color: #888; border-left: 1px solid #3a393d;}
+.footer_wrap .foot_menu li:first-child a {padding-left: 0; border-right: 0;}
+.footer_wrap p {margin-top: 12px; color: #888; font-size: 13px; line-height: 20px;}
+.footer_wrap p span {display: inline-block; vertical-align: middle; padding-right: 15px;}
+
+
+
+
+
+/************************************************************************************
+UI st.
+*************************************************************************************/
+/* Color */
+.white {color: #fff !important;}
+.black {color: #000 !important;}
+.darkgray {color: #333 !important;}
+.blue {color: #4282d4 !important;}
+.red {color: #ff0000 !important;}
+.jade {color: #2b9a9d !important;}
+.skyblue {color: #9ee1e3 !important;}
+
+
+/* Background */
+.bg_none {background: none !important;}
+.bg_lightgray {background: #f5f5f5;}
+
+
+/* Btn */
+.btn_wrap:after {display: block; visibility: hidden; clear: both; content: "";}
+.btn {display: inline-block; height: 40px; padding: 0 15px; line-height: 40px; font-size: 15px; text-align: center; -webkit-border-radius: 0;-moz-border-radius: 0; border-radius: 0; vertical-align: top; cursor: pointer;}
+
+.btn_wrap .btn {width:100px; height:40px; padding:0; line-height:40px; font-size: 16px; font-weight: 400}
+
+.btn_jade {color:#fff !important; background: #2b9a9d; border: 1px solid #2b9a9d !important;}
+.btn_gray {color:#fff !important; background: #666; border: 1px solid #666 !important;}
+.btn_pink {color:#fff !important; background:#ea98af !important; border:1px solid #ea98af !important;}
+.btn_lightgray {color:#fff !important; background:#999 !important; border:1px solid #999 !important;}
+.btn_border_gray {color:#666 !important; background:#f8f8f8 !important; border:1px solid #ddd !important;}
+
+.btn_delete {width: 20px; height: 20px; margin-left: 5px; padding: 0; text-indent: -9999px; background: #ddd url('/resources/images/common/ic_delete.png') center center no-repeat;}
+.btn_more {width: 27px; height: 27px; vertical-align: middle; background: url('/resources/images/main/ic_more.png') center center no-repeat;}
+.btn_add {width: 40px; height: 40px; padding: 0; text-indent: -9999px; background: #2b9a9d url('/resources/images/common/ic_plus.png') center center no-repeat; border: 1px solid #2b9a9d !important;}
+
+
+/* Icon */
+.icon {display: inline-block; text-indent: -9999px;}
+
+.ic_life {background: #2b9a9d url('/resources/images/common/ic_life.png') center center no-repeat;} /*  */
+.ic_clothing {background: #2b9a9d url('/resources/images/common/ic_clothing.png') center center no-repeat;} /*  */
+.ic_food {background: #2b9a9d url('/resources/images/common/ic_food.png') center center no-repeat;} /*  */
+.ic_art {background: #2b9a9d url('/resources/images/common/ic_art.png') center center no-repeat;} /*  */
+
+.ic_phone_line {width: 28px; height: 28px; background: url('/resources/images/common/ic_phone_line.png') center center no-repeat;}
+.ic_home_line {width: 28px; height: 28px; background: url('/resources/images/common/ic_home_line.png') center center no-repeat;}
+.ic_people_line {width: 28px; height: 28px; background: url('/resources/images/common/ic_people_line.png') center center no-repeat;}
+.ic_parking_line {width: 28px; height: 28px; background: url('/resources/images/common/ic_parking_line.png') center center no-repeat;}
+.ic_food_line {width: 28px; height: 28px; background: url('/resources/images/common/ic_food_line.png') center center no-repeat;}
+.ic_enter_line {width: 28px; height: 28px; background: url('/resources/images/common/ic_enter_line.png') center center no-repeat;}
+.ic_dis_line {width: 28px; height: 28px; background: url('/resources/images/common/ic_dis_line.png') center center no-repeat;}
+.ic_map_line {width: 28px; height: 28px; background: url('/resources/images/common/ic_map_line.png') center center no-repeat;}
+
+
+/* Label */
+.label {padding: 1px 3px; font-size: 14px;}
+
+.label_notice {display: inline-block; vertical-align: middle; padding: 2px 10px; border: 1px solid #ddd; background: #fefefe; border-radius:3px;}
+
+
+/* File */
+.filebox {}
+.filebox>* {display: inline-block; vertical-align: top;}
+.filebox input[type='text'] {height: 38px; font-size: 14px;}
+.filebox label {position: relative; width: 60px; height: 38px; margin-left: -4px; text-align: center; line-height: 38px; overflow: hidden; cursor: pointer;}
+.filebox label input {display: none; position: absolute; right: 0; width: 0; height: 0; overflow: hidden; border: 0;}
+
+.file_list {vertical-align: middle;}
+.file_list li {display: inline-block; position: relative; padding: 10px 30px 10px 5px; font-size: 14px; color: #888; line-height: 23px;}
+.file_list li img {position: relative; z-index: 1;}
+.file_list li .btn {position:absolute; right:5px; top:12px; z-index: 2;}
+.file_img_list li {display: inline-block;}
+.file_img_list li .img_wrap {width: 160px; height: 110px; padding: 0; overflow: hidden;}
+.file_img_list li img {height: 100%;}
+.file_img_list li .btn {position:absolute; right:0; top:0; z-index: 2;}
+
+
+/* Radio, Checkbox, Select, Textarea */
+.radio_style1 {display: inline-block; margin-right: 20px;}
+.radio_style1 input[type='radio'] {display: none;}
+.radio_style1 label {display: inline-block; vertical-align: middle; height: 20px; line-height: 20px;}
+.radio_style1 input + label.radio_img {width: 20px; margin-right: 3px; cursor: pointer; background: url('/resources/images/common/img_radio_off.png') no-repeat;}
+.radio_style1 input:checked + label.radio_img {background: url('/resources/images/common/img_radio_on.png') no-repeat;}
+
+.check_style1 {display: inline-block; margin-right: 20px;}
+.check_style1 input[type='checkbox'] {display: none;}
+.check_style1 label {display:inline-block; vertical-align: middle; height: 18px; line-height: 18px;}
+.check_style1 input + label.check_img {width: 18px; margin-right: 3px; cursor: pointer; background: url('/resources/images/common/img_check_off.png') no-repeat;}
+.check_style1 input:checked + label.check_img {background: url('/resources/images/common/img_check_on.png') no-repeat;}
+
+.flatCheck {position: relative; width: 53px; height: 30px;}
+.flatCheck input[type='checkbox'] {opacity: 0; filter: alpha(opacity=0); -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"}
+.flatCheck div {position: relative; top: -16px; width: 100%; height: 100%; background: #fff;  border: 1px solid #ddd; border-radius: 50px; -webkit-transition: all .2s ease; -moz-transition: all .2s ease; -o-transition: all .2s ease; -ms-transition: all .2s ease; transition: all .2s ease; }
+.flatCheck label {display: block; position: absolute; top: 1px; left: 0; width: 26px; height: 26px; cursor: pointer; z-index: 1; border-radius: 50%; background: #fff; border: 1px solid #ddd; -webkit-transition: all .2s ease; -moz-transition: all .2s ease; -o-transition: all .2s ease; -ms-transition: all .3s ease; transition: all .2s ease;}
+.flatCheck input[type=checkbox]:checked ~ div {background: #5787e9; border: 1px solid #5787e9;}
+.flatCheck input[type=checkbox]:checked ~ label {left: 26px; border: 1px solid #5787e9;}
+
+select {height: 40px; padding: 0 25px 0 5px; font-size: 14px; border-radius: 0px; -webkit-appearance: none; -moz-appearance: none; appearance: none; background: url('/resources/images/common/ic_arrow_down.png') right 5px center no-repeat;}
+select::-ms-expand {display: none;}
+textarea {font-family: 'Nanum Gothic', sans-serif;}
+
+
+/* Scroll */
+.scroll::-webkit-scrollbar {width: 5px; height: 5px;}
+.scroll::-webkit-scrollbar-button:start:decrement, 
+.scroll::-webkit-scrollbar-button:end:increment {display: block; height: 3px;}
+.scroll::-webkit-scrollbar-track {background: none;}
+.scroll::-webkit-scrollbar-thumb {width:5px; height: 5px; border-radius: 7px; background: #eee;}
+.scroll::-webkit-scrollbar-thumb:hover {background: #eee;}
+.scroll:hover::-webkit-scrollbar-thumb {background: #eee;}
+.scroll {scrollbar-3dLight-Color: none; scrollbar-arrow-color: #d3d3d3; scrollbar-base-color: rgb(238, 238, 238); scrollbar-Face-Color: rgb(213, 213, 213); scrollbar-Track-Color: #eee; scrollbar-DarkShadow-Color: none; scrollbar-Highlight-Color: none; scrollbar-Shadow-Color: rgb(238, 238, 238);}
+
+
+/* Layer popup */
+.popup_wrap {display: none; position: fixed; left: 0; top: 0; right: 0; bottom: 0; z-index: 20;}
+.popup_inner {position: relative; margin: 100px auto 0; background: #fff; border: 2px solid #282828; z-index: 2;}
+.popup_inner .btn_close {position: absolute; right: 20px; top: 20px; width: 20px; height: 20px; background: url('/resources/images/common/ic_popup_close.png') center center no-repeat; text-indent: -9999px; z-index: 99;}
+.popup_inner .popup_header {position: relative;}
+.popup_inner .popup_contents {}
+
+.popup_bg {position: fixed; left: 0; top: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 1;}
+.popup_inner .pop_info_text {font-size: 16px; line-height: 24px;}
+
+
+/* Basic calendar */
+.date_wrap>* {display: inline-block; height: 38px; line-height: 38px; vertical-align: middle;}
+.date_wrap .text {width: 5%; text-align: center;}
+input.datepicker {width: 35% !important; padding-right: 35px; background: #fff url('/resources/images/common/ic_calendar.png') right 5px center no-repeat;}
+.ui-datepicker .ui-widget.ui-widget-content {border:0; color: #23abe7; background: #333;}
+.ui-datepicker .ui-widget-header {padding: 5px 0; font-size: 18px; color: #fff; font-weight: 400; background: #666; border: 0; border-radius: 0;}
+.ui-datepicker .ui-datepicker-prev,
+.ui-datepicker .ui-datepicker-next {top: 6px; width: 30px; height: 25px; cursor: pointer;}
+.ui-datepicker .ui-state-hover.ui-datepicker-prev-hover {left: 2px; top: 6px; background: #666; border: 0;}
+.ui-datepicker .ui-state-hover.ui-datepicker-next-hover {right: 2px; top: 6px; background: #666; border: 0;}
+.ui-datepicker .ui-widget-header .ui-icon.ui-icon-circle-triangle-w {position: static; width: 30px; height: 30px; margin: 0; background: #666 url('/resources/images/common/ic_arrow_left_white.png') center center no-repeat !important;}
+.ui-datepicker .ui-widget-header .ui-icon.ui-icon-circle-triangle-e {position: static; width: 30px; height: 30px; margin: 0; background: #666 url('/resources/images/common/ic_arrow_right_white.png') center center no-repeat !important;}
+.ui-datepicker {padding: 0; width: auto; border-radius: 0 !important;}
+.ui-datepicker .ui-datepicker-title select {height: 30px; padding: 0 15px 0 10px; font-size: 14px; color: #333; background: #fff url('/resources/images/common/ic_arrow_down.png') right 5px center no-repeat; background-size: 12px !important;}
+.ui-datepicker .ui-datepicker-title select.ui-datepicker-month {width: 38%;}
+.ui-datepicker .ui-datepicker-title select.ui-datepicker-year {width: 48%;}
+.ui-datepicker table {margin-bottom: 0;}
+.ui-datepicker th {height: 19px; font-weight: 400; font-size: 14px; border-bottom: 1px solid #666;}
+.ui-datepicker td a.ui-state-default {width: 32px; height: 32px; line-height: 29px; font-size: 14px; color: #666; text-align: center; border: 0;}
+.ui-datepicker td a.ui-state-active {background: #2b9a9d; color: #fff;}
+.ui-datepicker td a.ui-state-highlight {background: none; border: 1px solid #2b9a9d;}
+
+
+/* Img wrap */
+.img_wrap {position: relative; height: 0; padding-bottom: 83.5%; overflow: hidden;}
+.img_wrap .img_box {position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;}
+.img_wrap .img_box img {height: 100%;}
+
+
+
+
+
+/************************************************************************************
+Main st.
+*************************************************************************************/
+.main_contents {padding-bottom: 150px;}
+.main_contents.active{padding-bottom: 0;}
+
+/* visual */
+.main_contents .visual {height: 900px; padding-top: 250px; background: url('/resources/images/main/bg_visual.jpg') center center no-repeat;}
+.main_contents .visual p {margin-top: 30px; font-size: 30px; color: #fff; line-height: 35px;}
+
+/* 아트마켓 행사 */
+.main_contents .cont1 {}
+.main_contents .cont1 .event_box {width: 590px; height: 658px;}
+.main_contents .cont1 .event_slide li>div {display: table; width: 590px; height: 658px; color: #fff;}
+.main_contents .cont1 .event_slide li>div div {display: table-cell; text-align: center; vertical-align: middle;}
+.main_contents .cont1 .event_slide li>div div .bar {display: inline-block; position: relative; margin-top: 80px; font-size: 20px; font-weight: 500;}
+.main_contents .cont1 .event_slide li>div div .bar:before {position: absolute; left: 50%; top: -15px; content: ""; width: 40px; height: 2px; margin-left: -20px; background: #fff;}
+.main_contents .cont1 .event_slide li>div div dl {margin: 80px 0 145px;}
+.main_contents .cont1 .event_slide li>div div dl dt {font-size: 44px; font-weight: 500;}
+.main_contents .cont1 .event_slide li>div div dl dd {font-size: 24px;}
+.main_contents .cont1 .event_slide li>div div .btn_wrap {display: block;}
+.main_contents .cont1 .event_slide li>div div a.btn {width: 30%; height: 60px; line-height: 60px; font-size: 18px; color: #fff; font-weight: 400; font-weight: 400; border: 1px solid #fff;}
+
+.main_contents .cont1 .bx-wrapper .bx-controls-direction a {top: 50%; width: 44px; height: 85px; margin-top: -42.5px;}
+.main_contents .cont1 .bx-wrapper .bx-controls-direction a.bx-prev {left: 15px; background: url('/resources/images/main/ic_arrow_prev.png') center center no-repeat;}
+.main_contents .cont1 .bx-wrapper .bx-controls-direction a.bx-next {right: 15px; background: url('/resources/images/main/ic_arrow_next.png') center center no-repeat;}
+
+.main_contents .cont1 .booth_box {width: calc(100% - 590px);}
+.main_contents .cont1 .booth_box ul li {width: 50%;}
+.main_contents .cont1 .booth_box ul li a {display: block; height: 329px; padding: 50px 30px; -ms-word-break: keep-all; word-break: keep-all;}
+.main_contents .cont1 .booth_box ul li a .bar {display: inline-block; position: relative; margin-bottom: 30px; font-size: 18px;}
+.main_contents .cont1 .booth_box ul li a .bar:before {position: absolute; left: 0; top: -5px; content: ""; width: 40px; height: 2px; background: #333;}
+.main_contents .cont1 .booth_box ul li p {font-size: 30px; font-weight: 500; line-height: 40px; letter-spacing: -2px;}
+
+.main_contents .cont1 .booth_box ul li.box2 a {background: #66c4c6;}
+.main_contents .cont1 .booth_box ul li.box3 a {background: #ea98af;}
+
+.main_contents .cont1 .booth_box ul li.box1 a,
+.main_contents .cont1 .booth_box ul li.box4 a {color: #fff;}
+.main_contents .cont1 .booth_box ul li.box1 a .bar:before,
+.main_contents .cont1 .booth_box ul li.box4 a .bar:before {background: #fff;}
+
+/* 온라인 마켓 상점 */
+.main_contents .cont2 {margin-top: 50px;}
+.main_contents .cont2 .box_title {margin-bottom: 15px; font-size: 22px; font-weight: 500; line-height: 27px;}
+.main_contents .cont2 .box_title a.fl_right {padding-right: 20px; font-size: 18px; line-height: 30px; color: #888; font-weight: 400; background: url('/resources/images/main/ic_go.png') right center no-repeat;}
+
+.main_contents .cont2 ul li {position: relative; width: 24%; margin-right: 1.3%;}
+.main_contents .cont2 ul li:last-child {margin-right: 0%;}
+.main_contents .cont2 ul li a {display: block;}
+.main_contents .cont2 ul li a .img_wrap .img_box {z-index: 1;}
+.main_contents .cont2 ul li a .img_wrap:after {display: block; position: absolute; left: 0; top: 0; right: 0; bottom: 0; content: ""; background: rgba(0, 0, 0, 0.3) url('/resources/images/main/img_more_big.png') center center no-repeat; z-index: 2; opacity: 0; transition: all.2s ease;}
+.main_contents .cont2 ul li a:hover .img_wrap:after {opacity: 1;}
+.main_contents .cont2 ul li a .text_wrap {height: 95px; padding: 20px; text-align: center; border: 1px solid #ddd; border-top: 0; background: #fff;}
+.main_contents .cont2 ul li a .text_wrap dt {font-size: 14px; color: #999;}
+.main_contents .cont2 ul li a .text_wrap dd {margin-top: 5px; font-size: 20px; font-weight: 500;}
+
+.main_contents .cont2 ul li a .img_wrap .icon {position: absolute; left: 0; top: 0; width: 49px; height: 49px; z-index: 2;}
+.ic_life {background: #2b9a9d url('/resources/images/main/ic_life.png') center center no-repeat;} /*  */
+.ic_clothing {background: #2b9a9d url('/resources/images/main/ic_clothing.png') center center no-repeat;} /*  */
+.ic_food {background: #2b9a9d url('/resources/images/main/ic_food.png') center center no-repeat;} /*  */
+.ic_art {background: #2b9a9d url('/resources/images/main/ic_art.png') center center no-repeat;} /*  */
+.ic_beauty {background: #2b9a9d url('/resources/images/main/ic_beauty.png') center center no-repeat;} /*  */
+.ic_etc {background: #2b9a9d url('/resources/images/main/ic_etc.png') center center no-repeat;} /*  */
+
+/* 관광지 / 맛집 */
+.main_contents .cont3 {margin: 50px 0;}
+.main_contents .cont3 .box {width: 49%; margin-right: 2%;}
+.main_contents .cont3 .box:last-child {margin-right: 0;}
+
+.main_contents .cont3 .box_title {margin-bottom: 15px; font-size: 22px; font-weight: 500; line-height: 36px;}
+.main_contents .cont3 .box_title span {display: block; font-size: 16px; line-height: 24px; font-weight: 400;}
+
+.main_contents .cont3 ul li a {display: block; height: 285px; padding: 30px;}
+.main_contents .cont3 ul li a dl dt {margin: 80px 0 20px;}
+.main_contents .cont3 .bx-wrapper .bx-pager {left: 30px; top: 30px; width: auto; text-align: left;}
+.main_contents .cont3 .bx-wrapper .bx-pager.bx-default-pager a {width: 11px; height: 11px; border: 2px solid #b3b3b3; border-radius: 0; background: none;}
+.main_contents .cont3 .bx-wrapper .bx-pager.bx-default-pager a:hover, 
+.main_contents .cont3 .bx-wrapper .bx-pager.bx-default-pager a.active {border-color: #27252a; background: #27252a;}
+
+/* Art Avenue */
+.main_contents .cont4 {padding: 70px 0 45px; background: #ddd;}
+.main_contents .cont4 span.bar {display: block; width: 32px; height: 2px; margin: 45px 0 30px; background: #27252a;}
+.main_contents .cont4 p {font-size: 18px; line-height: 30px;}
+.main_contents .cont4 a.btn {display: block; width: 245px; height: 60px; margin-top: 50px; padding: 0 30px; line-height: 60px; text-align: left; font-size: 16px; background: #fff url('/resources/images/main/ic_go_big.png') right 25px center no-repeat;}
+
+.main_contents .cont4 .fl_right {position: relative;}
+.main_contents .cont4 .fl_right p {position: absolute; left: -35px; bottom: 20px;}
+
+/* notice */
+.main_contents .notice_main {position: fixed; bottom: 90px; left: 0; right: 0; height: 60px; background: #fff; border-top: 1px solid #ddd; z-index: 9;}
+.main_contents .notice_main.active {position: static;}
+.main_contents .notice_main p.fl_left>img {margin-top: 20px;}
+.main_contents .notice_slide {float: left; width: calc(100% - 120px) !important;}
+.main_contents .notice_slide li {position: relative; width: 100% !important;}
+.main_contents .notice_slide li a {display: block; height: 60px; padding: 14px 0;}
+.main_contents .notice_slide li a:after {display: block; visibility: hidden; clear: both; content: "";}
+.main_contents .notice_slide li a>* {display: inline-block; vertical-align: middle;}
+.main_contents .notice_slide li a .label {width: 70px; height: 32px; line-height: 24px; font-size: 16px; font-weight: 500; text-align: center; background: #fff; border: 2px solid #27252a;}
+.main_contents .notice_slide li a p {max-width: calc(100% - 220px); padding: 0 10px; font-size: 16px; text-overflow:ellipsis; white-space:nowrap; word-wrap:normal; overflow:hidden;}
+.main_contents .notice_slide li a .date {display: block; position: absolute; right: 0; top: 0; bottom: 0; height: 60px; padding: 0 20px; line-height: 58px; font-size: 16px; color: #999;}
+
+.main_contents .notice_main .bx-wrapper {float: right; width: calc(100% - 105px);}
+.main_contents .notice_main .bx-wrapper .bx-controls-direction a {top: 0; width: 59px; height: 59px; border-right: 1px solid #ddd;}
+.main_contents .notice_main .bx-wrapper .bx-controls-direction a.bx-prev {left: auto; right: 59px; background: #fff url('/resources/images/main/ic_up.png') center center no-repeat; border-left: 1px solid #ddd;}
+.main_contents .notice_main .bx-wrapper .bx-controls-direction a.bx-next {right: 0; background: #fff url('/resources/images/main/ic_down.png') center center no-repeat;}
+
+/* weather */
+.main_contents .today_wrap {position: fixed; bottom: 0; left: 0; right: 0; height: 90px; color: #fff; background: #2b9a9d; z-index: 9;}
+.main_contents .today_wrap.active {position: static;}
+.main_contents .today_wrap .today {padding: 19px 0;}
+.main_contents .today_wrap .today>* {display: inline-block; vertical-align: middle;}
+.main_contents .today_wrap .today b {margin-right: 15px; font-size: 30px; line-height: 46px; font-weight: 500;}
+.main_contents .today_wrap .today p {font-size: 16px; line-height: 50px;}
+.main_contents .today_wrap .today p span {display: inline-block; vertical-align: middle; height: 46px; margin: 0 10px; padding: 0 12px; line-height: 46px; font-size: 30px; font-weight: 600; color: #fff; background: #323232; border-radius: 5px;}
+
+.main_contents .today_wrap .weather dl {position: relative; width: 205px; height: 89px; padding: 15px 20px; color: #fff; font-size: 15px; border-left: 1px solid #53acaf;}
+.main_contents .today_wrap .weather dl:last-child {border-right: 1px solid #53acaf;}
+.main_contents .today_wrap .weather dl dt {font-size: 15px;}
+.main_contents .today_wrap .weather dl dd {font-size: 28px; font-weight: 500;}
+
+.main_contents .today_wrap .weather dl dd.ic_weather {position: absolute; top: 0; right: 0; bottom: 0; width: 80px; height: 89px;}
+.ic_sunny {background: url('/resources/images/main/img_sunny.png') center center no-repeat;} /* 맑음 */
+.ic_overcast {background: url('/resources/images/main/img_overcast.png') center center no-repeat;} /* 구름조금 */
+.ic_cloud {background: url('/resources/images/main/img_cloud.png') center center no-repeat;} /* 구름많음 */
+.ic_cloudy {background: url('/resources/images/main/img_cloudy.png') center center no-repeat;} /* 흐림 */
+.ic_rain {background: url('/resources/images/main/img_rain.png') center center no-repeat;} /* 비 */
+.ic_snow {background: url('/resources/images/main/img_snow.png') center center no-repeat;} /* 눈 */
+.ic_sleet {background: url('/resources/images/main/img_sleet.png') center center no-repeat;} /* 비/눈 */
+.ic_cloud_rain {background: url('/resources/images/main/img_sleet.png') center center no-repeat;} /* 흐리고비 */
+
+
+
+
+/************************************************************************************
+Contents st.
+*************************************************************************************/
+.inner {width: 1200px; margin: 0 auto;}
+.contents {min-height: 850px;}
+.sub_contents {padding-top: 81px;}
+
+
+/* Page Root */
+.page_root {padding: 15px 0; border-bottom: 1px solid #ddd;}
+.page_root a {display: inline-block; height: 20px; padding-left: 20px; font-size: 14px; color: #777; line-height: 20px; background: url('/resources/images/common/ic_arrow_root.png') left 10px center no-repeat; vertical-align: middle;}
+.page_root a:first-child {background: url('/resources/images/common/ic_home.png') right center no-repeat;}
+
+
+/* Title */
+.page_title {margin: 50px 0; text-align: center; font-size: 30px; color: #141414;}
+.page_title .scroll_tab {display: none;}
+.box_title {padding: 0 0 10px; font-size:20px; font-weight: 600; color:#333;}
+
+
+/* Text */
+.text_info {margin-bottom:5px; font-size:12.5px; color:#666; line-height: 18px;}
+.text_notice {padding:20px 0; text-align:center; font-size:16px; line-height:22px;}
+
+
+/* Search */
+.search_wrap {margin-top: 0;}
+.search_wrap>* {display: inline-block; vertical-align: top; margin-right: 1px; font-size: 15px;}
+.search_wrap select {width: 120px;}
+.search_wrap input[type='text'] {width: 300px;}
+
+
+/* Board */
+.board_option {margin-bottom: 15px;}
+.board_option select {width: 120px;}
+
+.board_list {margin-top: 30px;}
+.board_list table {width: 100%; border-top: 2px solid #28a3a6; border-bottom: 1px solid #ddd; table-layout: fixed;}
+.board_list table th {height: 50px; font-weight: 400; text-align: center; font-weight: 400; font-size: 15px; color: #555; border-bottom: 1px solid #ddd; background: #f5f5f5;}
+.board_list table td {height: 50px; font-size: 15px; font-weight: 300; color: #555; border-bottom: 1px solid #ddd;}
+.board_list table tr:hover td {background: #f2f9f9;}
+.board_list table td.subject {text-align: left; padding: 0 10px 0 20px;}
+.board_list table td a {display: inline-block; max-width: 100%; height: 50px; line-height: 50px; font-weight: 400; text-overflow:ellipsis; white-space:nowrap; word-wrap:normal; overflow:hidden; vertical-align: middle;}
+.board_list .search_wrap {margin-top: 30px;}
+
+.board_view .view_title {padding: 20px 30px; font-size: 20px; font-weight: 400; line-height: 20px; border-top: 2px solid #666; border-bottom: 1px solid #ddd; background: #f7f7f7;}
+.board_view .view_info {padding: 20px 30px; font-size: 14px; border-bottom: 1px solid #ddd; background: #fff;}
+.board_view .view_info * {display: inline-block; vertical-align: middle;}
+.board_view .view_info dl {margin-left: 50px;}
+.board_view .view_info dl dt {padding-right: 15px;}
+.board_view .view_info dl dd {color: #666;}
+.board_view .view_contents {min-height: 250px; padding: 30px; font-size: 16px; color: #666; line-height: 30px; border-bottom: 1px solid #ddd;}
+.board_view .view_contents img {max-width: 100%;}
+.board_view .view_file {padding: 15px 20px; border-bottom:1px solid #ddd;}
+.board_view .view_file a {display: block; font-size: 14px;}
+.board_view .view_file a:before {display: inline-block; vertical-align: middle; width: 18px; height: 20px; margin-right: 5px; content:""; background:url('/resources/images/common/ic_clip.png') center center no-repeat; background-size:100%;}
+
+.board_write {margin-top: 30px;}
+.board_write table {width: 100%; border-top: 2px solid #28a3a6; border-bottom: 1px solid #ddd; table-layout: fixed;}
+.board_write th {height: 50px; padding: 5px 20px; font-weight: 400; font-weight: 400; font-size: 15px; color: #555; border-bottom: 1px solid #ddd; background: #f5f5f5;}
+.board_write td {height: 50px; padding: 5px 20px; font-size: 15px; font-weight: 300; color: #555; border-bottom: 1px solid #ddd;}
+.board_write td input[type='text'] {width: 80%;}
+.board_write td textarea {width: 78.5%; height: 300px;}
+.board_write td .filebox input[type='text'] {width: 30%;}
+
+.comments_wrap {margin: 50px 0 0; border-top: 2px solid #666;}
+.comments_wrap .title {padding: 15px 0; font-size: 14px; font-weight: 600;}
+.comments_wrap .write_com textarea {width: calc(90% - 20px); height: 50px; padding: 10px;}
+.comments_wrap .write_com .btn_gray {width: 9.8%; height: 72px; font-size: 14px;}
+.comments_wrap .list_com {margin: 10px 0 30px;}
+.comments_wrap .list_com li {position: relative; padding: 10px 0; border-bottom: 1px solid #ddd;}
+.comments_wrap .list_com li:last-child {border-bottom: 1px solid #ddd;}
+.comments_wrap .list_com dt {margin-bottom: 10px; font-size: 15px;}
+.comments_wrap .list_com dt .date {padding-left: 10px; font-size: 12px; color: #999;}
+.comments_wrap .list_com dd {font-size: 14px; line-height: 16px;}
+.comments_wrap .list_com li>.btn {position: absolute; right: 10px; top: 10px; min-width: 0; width: auto; height: auto; padding: 0; font-size: 12px; line-height: normal; color: #666; background: none; border: 0;}
+.comments_wrap .list_com li>.btn.btn_delete {min-width: 12px; height: 12px; background: #fff url('/resources/images/common/*.png') center center no-repeat; border: 0; text-indent: -9999px; background-size: 12px;}
+.comments_wrap .list_com li.re_com {padding: 10px 0 10px 30px;}
+.comments_wrap .list_com li.re_com:after {position: absolute; left: 5px; top: 10px; content: "└"; font-size: 19px; font-weight: 600;}
+.comments_wrap .list_com li.re_com textarea {width: calc(89.9% - 20px);}
+
+
+/* Form */
+.form_write {margin-top: 30px;}
+.form_write table {width: 100%; border-top: 2px solid #28a3a6; border-bottom: 1px solid #ddd; table-layout: fixed;}
+.form_write table th {padding: 15px 0 15px 30px; font-weight: 400; text-align: left; vertical-align: top; border-bottom: 1px solid #ddd; background: #f5f5f5;}
+.form_write table th b {color: #d93030;}
+.form_write table th span {display: block; font-size: 13px; color: #666;}
+.form_write table td {height: 51px; padding: 5px 0 5px 30px; text-align: left; border-bottom: 1px solid #ddd;}
+.form_write table td select {width: 200px;}
+.form_write table td textarea {width: 90%; height: 100px;}
+.form_write table td input[type='text'] {width: 50%;}
+.form_write table td input[type='password'] {width: 50%;}
+.form_write table td input[type='text'].type1 {width: 300px;}
+.form_write table td input[type='text'].type2 {width: 150px;}
+.form_write table td input[type='text'].type3 {width: 100px;}
+
+.form_write .btn_wrap {margin-top: 30px;}
+
+
+/* Paging */
+.paging {margin-top: 50px;}
+.paging a {display: inline-block; vertical-align: top; width: 36px; height: 36px; line-height: 35px; font-size: 14px; color: #888; background: #fff; border: 1px solid #ddd;}
+.paging a.active {color: #fff; background: #2b9a9d; border: 1px solid #2b9a9d;}
+.paging a.btn_prev {background:#fff url('/resources/images/common/ic_arrow_prev.png') center center no-repeat; text-indent: -9999px;}
+.paging a.btn_prev_db {background:#fff url('/resources/images/common/ic_arrow_prev_db.png') center center no-repeat; text-indent: -9999px;}
+.paging a.btn_next {background:#fff url('/resources/images/common/ic_arrow_next.png') center center no-repeat; text-indent: -9999px;}
+.paging a.btn_next_db {background:#fff url('/resources/images/common/ic_arrow_next_db.png') center center no-repeat; text-indent: -9999px;}
+
+
+/* Tab */
+.tab_wrap {}
+.tab_wrap a {display: block; height: 50px; margin-bottom: 30px; text-align: center; line-height: 48px; font-weight: 400; color: #444; font-size: 18px; background: #fff; border: 1px solid #28a3a6;}
+.tab_wrap a:last-child {margin-right: 0 !important;}
+.tab_wrap a.active {color: #fff; font-weight: 500; background: #2b9a9d; border-color: #2b9a9d;}
+
+.tab_wrap.col-2 a {width: 49.5% !important; margin-right: 1%;}
+.tab_wrap.col-3 a {width: 32.5% !important; margin-right: 1.2%;}
+.tab_wrap.col-4 a {width: 24.1% !important; margin-right: 1.2%;}
+.tab_wrap.col-5 a {width: 19.2% !important; margin-right: 1%;}
+
+.tab_wrap2 {margin-bottom: 30px;}
+.tab_wrap2 a {float: left; width: 150px; height: 45px; line-height: 45px; text-align: center; font-size: 15px; background: #fff; border: 1px solid #ddd; border-right: 0;}
+.tab_wrap2 a:last-child {border-right: 1px solid #ddd;}
+.tab_wrap2 a.active {background: #ddd; border-color: #ddd;}
+
+
+/* Sort */
+.sort_wrap>* {display: inline-block;}
+
+
+
+/* 로그인 */
+.login {padding: 0 0 150px;}
+
+.login .sub_text {margin-bottom: 50px; font-size: 23px; color: #444; font-weight: 300;}
+.login .sub_text b {display: block; font-size: 30px; color: #333; font-weight: 500;}
+
+.login .login_box {padding: 45px; background: #f5f5f5; border: 1px solid #eaeaea;}
+.login .login_box .login_form {width: 660px; margin: 0 auto 40px;}
+.login .login_box .login_form input {width: calc(100% - 62px); height: 55px; padding: 0 30px; font-size: 16px; line-height: 55px; margin-bottom: 15px;}
+.login .login_box .login_form input.btn {width: 100%; margin-bottom: 0; font-size: 22px;}
+.login .login_box ul li {display: inline-block;}
+.login .login_box ul li a {display: block; height: 17px; padding: 0 20px; line-height: 17px; font-size: 16px; color: #888; border-right: 1px solid #ddd;}
+.login .login_box ul li:last-child a {border-right: 0;}
+
+/* 아이디 찾기 */
+.findid .result_text {padding: 40px 0 70px; font-size: 22px;}
+
+/* 비밀번호 찾기 */
+.findpassword .info_text {padding: 0px 0 20px; font-size: 16px;}
+
+/* 회원가입 */
+.signup {padding: 0 0 150px;}
+
+
+/* 마이페이지 */
+.mypage {padding: 0 0 150px;}
+
+.mypage.login .login_box .login_form {width: 450px; margin: 0 auto;}
+
+/* 마이페이지 - 나의신청내역 */
+.history {padding: 0 0 150px;}
+
+.history .info_text {color: #666;}
+.history .box_title {margin-top: 30px;}
+
+.product_history table .subject {color: #333; font-weight: 400;}
+.product_history table .btn {height: 40px; line-height: 40px;}
+.product_history .btn_wrap {margin-top: 30px;}
+
+
+/* 미추홀 아트마켓 - 소개 */
+.artmarket_info {padding: 0 0 150px;}
+
+.artmarket_info p {font-size: 23px; line-height: 38px; color: #444; font-weight: 300;}
+.artmarket_info p b {font-size: 34px; font-weight: 400;}
+.artmarket_info p a.btn {display: block; width: 250px; height: 60px; margin: 30px auto 0; line-height: 60px; font-size: 19px;}
+
+.artmarket_info .img_box {display: table; width: 100%; height: 380px; font-size: 34px; line-height: 48px; background: url('/resources/images/artmarket/img_artmarket01.jpg') center center no-repeat; background-size: 100% 100%;}
+.artmarket_info .img_box p {display: table-cell; vertical-align: middle;}
+.artmarket_info .img_box b {font-weight: 500;}
+
+/* 미추홀 아트마켓 - 이용안내 */
+.artmarket_use {padding: 0 0 150px;}
+
+.artmarket_use .sub_text {font-size: 26px; line-height: 38px; font-weight: 500;}
+.artmarket_use .sub_text span {display: block; font-size: 22px; color: #444; font-weight: 300;}
+
+.artmarket_use .slide_box {margin-top: 46px;}
+.artmarket_use .slide_box>li {position: relative; width: 32%; height: 420px; margin-right: 2%; border: 1px solid #ddd; background: #fff; overflow: hidden;}
+.artmarket_use .slide_box>li:last-child {margin-right: 0;}
+
+.artmarket_use .slide_box li .base_box dl {padding: 30px 25px; text-align: left;}
+.artmarket_use .slide_box li .base_box dl dt {font-size: 30px; font-weight: 500;}
+.artmarket_use .slide_box li .base_box dl dd.bar {width: 27px; height: 1px; margin: 25px 0;}
+.artmarket_use .slide_box li .base_box dl dd {font-size: 18px; font-weight: 400; color: #999; line-height: 24px;}
+
+.artmarket_use .slide_box li .cover_box {position: absolute; top: 318px; left: 0; right: 0; width: 100%; height: 420px; background: #fff; transition: all.5s ease;}
+.artmarket_use .slide_box li.active .cover_box {top: 0;}
+.artmarket_use .slide_box li .cover_box a.btn_cover {display: block; height: 100px; padding: 25px; text-align: left; font-size: 18px; line-height: 26px; color: #fff;}
+.artmarket_use .slide_box li .cover_box a.btn_cover b {display: block;}
+.artmarket_use .slide_box li .cover_box ul {display: block; height: 308px;}
+.artmarket_use .slide_box li .cover_box ul li a {display: block; padding: 0 20px; text-align: left; font-size: 18px; color: #666; font-weight: 400; background: url('/resources/images/artmarket/btn_go.png') right 30px center no-repeat; border-bottom: 1px solid #ddd;}
+.artmarket_use .slide_box li .cover_box ul li:last-child a {height: 78px !important; line-height: 78px !important; text-align: center; font-size: 20px; color: #fff; font-weight: 500; border-bottom: 0;}
+
+.artmarket_use .slide_box li.green_box dl dt {color: #5cc5c7;}
+.artmarket_use .slide_box li.green_box .base_box dl dd.bar {background: #5cc5c7;}
+.artmarket_use .slide_box li.green_box .cover_box a.btn_cover {background: #66c4c6 url('/resources/images/artmarket/btn_arrow_up_green.png') right 25px center no-repeat;}
+.artmarket_use .slide_box li.green_box.active .cover_box a.btn_cover {background: #66c4c6 url('/resources/images/artmarket/btn_arrow_down_green.png') right 25px center no-repeat;}
+.artmarket_use .slide_box li.green_box .cover_box ul li a {height: 60px; line-height: 60px;}
+.artmarket_use .slide_box li.green_box .cover_box ul li:last-child a {background: #336565;}
+
+.artmarket_use .slide_box li.red_box dl dt {color: #e992ab;}
+.artmarket_use .slide_box li.red_box .base_box dl dd.bar {background: #e992ab;}
+.artmarket_use .slide_box li.red_box .cover_box a.btn_cover {background: #ea98af url('/resources/images/artmarket/btn_arrow_up_red.png') right 25px center no-repeat;}
+.artmarket_use .slide_box li.red_box.active .cover_box a.btn_cover {background: #ea98af url('/resources/images/artmarket/btn_arrow_down_red.png') right 25px center no-repeat;}
+.artmarket_use .slide_box li.red_box .cover_box ul li a {height: 120px; line-height: 120px;}
+.artmarket_use .slide_box li.red_box .cover_box ul li:last-child a {background: #5f333f;}
+
+.artmarket_use .slide_box li.blue_box dl dt {color: #5c89ed;}
+.artmarket_use .slide_box li.blue_box .base_box dl dd.bar {background: #5c89ed;}
+.artmarket_use .slide_box li.blue_box .cover_box a.btn_cover {background: #618ceb url('/resources/images/artmarket/btn_arrow_up_blue.png') right 25px center no-repeat;}
+.artmarket_use .slide_box li.blue_box.active .cover_box a.btn_cover {background: #618ceb url('/resources/images/artmarket/btn_arrow_down_blue.png') right 25px center no-repeat;}
+.artmarket_use .slide_box li.blue_box .cover_box ul li a {height: 80px; line-height: 80px;}
+.artmarket_use .slide_box li.blue_box .cover_box ul li:last-child a {background: #33456c;}
+
+/* 미추홀 아트마켓 - 찾아오시는 길 */
+.artmarket_map {padding: 0 0 150px;}
+
+.artmarket_map #daumRoughmapContainer1537262952392 {height: 430px;}
+.artmarket_map #daumRoughmapContainer1537262952392 .wrap_map {height: 398px;}
+
+.artmarket_map dl {margin-top: 35px; padding: 9px 0 9px 75px;}
+.artmarket_map dl dt {font-size: 23px; line-height: 34px; font-weight: 500;}
+.artmarket_map dl dd {font-size: 18px; line-height: 34px; font-weight: 300;}
+.artmarket_map dl dd>span {padding-left: 45px; background: url('/resources/images/artmarket/ic_arrow_db.png') left 15px center no-repeat;}
+.artmarket_map dl dd>span:first-child {padding-left: 0; background: none;}
+.artmarket_map dl dd ul li {width: 49%; margin-right: 2%;}
+.artmarket_map dl dd ul li:last-child {margin-right: 0;}
+.artmarket_map dl dd ul li table {height: 200px; border: 1px solid #ddd;}
+.artmarket_map dl dd ul li table th {padding: 20px; text-align: left; font-size: 18px; color: #fff; line-height: 28px; font-weight: 500; background: #2b9a9d;}
+.artmarket_map dl dd ul li table td {padding: 25px; text-align: left; font-size: 18px; line-height: 35px; font-weight: 500; background: #fff;}
+.artmarket_map dl dd ul li table td p {padding-left: 40px;}
+.artmarket_map dl dd ul li table td p>* {display: inline-block; vertical-align: top;}
+.artmarket_map dl dd ul li table td b {width: 45px;}
+.artmarket_map dl dd ul li table td span {width: calc(100% - 70px); font-weight: 300;}
+
+.artmarket_map dl.address {background: url('/resources/images/artmarket/img_compass.png') left 10px top no-repeat;}
+.artmarket_map dl.subway {background: url('/resources/images/artmarket/img_subway.png') left 10px top no-repeat;}
+.artmarket_map dl.bus {background: url('/resources/images/artmarket/img_bus.png') left 10px top no-repeat;}
+
+.artmarket_map dl dd ul li table td p.red_bus {background: url('/resources/images/artmarket/img_bus_red.png') left top 7px no-repeat;}
+.artmarket_map dl dd ul li table td p.green_bus {background: url('/resources/images/artmarket/img_bus_green.png') left top 7px no-repeat;}
+.artmarket_map dl dd ul li table td p.blue_bus {background: url('/resources/images/artmarket/img_bus_blue.png') left top 7px no-repeat;}
+
+/* 미추홀아트마켓 - 아트마켓 일정 */
+.artmarket_schedule {padding: 0 0 150px;}
+
+.box_list ul {width: 100%;}
+.box_list ul li {width: 23.5%; margin-right: 2%; margin-bottom: 20px;}
+.box_list ul li:nth-child(4n+4) {margin-right: 0;}
+.box_list ul li a {display: block; padding: 20px; text-align: left; color: #444; border: 1px solid #dcdcdc; background: #fff;}
+.box_list ul li a:hover {border: 1px solid #2b9a9d; background: #f2f9f9;}
+.box_list ul li a dl dd {font-size: 18px; font-weight: 500;}
+.box_list ul li a dl dt {height: 128px; margin: 25px 0; font-size: 26px; line-height: 32px; font-style: 500; word-break: keep-all; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 4; /* 라인수 */ -webkit-box-orient: vertical;}
+.box_list ul li a span.time {padding-left: 20px; font-size: 15px; color: #666; font-weight: 100; background: url('/resources/images/artmarket/ic_clock.png') left center no-repeat;}
+
+/* 미추홀아트마켓 - 아트마켓 일정 상세 */
+.artmarket_schedule .tab_wrap a span {display: inline-block; padding-left: 50px;}
+.artmarket_schedule .tab_wrap a.ic_market span {background: #fff url('/resources/images/artmarket/ic_market.png') left center no-repeat}
+.artmarket_schedule .tab_wrap a.ic_show span {background: #fff url('/resources/images/artmarket/ic_show.png') left center no-repeat}
+.artmarket_schedule .tab_wrap a.ic_like span {background: #fff url('/resources/images/artmarket/ic_like.png') left center no-repeat}
+.artmarket_schedule .tab_wrap a.ic_truck span {background: #fff url('/resources/images/artmarket/ic_truck.png') left center no-repeat}
+.artmarket_schedule .tab_wrap a.ic_market.active span {background: #2b9a9d url('/resources/images/artmarket/ic_market.png') left center no-repeat}
+.artmarket_schedule .tab_wrap a.ic_show.active span {background: #2b9a9d url('/resources/images/artmarket/ic_show.png') left center no-repeat}
+.artmarket_schedule .tab_wrap a.ic_like.active span {background: #2b9a9d url('/resources/images/artmarket/ic_like.png') left center no-repeat}
+.artmarket_schedule .tab_wrap a.ic_truck.active span {background: #2b9a9d url('/resources/images/artmarket/ic_truck.png') left center no-repeat}
+
+.webzin_wrap {padding: 0 0 150px;}
+
+.webzin_wrap .webzin_list_title {position: relative; margin-bottom: 20px; font-size: 30px; font-weight: 500; line-height: 34px;}
+.webzin_wrap .webzin_list_title b {display: block; line-height: 50px; font-weight: 500;}
+.webzin_wrap .webzin_list_title span {display: inline-block; height: 35px; padding: 0 20px 0 45px; line-height: 33px; font-size: 16px; font-weight: 100; color: #666; border: 1px solid #ddd; background: #f3f3f3 url('/resources/images/artmarket/ic_clock_gray.png') 15px center no-repeat; border-radius: 50px}
+.webzin_wrap .webzin_list_title a.btn {position: absolute; right: 0; bottom: 40px; width: 150px; height: 50px; line-height: 50px; font-size: 18px; font-weight: 400;}
+
+.webzin_wrap .webzin_list {margin-top: 10px; border-top: 2px solid #28a3a6; border-bottom: 1px solid #ddd;}
+.webzin_wrap .webzin_list>li {padding: 15px 20px; border-bottom: 1px solid #ddd;}
+.webzin_wrap .webzin_list>li:last-child {border-bottom: 0;}
+.webzin_wrap .webzin_list>li:after {display: block; visibility: hidden; clear: both; content: "";}
+
+.webzin_wrap .webzin_list>li .slide_wrap {float: left; width: 280px;}
+.webzin_wrap .webzin_list>li .slide_wrap li {height: 193px; overflow: hidden;}
+.webzin_wrap .webzin_list>li .slide_wrap li img {height: 100%;}
+.webzin_wrap .webzin_list>li .bx-wrapper .bx-pager.bx-default-pager a {width: 15px; height: 15px; margin: 0 3px; background: #ddd; border-radius:50%;}
+.webzin_wrap .webzin_list>li .bx-wrapper .bx-pager.bx-default-pager a:hover, 
+.webzin_wrap .webzin_list>li .bx-wrapper .bx-pager.bx-default-pager a.active {background: #2b9a9d;}
+
+.webzin_wrap .webzin_list>li .text_wrap {float: right; width: calc(100% - 325px); text-align: left;}
+.webzin_wrap .webzin_list>li .text_wrap a {display: block; cursor: default;}
+.webzin_wrap .webzin_list>li .text_wrap dt {margin-top: 5px; font-size: 17px; font-weight: 100; color: #444;}
+.webzin_wrap .webzin_list>li .text_wrap dt b {display: block; font-size: 20px; font-weight: 500; line-height: 30px;}
+.webzin_wrap .webzin_list>li .text_wrap dd {height: 72px; margin: 5px 0 10px; font-size: 17px; font-weight: 100; line-height: 24px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; /* 라인수 */ -webkit-box-orient: vertical; word-wrap:break-word;}
+.webzin_wrap .webzin_list>li .text_wrap div a {display: inline-block; height: 30px; margin-right: 20px; padding-left: 40px; line-height: 30px; font-size: 15px; font-weight: 100; color: #666;}
+.webzin_wrap .webzin_list>li .text_wrap div a.call {background: url('/resources/images/artmarket/img_phone.png') left center no-repeat;}
+.webzin_wrap .webzin_list>li .text_wrap div a.homepage {background: url('/resources/images/artmarket/img_home.png') left center no-repeat;}
+
+.webzin_wrap .btn_wrap {margin-top: 30px;}
+
+/* 미추홀아트마켓 - 셀러신청 */
+.seller_apply {padding: 0 0 150px;}
+
+.seller_apply .info_box div {font-size: 23px; line-height: 38px; font-weight: 300; color: #444;}
+.seller_apply .info_box div b.marker {display: block; width: 659px; margin: 0 auto 30px; font-size: 34px; line-height: 45px; font-weight: 400; background: url('/resources/images/artmarket/bg_marker.png') center center no-repeat;}
+
+.seller_apply .info_box .btn_wrap {margin: 40px 0 0;}
+.seller_apply .info_box .btn_wrap .btn {width: 300px; height: 70px; line-height: 70px; font-size: 22px;}
+
+.seller_apply .info_box div.img_box {display: block; width: 100%; max-width: 1201px; height: 412px; margin: 45px auto 40px; padding-top: 60px; font-size: 23px; font-weight: 300; line-height: 38px; background: url('/resources/images/artmarket/bg_seller.jpg') center center no-repeat; background-size: 100% !important;}
+.seller_apply .info_box div.img_box b {font-weight: 400; font-size: 34px; font-weight: 500;}
+.seller_apply .info_box div.img_box p {margin-top: 35px;}
+.seller_apply .info_box div.img_box p b {font-size: 25px;}
+.seller_apply .info_box div.img_box p b.ocher {color: #dc874f;}
+
+.seller_apply .info_box dl {margin-bottom: 50px; text-align: left;}
+.seller_apply .info_box dl dt {height: 26px; margin-bottom: 15px; padding-left: 13px; line-height: 24px; font-size: 23px; color: #28a3a6; font-weight: 500; border-left: 5px solid #28a3a6;}
+.seller_apply .info_box dl dd {font-size: 18px; line-height: 28px; color: #444; font-weight: 300;}
+.seller_apply .info_box dl dd b {display: inline-block; vertical-align: top; font-weight: 400;}
+.seller_apply .info_box dl dd span {display: inline-block; vertical-align: top; width: calc(100% - 120px);}
+
+
+/* 온라인마켓 - 소개 */
+.onlinemarket_info {padding: 0 0 150px;}
+
+.onlinemarket_info div {font-size: 23px; line-height: 38px; font-weight: 300; color: #444;}
+.onlinemarket_info div b.marker {display: block; width: 659px; margin: 0 auto 30px; font-size: 34px; line-height: 45px; font-weight: 400; background: url('/resources/images/onlinemarket/bg_marker.png') center center no-repeat;}
+
+.onlinemarket_info .btn_wrap {margin: 40px 0 85px;}
+.onlinemarket_info .btn_wrap .btn {width: 300px; height: 70px; line-height: 70px; font-size: 22px;}
+
+.onlinemarket_info dl {position: relative; height: 190px; padding: 35px 0 35px 215px; text-align: left; background: #f5f5f5 url('/resources/images/onlinemarket/ic_i.png') left 30px center no-repeat;}
+.onlinemarket_info dl dt {font-size: 23px; line-height: 45px; font-weight: 400;}
+.onlinemarket_info dl dd {font-size: 16px; line-height: 24px; color: #444;}
+.onlinemarket_info dl .img_cont {position: absolute; right: 45px; top: -85px;}
+
+/* 온라인마켓 - 입점상품 목록 */
+.galley_list {padding: 0 0 150px;}
+
+.galley_list ul li {position: relative; width: 24%; margin-right: 1.3%; margin-bottom: 15px;}
+.galley_list ul li:nth-child(4n+4) {margin-right: 0%;}
+.galley_list ul li a {display: block;}
+.galley_list ul li a .img_wrap .img_box {z-index: 1;}
+.galley_list ul li a .img_wrap:after {display: block; position: absolute; left: 0; top: 0; right: 0; bottom: 0; content: ""; background: rgba(0, 0, 0, 0.3) url('/resources/images/main/img_more_big.png') center center no-repeat; z-index: 2; opacity: 0; transition: all.2s ease;}
+.galley_list ul li a:hover .img_wrap:after {opacity: 1;}
+.galley_list ul li a .text_wrap {height: 80px; padding: 10px; text-align: left; border: 1px solid #ddd; background: #fff;}
+.galley_list ul li a .text_wrap:after {display: block; visibility: hidden; clear: both; content: "";}
+.galley_list ul li a .text_wrap dl {float: left; width: 60%; padding: 0;}
+.galley_list ul li a .text_wrap dl dt {font-size: 14px; color: #999;}
+.galley_list ul li a .text_wrap dl dd {width: 100%; font-size: 20px; font-weight: 500; text-overflow:ellipsis; white-space:nowrap; word-wrap:normal; overflow:hidden;}
+.galley_list ul li a .text_wrap p.price {float: right; margin-top: 26px; padding: 0; font-size: 22px; color: #2b9a9d;}
+.galley_list ul li a .img_wrap .icon {position: absolute; left: 0; top: 0; width: 49px; height: 49px; z-index: 2;}
+
+.nodata {padding: 120px 0 !important; font-size: 18px; font-weight: 400; color: #888;}
+
+/* 온라인마켓 - 입점상품 상세 */
+.galley_detail {padding: 0 0 150px}
+
+.galley_detail .info_detail .detail_img {float: left; width: 500px; margin-bottom: 20px;}
+.galley_detail .info_detail .detail_img>img {width:100%;}
+.galley_detail .info_detail .detail_img .bx-wrapper:first-child {z-index:1;}
+.galley_detail .info_detail .detail_img .bx-wrapper:first-child {width:500px; margin-bottom:30px;}
+.galley_detail .info_detail .detail_img .detail_slide li {width:100%; height: 375px;}
+.galley_detail .info_detail .detail_img .detail_slide li img {width:100%; height: 375px;}
+.galley_detail .info_detail .detail_img .bx-wrapper .bx-controls-direction a.bx-prev {left:-30px; top:17px; width: 21px; height: 41px; background: url('/resources/images/onlinemarket/ic_arrow_prev.png') center center no-repeat;}
+.galley_detail .info_detail .detail_img .bx-wrapper .bx-controls-direction a.bx-next {right:-30px; top:17px; width: 21px; height: 41px; background: url('/resources/images/onlinemarket/ic_arrow_next.png') center center no-repeat;}
+.galley_detail .info_detail .detail_img #detail_slide_pager a {position: relative;}
+.galley_detail .info_detail .detail_img #detail_slide_pager a:after {position: absolute; left: 0; top: 0; right: 0; bottom: 0; content:""; background:rgba(0, 0, 0, 0.2);}
+.galley_detail .info_detail .detail_img #detail_slide_pager a img {width: 100%; height: 75px;}
+
+.galley_detail .info_detail .detail_info {float: right; width: calc(100% - 520px);}
+.galley_detail .info_detail .top_title {position:relative; padding:0 15px 15px; font-size:17px; color:#666; line-height:37px; border-bottom:2px solid #666; }
+.galley_detail .info_detail .top_title p {display:inline-block; vertical-align:bottom;}
+.galley_detail .info_detail .top_title b {display:block; font-size:37px; color:#141414; font-weight:400;}
+.galley_detail .info_detail .top_title .btn {position:absolute; right:0; bottom:15px; width:100px; height:40px; padding:0; line-height:40px; font-size: 16px; font-weight: 400;}
+.galley_detail .info_detail .basic_info {padding:20px 0; border-bottom: 1px solid #ddd;}
+
+.galley_detail .info_detail .detail_info>dl {border-bottom:1px solid #ddd;}
+.galley_detail .info_detail .detail_info dl:after {display: block; visibility: hidden; clear: both; content: "";}
+.galley_detail .info_detail .detail_info dl>* {float: left; height:70px; line-height:70px;}
+.galley_detail .info_detail .detail_info dl dt {width:65px; text-align:center; font-size:15px; color:#000;}
+.galley_detail .info_detail .detail_info dl dd {width: calc(100% - 65px); padding-left:20px;}
+.galley_detail .info_detail .detail_info div dl {height:25px; margin-bottom:27px;}
+.galley_detail .info_detail .detail_info div dl:last-child {height: auto; margin-bottom:0;}
+.galley_detail .info_detail .detail_info div dl>* {height:25px; line-height:25px;}
+.galley_detail .info_detail .detail_info div dl dt {border-right:1px solid #ddd;}
+.galley_detail .info_detail .detail_info div dl dd {color:#666; font-size:15px;}
+.galley_detail .info_detail .detail_info div dl dd a {display: inline-block; color:#666; border-bottom: 1px solid #999;}
+.galley_detail .info_detail .detail_info .jade {padding-left:10px; font-size:30px; font-weight:500; vertical-align:top;}
+
+.galley_detail .info_box {margin: 30px 0 40px;}
+.galley_detail .info_box .box {padding: 15px 10px; font-size: 17px; line-height: 26px; color: #7d7d7d; border-top: 2px solid #666; border-bottom: 1px solid #ddd;}
+.galley_detail .info_box .map iframe {width: 100%; height: 400px;}
+.galley_detail .info_box .bx-wrapper .bx-controls-direction a.bx-prev {left:-40px; top:50%; width: 21px; height: 41px; margin-top: -40px; background: url('/resources/images/onlinemarket/ic_arrow_prev.png') center center no-repeat;}
+.galley_detail .info_box .bx-wrapper .bx-controls-direction a.bx-next {right:-40px; top:50%; width: 21px; height: 41px; margin-top: -40px; background: url('/resources/images/onlinemarket/ic_arrow_next.png') center center no-repeat;}
+
+/* 온라인마켓 - 입점상점 목록 */
+.shop.galley_list ul li a .text_wrap {height: 50px; text-align: center;}
+.shop.galley_list ul li a .text_wrap dl {float: none; width: 100%;}
+.shop.galley_list ul li a .text_wrap dl dt {font-size: 20px; font-weight: 500; color: #333;}
+
+/* 온라인마켓 - 입점신청 */
+.application {padding: 0 0 150px; text-align: left;}
+
+.application .box_title {margin-top: 30px;}
+.regi_box {position: relative; margin-bottom: 10px; padding: 0 0 0 0; border-top: 2px solid #666;}
+.regi_box .btn_delete {position: absolute; top: 0; right: 0; width: 40px; height: 40px;}
+.regi_box table {border: 0;}
+
+
+/* 주변관광지 - 맛집 목록 */
+.food.galley_list ul li a .text_wrap {height: 50px; text-align: center;}
+.food.galley_list ul li a .text_wrap dl {float: none; width: 100%;}
+.food.galley_list ul li a .text_wrap dl dt {font-size: 20px; font-weight: 500; color: #333;}
+
+
+/* 소식 - 공지사항 목록 */
+.notice {padding: 0 0 150px; text-align: left;}
+
+.notice table .label {margin-right: 5px; line-height: normal;}
+
+/* 소식 - 현장스케치 목록 */
+.sketch {padding: 0 0 150px;}
+
+.sketch.galley_list ul li a .text_wrap {height: 75px; text-align: center;}
+.sketch.galley_list ul li a .text_wrap dl {float: none; width: 100%;}
+
+/* 소식 - 언론보도 상세 */
+.report {padding: 0 0 150px;}
+
+.report.webzin_wrap .webzin_list>li .img_wrap {float: left; width: 280px; height: 193px; padding: 0;}
+.report.webzin_wrap .webzin_list>li .img_wrap img {width: 100%; height: auto;}
+.report.webzin_wrap .webzin_list>li .text_wrap a {display: block; cursor: pointer;}
+.report.webzin_wrap .webzin_list>li .text_wrap dt {margin-top: 0;}
+.report.webzin_wrap .webzin_list>li .text_wrap dt b {margin-top: 5px;}
+.report.webzin_wrap .webzin_list>li .text_wrap dd {margin: 15px 0 0;}
+
+.report.board_view {text-align: center;}
+.report.board_view .view_title {padding: 50px 30px 10px; font-size: 26px; font-weight: 500;  line-height: 30px; background: none; border-bottom: 0;}
+.report.board_view .view_title span {display: block; font-size: 14px; color: #666; font-weight: 400;}
+.report.board_view .view_contents {font-size: 18px; line-height: 32px; font-weight: 300;}
+
+
+/* 개인정보취급방침/이용약관 */
+.terms {padding: 0 0 150px;}
+
+.terms {font-size: 13px; line-height: 20px; color: #666;}
+.terms b {display: block; margin-bottom: 5px; font-size: 14px;}
+.terms table {width: 100%; margin-top: 10px; border: 1px solid #ddd;}
+.terms table th {padding: 10px; font-weight: 600; background: #f2f2f2; border: 1px solid #ddd;}
+.terms table td {padding: 10px; border: 1px solid #ddd;}
+
+
+/* 아트에비뉴 - 소개 */
+.artavenue_info .img_box {position: relative; height: 380px; background: url('/resources/images/artavenue/img_artavenue01.jpg') center center no-repeat; background-size: 100% !important;}
+.artavenue_info .img_box p {position: absolute; left: 0; right: 0; bottom: 0; margin: 0; padding: 20px; font-size: 34px; line-height: 45px; color: #fff; font-weight: 300; background: rgba(0, 0, 0, 0.8);}
+.artavenue_info .img_box p b {font-weight: 500;}
+.artavenue_info .bar {display: block; width: 2px; height: 47px; margin: 25px auto 30px; background: #2b9a9d;}
+.artavenue_info div {font-size: 23px; line-height: 50px; font-weight: 300;}
+.artavenue_info div p {margin-bottom: 10px; font-size: 30px; font-weight: 500;}
+.artavenue_info div p b {font-weight: 500;}
+
+.artavenue_space ul.space_list li {padding: 25px 0; border-bottom: 1px solid #ddd;}
+.artavenue_space ul.space_list li:after {display: block; visibility: hidden; clear: both; content: "";}
+.artavenue_space ul.space_list li:last-child {border-bottom: 0;}
+.artavenue_space ul.space_list li>* {float: left;}
+.artavenue_space ul.space_list li>img {width: 460px;}
+.artavenue_space ul.space_list li>dl {width: calc(100% - 460px); padding-left: 50px; color: #444;}
+.artavenue_space ul.space_list li>dl dt {position: relative; margin: 30px 0 10px; padding-top: 20px; font-size: 26px; line-height: 44px; font-weight: 400;}
+.artavenue_space ul.space_list li>dl dt:before {position: absolute; top: 0; left: 0; width: 32px; height: 2px; background: #444; content: "";}
+.artavenue_space ul.space_list li>dl dd {font-size: 20px; line-height: 30px; font-weight: 300; -ms-word-break: keep-all; word-break: keep-all;}
+
+.artavenue_rental .img_box {position: relative; height: 380px; background: url('/resources/images/artavenue/img_artavenue06.jpg') center center no-repeat; background-size: 100% !important;}
+.artavenue_rental .img_box p {position: absolute; left: 0; right: 0; bottom: 0; margin: 0; padding: 20px; font-size: 34px; line-height: 45px; color: #fff; font-weight: 300; background: rgba(0, 0, 0, 0.8);}
+.artavenue_rental .img_box p b {font-weight: 500;}
+.artavenue_rental dl {color: #444; font-weight: 300;}
+.artavenue_rental dl dt {position: relative; margin: 55px 0 5px; padding-top: 20px; font-size: 26px; line-height: 44px; font-weight: 400;}
+.artavenue_rental dl dt:before {position: absolute; top: 0; left: 0; width: 32px; height: 2px; background: #444; content: "";}
+.artavenue_rental dl dd {font-size: 20px; line-height: 35px; font-weight: 300; -ms-word-break: keep-all; word-break: keep-all;}
+.artavenue_rental dl dd b {font-weight: 400;}
+.artavenue_rental dl.list dd {padding-left: 15px; background: url('/resources/images/artavenue/ic_bul.png') left center no-repeat;}
+.artavenue_rental table {width: 100%; margin-top: 20px; border-top: 2px solid #28a3a6; border-bottom: 1px solid #ddd; table-layout: fixed;}
+.artavenue_rental table th {height: 50px; font-weight: 400; font-size: 18px; border-bottom: 1px solid #ddd; border-right: 1px solid #ddd; background: #f5f5f5;}
+.artavenue_rental table td {height: 50px; text-align: center; font-size: 18px; border-bottom: 1px solid #ddd; border-right: 1px solid #ddd;}
+.artavenue_rental table td.jade {font-weight: 400;}
+.artavenue_rental table th:last-child,
+.artavenue_rental table td:last-child {border-right: 0;}
+.artavenue_rental .progress li {position: relative; display: table; width: 220px; height: 220px; margin-left: 25px; background: #f5f5f5; border: 1px solid #ebebeb; border-radius: 50%;}
+.artavenue_rental .progress li:after {position: absolute; top: 50%; left: -35px; width: 40px; height: 40px; margin-top: -20px; content: ""; background: url('/resources/images/artavenue/ic_arrow.png') center center no-repeat; z-index: 2;}
+.artavenue_rental .progress li:first-child {margin-left: 0;}
+.artavenue_rental .progress li:first-child:after {display: none;}
+.artavenue_rental .progress li div {display: table-cell; position: relative; vertical-align: middle; z-index: 1;}
+.artavenue_rental .progress li div span {position: absolute; top: 25px; left: 0; right: 0; font-size: 15px; font-weight: 500; color: #2b9a9d;}
+.artavenue_rental .progress li div p {font-size: 18px; line-height: 26px; color: #444;}
+.artavenue_rental .progress li div p b {display: block; margin: 5px 0;}
+
+.rental.artmarket_map #daumRoughmapContainer1539234005282 {width: 100%; height: 430px;}
+.rental.artmarket_map #daumRoughmapContainer1539234005282 .wrap_map {height: 398px;}
+.rental.artmarket_map dl.call {background: url('/resources/images/artavenue/img_call.png') left 10px top no-repeat;}
+.rental.artmarket_map dl.email {background: url('/resources/images/artavenue/img_mail.png') left 10px top no-repeat;}
+.rental.artmarket_map dl dd ul li table {height: 150px;}
+.rental.artmarket_map dl dd ul li table td p {padding-left: 10px; font-weight: 300;}
+.rental.artmarket_map dl dd ul li table td p:first-child {font-weight: 400;}
+
+/* 아트에비뉴 - 대관신청 */
+.rental {padding: 0 0 150px;}
+
+.rental .dl_box>div:after {display: block; visibility: hidden; clear: both; content: "";}
+.rental .dl_box>div {border-top: 2px solid #666; border-bottom: 1px solid #ddd;}
+.rental .dl_box>div dl:after {display: block; visibility: hidden; clear: both; content: "";}
+.rental .dl_box>div dl>* {float: left;}
+.rental .dl_box>div dl dt {width: 200px; padding: 0 0 0 30px; line-height: 50px; background: #f5f5f5;}
+.rental .dl_box>div dl dd {width: calc(100% - 200px); padding: 5px 15px;}
+
+.rental .search_area {margin-top: 30px}
+.rental .search_area dl:first-child {float: left; width: 45%;}
+.rental .search_area dl:last-child {float: left; width: 55%;}
+.rental .search_area .btn_wrap {border: 0;}
+
+.rental .board_list table .btn {height: 35px; line-height: 35px;}
+.rental .board_list table .subject a {padding-left: 18px; background: url('/resources/images/common/ic_clip.png') left center no-repeat; background-size: 14px !important;}
+
+/* 대관신청 수정 팝업 */
+#rentalModify {background: rgba(0, 0, 0, 0.5);}
+#rentalModify .popup_inner {width: 520px;}
+#rentalModify .popup_contents {padding: 35px 0;}
+#rentalModify .popup_contents p {font-size: 22px; font-weight: 600; padding: 0 0 20px;}
+#rentalModify .popup_contents input[type='text'] {width: 300px; margin-bottom: 20px;}
+
+/* 아트에비뉴 - 이달의아트에비뉴27 */
+.rental.board_view {}
+
+.rental.month_view .title {margin: 30px 0; font-size: 22px; font-weight: 600; text-align: center;}
+.rental.month_view .text {font-size: 16px; line-height: 26px;}
+.rental.month_view .bx-wrapper img {width: 100%; margin: 0 auto;}
+.rental.month_view .month_img .bx-wrapper .bx-controls-direction a.bx-prev {left:-30px; top:50%; width: 21px; height: 41px; margin-top: -20.5px; background: url('/resources/images/onlinemarket/ic_arrow_prev.png') center center no-repeat;}
+.rental.month_view .month_img .bx-wrapper .bx-controls-direction a.bx-next {right:-30px; top:50%; width: 21px; height: 41px; margin-top: -20.5px; background: url('/resources/images/onlinemarket/ic_arrow_next.png') center center no-repeat;}
+.rental.month_view .month_img .bx-pager {display: none;}
+.rental.month_view .month_img .bx-wrapper .bx-pager, 
+.rental.month_view .bx-wrapper .bx-controls-auto {bottom: -20px;}
+.rental.month_view .bx-wrapper .bx-pager.bx-default-pager a {background: #ddd;}
+.rental.month_view .bx-wrapper .bx-pager.bx-default-pager a:hover, 
+.rental.month_view .bx-wrapper .bx-pager.bx-default-pager a.active {background: #2b9a9d;}
+.rental.month_view .galley_list {margin-top: 50px; padding-top: 50px; border-top: 1px solid #ddd;}
+.rental.month_view .galley_list ul li a .text_wrap {height: 45px; text-align: center;}
+.rental.month_view .galley_list ul li a .text_wrap dl {float: none; width: 100%;}
+.rental.month_view .galley_list ul li a .text_wrap dl dt {font-size: 16px; font-weight: 500; color: #333; text-overflow:ellipsis; white-space:nowrap; word-wrap:normal; overflow:hidden;}
+.rental.month_view .galley_list .bx-wrapper .bx-controls-direction a.bx-prev {left:-40px; top:50%; width: 21px; height: 41px; margin-top: -40px; background: url('/resources/images/onlinemarket/ic_arrow_prev.png') center center no-repeat;}
+.rental.month_view .galley_list .bx-wrapper .bx-controls-direction a.bx-next {right:-40px; top:50%; width: 21px; height: 41px; margin-top: -40px; background: url('/resources/images/onlinemarket/ic_arrow_next.png') center center no-repeat;}
+
+.rental.month_view .galley_list ul li.active a {border: 2px solid #2b9a9d;}
+.rental.month_view .galley_list ul li.active .text_wrap {border: 0;}
+.rental.month_view .galley_list ul li.active .text_wrap dt {color: #2b9a9d; font-weight: 400;}

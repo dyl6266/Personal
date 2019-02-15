@@ -2,10 +2,13 @@ package com.dy.common.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Random;
 import java.util.UUID;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+
+import com.dy.common.domain.YesNo;
 
 public class CommonUtils {
 
@@ -26,6 +29,42 @@ public class CommonUtils {
 	 */
 	public static String getRandomString() {
 		return UUID.randomUUID().toString().replaceAll("-", "");
+	}
+
+	/**
+	 * length 만큼의 랜덤 숫자 반화
+	 * 
+	 * @param length - 생성할 숫자 길이
+	 * @param useYn  - 중복 허용 여부
+	 * @return
+	 */
+	public static String getRandomNumber(int length, YesNo useYn) {
+
+		String resultNum = "";
+		Random random = new Random();
+
+		/* 중복을 허용하는 경우 */
+		if ("Y".equals(useYn.toString())) {
+			for (int i = 0; i < length; i++) {
+				/* 0 ~ 9 사이의 난수 */
+				String randomNum = Integer.toString(random.nextInt(10));
+				resultNum += randomNum;
+			}
+		/* 중복을 허용하지 않는 경우 */
+		} else {
+			for (int i = 0; i < length; i++) {
+				/* 0 ~ 9 사이의 난수 */
+				String randomNum = Integer.toString(random.nextInt(10));
+				/* 결과에 randomNum과 동일한 숫자가 존재하면 continue */
+				if (resultNum.contains(randomNum)) {
+					i -= 1;
+					continue;
+				}
+				resultNum += randomNum;
+			}
+		}
+
+		return resultNum;
 	}
 
 	/**

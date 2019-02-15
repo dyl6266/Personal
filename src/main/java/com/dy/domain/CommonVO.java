@@ -2,12 +2,15 @@ package com.dy.domain;
 
 import java.util.Date;
 
-import com.dy.common.domain.Status;
+import com.dy.common.domain.YesNo;
 
 public class CommonVO {
 
-	/* 상태 (Y : 사용 / N : 미사용) */
-	private Status status;
+	/* 사용 여부 */
+	private YesNo useYn;
+
+	/* 상태 */
+	private YesNo status;
 
 	/* 등록일 */
 	private Date insertTime;
@@ -15,11 +18,19 @@ public class CommonVO {
 	/* 수정일 */
 	private Date updateTime;
 
-	public Status getStatus() {
+	public YesNo getUseYn() {
+		return useYn;
+	}
+
+	public void setUseYn(YesNo useYn) {
+		this.useYn = useYn;
+	}
+
+	public YesNo getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(YesNo status) {
 		this.status = status;
 	}
 
