@@ -45,11 +45,11 @@ public class MemberDAO extends AbstractDAO {
 	/**
 	 * 회원 정보 삭제 (사용 여부 변경)
 	 * 
-	 * @param member - VO 클래스
+	 * @param memberId - 회원 아이디
 	 * @return int - 쿼리 실행 횟수
 	 */
-	public int deleteMember(Integer idx) {
-		return update(namespace + ".deleteMember", idx);
+	public int deleteMember(String memberId) {
+		return update(namespace + ".deleteMember", memberId);
 	}
 
 	/**

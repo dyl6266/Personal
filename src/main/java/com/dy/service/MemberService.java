@@ -26,10 +26,10 @@ public interface MemberService {
 	/**
 	 * 회원 정보 삭제 (사용 여부 변경)
 	 * 
-	 * @param idxs - PK를 '|'로 구분한 스트링
+	 * @param memberId - 회원 아이디
 	 * @return int - 쿼리 실행 횟수
 	 */
-	public boolean deleteMember(String idxs);
+	public boolean deleteMember(String memberId);
 
 	/**
 	 * 회원 리스트 조회

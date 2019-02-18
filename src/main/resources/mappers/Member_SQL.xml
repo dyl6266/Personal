@@ -11,6 +11,7 @@
 		<result property="memberPw" 	column="member_pw" />
 		<result property="memberName" 	column="member_name" />
 		<result property="memberPhone" 	column="member_phone" />
+		<result property="authKey"		column="auth_key" />
 		<result property="status" 		column="status" />
 		<result property="insertTime" 	column="insert_time" />
 		<result property="updateTime" 	column="update_time" />
@@ -23,6 +24,7 @@
 		, member_pw
 		, member_name
 		, member_phone
+		, auth_key
 		, status
 		, insert_time
 		, update_time
@@ -50,6 +52,7 @@
 			, #{memberPw}
 			, #{memberName}
 			, #{memberPhone}
+			, #{authKey}
 			, 'N'
 			, NOW()
 			, NULL
@@ -77,16 +80,16 @@
 		  ,	<if test="!@com.dy.common.utils.MyBatisUtils@isEmpty(memberPhone)">member_phone = #{memberPhone}</if>
 		  , update_time = NOW()
 		WHERE
-			idx = #{idx}
+			member_id = #{memberId}
 	</update>
 
 	<!-- 회원 정보 삭제 (사용 여부 변경) -->
-	<update id="deleteMember" parameterType="integer">
+	<update id="deleteMember" parameterType="string">
 		UPDATE member
 		SET
 			status = 'N'
 		WHERE
-			idx = #{idx}
+			member_id = #{memberId}
 	</update>
 
 	<!-- 회원 리스트 조회 -->

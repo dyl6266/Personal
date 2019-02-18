@@ -19,7 +19,7 @@
 		</div>
 		<!-- // page title -->
 
-		<form name="joinForm" action="<c:url value="" />" method="post" onsubmit="return checkForm(this)">
+		<form name="joinForm" action="<c:url value="/member/processing.do?type=register" />" method="post" onsubmit="return checkForm(this)">
 			<!-- 콘텐츠 시작 -->
 			<div class="inner signup text_center form_write">
 				<table>
@@ -32,6 +32,7 @@
 						<tr>
 							<th><b>*</b> 아이디</th>
 							<td>
+								<input type="hidden" name="memberId" />
 								<input type="text" name="frontAddr" class="type2" value="" maxlength="15" />
 								<span>@</span>
 								<input type="text" name="backAddr" class="type2" readonly />
@@ -62,32 +63,32 @@
 						</tr>
 						<tr>
 							<th><b>*</b> 비밀번호</th>
-							<td><input type="password" value="" maxlength="20" placeholder="영문자, 숫자, 특수문자 조합 8~20자리로 입력해 주세요." /></td>
+							<td><input type="password" name="memberPw" value="" maxlength="20" placeholder="영문자, 숫자, 특수문자 조합 8~20자리로 입력해 주세요." /></td>
 						</tr>
 						<tr>
 							<th><b>*</b> 비밀번호 재입력</th>
-							<td><input type="password" value="" maxlength="20" placeholder="영문자, 숫자, 특수문자 조합 8~20자리로 입력해 주세요." /></td>
+							<td><input type="password" name="memberPwCheck" value="" maxlength="20" placeholder="비밀번호를 다시 입력해 주세요." /></td>
 						</tr>
 						<tr>
 							<th><b>*</b> 이름</th>
-							<td><input type="text" value="" placeholder="" class="type2" /></td>
+							<td><input type="text" name="memberName" class="type2" value="" placeholder="이름을 입력해 주세요." /></td>
 						</tr>
 						<tr>
 							<th><b>*</b> 연락처</th>
-							<td><input type="text" value="" placeholder="예) 010-1234-5678" /></td>
+							<td><input type="text" name="memberPhone" value="" placeholder="'ㅡ' 없이 숫자만 입력해 주세요." /></td>
 						</tr>
-						<tr>
+						<!-- <tr>
 							<th><b>*</b> 주소</th>
 							<td>
-								<input type="text" value="" placeholder="" class="type3" />
-								<input type="button" value="주소찾기" class="btn btn_border_gray" /><br />
-								<input type="text" value="" placeholder="" class="mt05" /><br />
-								<input type="text" value="" placeholder="상세주소를 입력하세요." class="mt05" />
+								<input type="text" name="postcode" id="postcode" class="type3" value="" placeholder="우편번호" readonly />
+								<input type="button" class="btn btn_border_gray" value="주소찾기" onclick="findPostcode()" /><br />
+								<input type="text" name="address" id="address" class="mt05" value="" placeholder="주소" readonly /><br />
+								<input type="text" name="detailAddress" id="detailAddress" class="mt05" value="" placeholder="상세주소" />
 							</td>
-						</tr>
+						</tr> -->
 					</tbody>
 				</table>
-	
+
 				<div class="btn_wrap text_right">
 					<input type="submit" value="회원가입" class="btn btn_jade" />
 					<a href="<c:url value="/index.do" />" class="btn btn_gray ml05">취소</a>
@@ -115,6 +116,11 @@
 				form.backAddr.value = obj.value;
 				form.backAddr.setAttribute("readonly", "true");
 			}
+		}
+
+		function checkForm(obj) {
+			obj.memberId.value = obj.frontAddr.value + "@" + obj.backAddr.value;
+			return true;
 		}
 	</script>
 
