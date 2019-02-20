@@ -63,19 +63,19 @@
 						</tr>
 						<tr>
 							<th><b>*</b> 비밀번호</th>
-							<td><input type="password" name="memberPw" value="" maxlength="20" placeholder="영문자, 숫자, 특수문자 조합 8~20자리로 입력해 주세요." /></td>
+							<td><input type="password" name="memberPw" maxlength="20" placeholder="영문자, 숫자, 특수문자 조합 8~20자리로 입력해 주세요." /></td>
 						</tr>
 						<tr>
 							<th><b>*</b> 비밀번호 재입력</th>
-							<td><input type="password" name="memberPwCheck" value="" maxlength="20" placeholder="비밀번호를 다시 입력해 주세요." /></td>
+							<td><input type="password" name="memberPwCheck" maxlength="20" placeholder="비밀번호를 다시 입력해 주세요." /></td>
 						</tr>
 						<tr>
 							<th><b>*</b> 이름</th>
-							<td><input type="text" name="memberName" class="type2" value="" placeholder="이름을 입력해 주세요." /></td>
+							<td><input type="text" name="memberName" class="type2" placeholder="이름을 입력해 주세요." /></td>
 						</tr>
 						<tr>
 							<th><b>*</b> 연락처</th>
-							<td><input type="text" name="memberPhone" value="" placeholder="'ㅡ' 없이 숫자만 입력해 주세요." /></td>
+							<td><input type="text" name="memberPhone" maxlength="11" placeholder="'ㅡ' 없이 숫자만 입력해 주세요." /></td>
 						</tr>
 						<!-- <tr>
 							<th><b>*</b> 주소</th>
@@ -89,7 +89,7 @@
 					</tbody>
 				</table>
 				<div class="btn_wrap text_center">
-					<a href="javascript:void(0)" class="btn btn_jade" onclick="checkJoinForm()">다음</a>
+					<a href="javascript:void(0)" class="btn btn_jade" onclick="moveNextStepAndSendMail()">다음</a>
 					<a href="<c:url value="/index.do" />" class="btn btn_gray ml05">취소</a>
 				</div>
 			</div>
@@ -103,7 +103,9 @@
 				<input type="text" name="authKey" class="type2" placeholder="인증번호 입력" style="text-align: center;" />
 				
 				<div class="btn_wrap text_center">
-					<button type="button" class="btn btn_jade">다음</button>
+					<a href="javascript:void(0)" class="btn btn_jade" onclick="checkAuthKey()">다음</a>
+					<!-- <button type="submit" class="btn btn_jade">다음</button> -->
+					<!-- <a href="javascript:void(0)" class="btn btn_gray ml05" onclick="movePrevStep()">이전</a> -->
 				</div>
 			</div>
 			<!-- //. Step2 -->
@@ -136,21 +138,70 @@
 			}
 		}
 
-		function checkJoinForm() {
+		function moveNextStepAndSendMail() {
 			/* 아이디 hidden */
 			joinForm.memberId.value = joinForm.frontAddr.value + "@" + joinForm.backAddr.value;
-			console.log("아이디 : " + joinForm.memberId.value);
 
-			return checkField(joinForm.frontAddr, "아이디")
-				&& checkField(joinForm.backAddr, "아이디")
-				&& checkValidation(joinForm.memberId, joinForm.frontAddr, "email")
-				&& checkField(joinForm.memberPw, "비밀번호")
-				&& checkValidation(joinForm.memberPw, null, "password")
-				&& checkEquals(joinForm.memberPw, joinForm.memberPwCheck, "비밀번호와 재입력한 비밀번호")
-				&& checkField(joinForm.memberName, "이름")
-				&& checkField(joinForm.memberPhone, "연락처")
-				&& checkValidation(joinForm.memberPhone, null, "phone");
+			var status = checkValidation(joinForm.frontAddr, "아이디", null, null)
+					  && checkValidation(joinForm.backAddr, "도메인", null, null)
+					  && checkValidation(joinForm.memberId, null, joinForm.frontAddr, "email")
+					  && checkValidation(joinForm.memberPw, "비밀번호", null, null)
+					  && checkValidation(joinForm.memberPw, null, null, "password")
+					  && checkEquals(joinForm.memberPw, joinForm.memberPwCheck, "비밀번호와 재입력한 비밀번호")
+					  && checkValidation(joinForm.memberName, "이름", null, null)
+					  && checkValidation(joinForm.memberPhone, "연락처", null, null)
+					  && checkValidation(joinForm.memberPhone, null, null, "phone");
+
+			if ( status == true ) {
+				$(joinForm).hide();
+				$(authForm).show();
+
+				var uri = '<c:url value="/member/sendMail.do" />';
+				console.log(joinForm.memberId.value);
+				$.ajax({
+					url : uri,
+					type : "post",
+// 					dataType : "json",
+					headers : {
+// 						"Content-type" : "application/json",
+						"X-HTTP-Method-Override" : "post",
+						"${_csrf.headerName}" : "${_csrf.token}"
+					},
+					data : { "memberId" : joinForm.memberId.value },
+					async : false,
+					success : function(response) {
+						console.log(response);
+						console.log("결과");
+					},
+					error : function(request, status, error) {
+                        console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                        alert("다시 시도해 주세요.");
+                        return false;
+                    }
+				});
+			}
+
+			return status;
 		}
+
+		function checkAuthKey() {
+			var uri = '<c:url value="/member/checkAuthKey.do" />';
+			console.log(authForm.authKey.value);
+			return false;
+
+			$.ajax({
+				url : uri,
+				type : "post",
+				data : { "authKey" : authForm.authKey.value },
+				async : false
+			});
+		}
+		
+
+// 		function movePrevStep() {
+// 			$(authForm).hide();
+// 			$(joinForm).show();
+// 		}
 	</script>
 
 <%@include file="/WEB-INF/include/footer.jsp"%>

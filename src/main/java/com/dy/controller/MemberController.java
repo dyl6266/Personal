@@ -12,7 +12,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dy.common.service.CommonService;
 import com.dy.common.utils.CommonUtils;
 import com.dy.domain.MemberVO;
 import com.dy.service.MemberService;
@@ -21,6 +23,9 @@ import com.dy.service.MemberService;
 public class MemberController extends CommonUtils {
 
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+
+	@Autowired
+	private CommonService commonService;
 
 	@Autowired
 	private MemberService memberService;
@@ -46,6 +51,17 @@ public class MemberController extends CommonUtils {
 		return "/member/write";
 	}
 
+	@RequestMapping(value = "/member/sendMail.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String sendAuthenticationMail(@RequestParam(value = "memberId", required = false) String memberId) {
+
+		boolean status = commonService.registerAuthKeyAndSendMail(memberId);
+		System.out.println(status);
+		System.out.println(status);
+		System.out.println(status);
+		return null;
+	}
+
 	/**
 	 * 타입에 따른 프로세스 수행
 	 * 
@@ -57,8 +73,7 @@ public class MemberController extends CommonUtils {
 	@RequestMapping(value = "/member/processing.do", method = RequestMethod.POST)
 	public String processingMember(@RequestParam(value = "type", required = false) String type,
 								   @RequestParam(value = "memberId", required = false) String memberId,
-								   @RequestParam(value = "params", required = false) MemberVO params,
-								   Model model) {
+								   @RequestParam(value = "params", required = false) MemberVO params, Model model) {
 
 		String failureResult = showMessageAndRedirect("오류가 발생했습니다. 다시 시도해 주세요.", "/member/list.do", null, model);
 

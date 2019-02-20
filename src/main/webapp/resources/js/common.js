@@ -17,26 +17,6 @@ function charToUnicode(str) {
 }
 
 /**
- * 필드의 값이 비어있으면 해당 필드로 focus한 다음, 메시지 출력
- */
-function checkField(field, fieldName) {
-	if (isEmpty(field.value)) {
-		/* alert 메시지 */
-		var message = "";
-		/* 종성으로 을 / 를 구분 */
-		if (charToUnicode(fieldName) > 0) {
-			message = fieldName + "을 확인해 주세요.";
-		} else {
-			message = fieldName + "를 확인해 주세요.";
-		}
-		field.focus();
-		Swal.fire(message);
-		return false;
-	}
-	return true;
-}
-
-/**
  * 필드1, 필드2의 값이 다르면 해당 필드2로 focus한 다음, 메시지 출력
  */
 function checkEquals(field1, field2, fieldName) {
@@ -58,48 +38,67 @@ function checkEquals(field1, field2, fieldName) {
 }
 
 /**
- * field에 알맞은 형식인지 유효성 체크 (정규표현식 사용)
+ * field의 값이 올바른 형식인지 체크 (정규표현식 사용)
  * 
  * @param field - 타겟 필드
+ * @param fieldName - 필드 이름 (null 허용)
  * @param focusField - 포커스할 필드 (null 허용)
- * @param type - 유형 구분 (이메일, 전화번호 등)
+ * @param type - 유형 구분 (이메일, 전화번호 등 / null 허용)
  * @returns
  */
-function checkValidation(field, focusField, type) {
+function checkValidation(field, fieldName, focusField, type) {
 	/* type에 해당하는 정규식 */
 	var regExp = "";
 	/* alert 메시지 */
 	var message = "";
 
-	switch (type) {
-	case "email":
-		regExp = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,20}$/;
-		message = "올바르지 않은 형식의 이메일입니다.";
-		break;
-
-	case "password":
-		regExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,20}/;
-		message = "올바르지 않은 형식의 비밀번호입니다.";
-		break;
-
-	case "phone":
-		regExp = /^\d{3}\d{3,4}\d{4}$/;
-		message = "올바르지 않은 형식의 연락처입니다.";
-		break;
-
-	default:
-		break;
-	}
-
-	if ( regExp.test(field.value) == false ) {
-		if ( isEmpty($(focusField)) ) {
+	/* 일반 필드의 경우 */
+	if ( isEmpty(type) ) {
+		if ( isEmpty(field.value) ) {
+			/* 종성으로 을 / 를 구분 */
+			if (charToUnicode(fieldName) > 0) {
+				message = fieldName + "을 확인해 주세요.";
+			} else {
+				message = fieldName + "를 확인해 주세요.";
+			}
 			field.focus();
-		} else {
-			focusField.focus();
+			Swal.fire(message);
+			return false;
 		}
-		Swal.fire(message);
-		return false;
+	} else {
+		/* 타입을 지정해야 하는 경우 */
+		switch (type) {
+		case "email":
+			regExp = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,20}$/;
+			message = "올바르지 않은 형식의 이메일입니다.";
+			break;
+
+		case "password":
+			regExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,20}/;
+			message = "올바르지 않은 형식의 비밀번호입니다.";
+			break;
+
+		case "phone":
+			regExp = /^\d{3}\d{3,4}\d{4}$/;
+			message = "올바르지 않은 형식의 연락처입니다.";
+			break;
+
+		default:
+			break;
+		}
+		// end of switch
+
+		if ( regExp.test(field.value) == false ) {
+			if ( isEmpty($(focusField)) ) {
+				field.focus();
+			} else {
+				focusField.focus();
+			}
+			Swal.fire(message);
+			return false;
+		}
 	}
+	// end of else
 
 	return true;
 }
