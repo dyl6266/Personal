@@ -1,12 +1,8 @@
 /**
  * 자료형에 상관없이 값이 비어있는지 체크
  */
-function isEmpty(value) {
-	if (value == null
-			|| value == ""
-			|| value == undefined
-			|| (value != null && typeof value == "object" && !Object
-					.keys(value).length)) {
+function isEmpty(obj) {
+	if (obj == null || obj == "" || obj == undefined || (obj != null && typeof obj == "object" && !Object.keys(obj).length)) {
 		return true;
 	} else {
 		return false;
@@ -21,10 +17,10 @@ function charToUnicode(str) {
 }
 
 /**
- * 필드의 값이 비어있으면 메시지를 출력한 다음, 해당 필드로 focus
+ * 필드의 값이 비어있으면 해당 필드로 focus한 다음, 메시지 출력
  */
 function checkField(field, fieldName) {
-	if (isEmpty($(field).val())) {
+	if (isEmpty(field.value)) {
 		/* alert 메시지 */
 		var message = "";
 		/* 종성으로 을 / 를 구분 */
@@ -33,10 +29,78 @@ function checkField(field, fieldName) {
 		} else {
 			message = fieldName + "를 확인해 주세요.";
 		}
-		alert(message);
 		field.focus();
+		Swal.fire(message);
 		return false;
 	}
+	return true;
+}
+
+/**
+ * 필드1, 필드2의 값이 다르면 해당 필드2로 focus한 다음, 메시지 출력
+ */
+function checkEquals(field1, field2, fieldName) {
+	if ( field1.value === field2.value ) {
+		return true;
+	} else {
+		/* alert 메시지 */
+		var message = "";
+		/* 종성으로 을 / 를 구분 */
+		if (charToUnicode(fieldName) > 0) {
+			message = fieldName + "이 일치하지 않습니다.";
+		} else {
+			message = fieldName + "가 일치하지 않습니다.";
+		}
+		field2.focus();
+		Swal.fire(message);
+		return false;
+	}
+}
+
+/**
+ * field에 알맞은 형식인지 유효성 체크 (정규표현식 사용)
+ * 
+ * @param field - 타겟 필드
+ * @param focusField - 포커스할 필드 (null 허용)
+ * @param type - 유형 구분 (이메일, 전화번호 등)
+ * @returns
+ */
+function checkValidation(field, focusField, type) {
+	/* type에 해당하는 정규식 */
+	var regExp = "";
+	/* alert 메시지 */
+	var message = "";
+
+	switch (type) {
+	case "email":
+		regExp = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,20}$/;
+		message = "올바르지 않은 형식의 이메일입니다.";
+		break;
+
+	case "password":
+		regExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,20}/;
+		message = "올바르지 않은 형식의 비밀번호입니다.";
+		break;
+
+	case "phone":
+		regExp = /^\d{3}\d{3,4}\d{4}$/;
+		message = "올바르지 않은 형식의 연락처입니다.";
+		break;
+
+	default:
+		break;
+	}
+
+	if ( regExp.test(field.value) == false ) {
+		if ( isEmpty($(focusField)) ) {
+			field.focus();
+		} else {
+			focusField.focus();
+		}
+		Swal.fire(message);
+		return false;
+	}
+
 	return true;
 }
 

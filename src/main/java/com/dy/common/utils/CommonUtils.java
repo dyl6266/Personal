@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.User;
 
 import com.dy.common.domain.YesNo;
 
-public class CommonUtils {
+public class CommonUtils extends UIUtils {
 
 	/**
 	 * 로그인한 회원의 아이디를 반환
@@ -50,7 +50,7 @@ public class CommonUtils {
 				String randomNum = Integer.toString(random.nextInt(10));
 				resultNum += randomNum;
 			}
-		/* 중복을 허용하지 않는 경우 */
+			/* 중복을 허용하지 않는 경우 */
 		} else {
 			for (int i = 0; i < length; i++) {
 				/* 0 ~ 9 사이의 난수 */

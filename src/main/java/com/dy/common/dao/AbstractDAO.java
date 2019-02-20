@@ -17,15 +17,15 @@ public class AbstractDAO {
 	/**
 	 * 쿼리 아이디 출력
 	 * 
-	 * @param queryId
+	 * @params queryId
 	 */
 	private void printQueryId(String queryId) {
 		logger.info("QueryId ::: " + queryId);
 	}
 
-	public int insert(String queryId, Object param) {
+	public int insert(String queryId, Object params) {
 		printQueryId(queryId);
-		return sqlSession.insert(queryId, param);
+		return sqlSession.insert(queryId, params);
 	}
 
 	public Object selectOne(String queryId) {
@@ -33,19 +33,19 @@ public class AbstractDAO {
 		return sqlSession.selectOne(queryId);
 	}
 
-	public Object selectOne(String queryId, Object param) {
+	public Object selectOne(String queryId, Object params) {
 		printQueryId(queryId);
-		return sqlSession.selectOne(queryId, param);
+		return sqlSession.selectOne(queryId, params);
 	}
 
-	public int update(String queryId, Object param) {
+	public int update(String queryId, Object params) {
 		printQueryId(queryId);
-		return sqlSession.update(queryId, param);
+		return sqlSession.update(queryId, params);
 	}
 
-	public int delete(String queryId, Object param) {
+	public int delete(String queryId, Object params) {
 		printQueryId(queryId);
-		return sqlSession.delete(queryId, param);
+		return sqlSession.delete(queryId, params);
 	}
 
 	public List<?> selectList(String queryId) {
@@ -53,9 +53,9 @@ public class AbstractDAO {
 		return sqlSession.selectList(queryId);
 	}
 
-	public List<?> selectList(String queryId, Object param) {
+	public List<?> selectList(String queryId, Object params) {
 		printQueryId(queryId);
-		return sqlSession.selectList(queryId, param);
+		return sqlSession.selectList(queryId, params);
 	}
 
 }

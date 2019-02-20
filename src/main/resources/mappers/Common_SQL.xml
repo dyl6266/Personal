@@ -122,4 +122,29 @@
 			board_idx = #{boardIdx}
 	</select>
 
+	<!-- 인증번호 등록 -->
+	<insert id="insertAuthKey" parameterType="hashmap">
+		INSERT INTO authentication (
+			auth_key
+		  , member_id
+		  , status
+		) VALUES(
+			#{authKey}
+		  , #{memberId}
+		  , 'N'
+		)
+	</insert>
+
+	<!-- 입력한 인증번호가 유효한 번호인지 확인 (10분 기준) -->
+	<select id="checkValidTime" parameterType="hashmap" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			authentication
+		WHERE
+			status = 'Y'
+		AND
+			insert_time BETWEEN SUBDATE(NOW(), INTERVAL 10 MINUTE) AND NOW()
+	</select>
+
 </mapper>

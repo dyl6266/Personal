@@ -27,11 +27,13 @@
 			</p>
 
 			<div class="login_box">
-				<form>
+				<form name="loginForm" action="/auth.do" method="post">
+					<!-- csrf 토큰(?) -->
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<div class="login_form">
-						<input type="text" value="" placeholder="아이디를 입력해 주세요." class="" />
-						<input type="password" value="" placeholder="비밀번호를 입력해 주세요." class="" />
-						<input type="submit" value="로그인" class="btn btn_jade" />
+						<input type="text" name="memberId" class="" value="" placeholder="아이디를 입력해 주세요." />
+						<input type="password" name="memberPw" class="" value="" placeholder="비밀번호를 입력해 주세요." />
+						<input type="submit" class="btn btn_jade" value="로그인" />
 					</div>
 				</form>
 				<ul>

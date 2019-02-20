@@ -66,8 +66,6 @@
 		FROM
 			member
 		WHERE
-			status = 'Y'
-		AND
 			member_id = #{memberId}
 	</select>
 

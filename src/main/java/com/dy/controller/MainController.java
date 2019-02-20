@@ -21,6 +21,17 @@ public class MainController {
 	}
 
 	/**
+	 * 회원가입 페이지
+	 * 
+	 * @return String - 페이지
+	 */
+	@RequestMapping(value = "/join.do")
+	public String openJoinPage(Model model) {
+
+		return "/join";
+	}
+
+	/**
 	 * 로그인 페이지
 	 * 
 	 * @param status - 상태 (로그인 실패, 로그아웃 등)

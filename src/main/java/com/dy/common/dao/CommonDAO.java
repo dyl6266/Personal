@@ -81,4 +81,24 @@ public class CommonDAO extends AbstractDAO {
 		return (int) selectOne(namespace + ".selectTotalCount", boardIdx);
 	}
 
+	/**
+	 * 인증번호 등록
+	 * 
+	 * @param params
+	 * @return int - 쿼리 실행 횟수
+	 */
+	public int insertAuthkey(HashMap<String, Object> params) {
+		return insert(namespace + ".insertAuthKey", params);
+	}
+
+	/**
+	 * 입력한 인증번호가 유효한 번호인지 확인 (10분 기준)
+	 * 
+	 * @param params - HashMap (인증번호, 아이디)
+	 * @return int - 결과 수
+	 */
+	public int checkValidTime(HashMap<String, Object> params) {
+		return (int) selectOne(namespace + ".checkValidTime", params);
+	}
+
 }

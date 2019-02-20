@@ -34,7 +34,7 @@ public class BoardController extends CommonUtils {
 	@RequestMapping(value = "/board/list.do")
 	public String openBoardList(HttpServletRequest request, @RequestParam(value = "params", required = false) BoardVO params, Model model) {
 
-		System.out.println( CommonUtils.getLoginId() );
+//		System.out.println( CommonUtils.getLoginId() );
 		/* 로그인 사용자 정보 (애너테이션으로 대체 가능, 그러나 xml 설정이 필요한듯) */
 //		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //		if ( ObjectUtils.isEmpty(user) == false ) {

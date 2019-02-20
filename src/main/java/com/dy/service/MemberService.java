@@ -1,6 +1,5 @@
 package com.dy.service;
 
-import java.util.HashMap;
 import java.util.List;
 
 import com.dy.domain.MemberVO;
@@ -11,7 +10,7 @@ public interface MemberService {
 	 * 회원 등록
 	 * 
 	 * @param params - VO 클래스
-	 * @return boolean - true or false
+	 * @return int - 쿼리 실행 횟수
 	 */
 	public boolean registerMember(MemberVO params);
 
