@@ -20,11 +20,20 @@ public interface CommonService {
 	public int deleteAttach(Integer idx);
 
 	/**
-	 * DB에 인증번호를 등록하고, 해당 인증번호를 이메일로 발송
+	 * DB에 인증 키를 등록하고, 해당 인증 키를 이메일로 발송
 	 * 
 	 * @param memberId - 회원가입 아이디
 	 * @return boolean - (true or false)
 	 */
 	public boolean registerAuthKeyAndSendMail(String memberId);
+
+	/**
+	 * 메일로 발송한 인증 키 유효성 체크
+	 * 
+	 * @param authKey  - 인증 키
+	 * @param memberId - 회원가입 아이디
+	 * @return boolean - (true or false)
+	 */
+	public boolean checkAuthKeyValidation(String authKey, String memberId);
 
 }

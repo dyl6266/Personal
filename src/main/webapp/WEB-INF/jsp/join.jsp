@@ -77,15 +77,6 @@
 							<th><b>*</b> 연락처</th>
 							<td><input type="text" name="memberPhone" maxlength="11" placeholder="'ㅡ' 없이 숫자만 입력해 주세요." /></td>
 						</tr>
-						<!-- <tr>
-							<th><b>*</b> 주소</th>
-							<td>
-								<input type="text" name="postcode" id="postcode" class="type3" value="" placeholder="우편번호" readonly />
-								<input type="button" class="btn btn_border_gray" value="주소찾기" onclick="findPostcode()" /><br />
-								<input type="text" name="address" id="address" class="mt05" value="" placeholder="주소" readonly /><br />
-								<input type="text" name="detailAddress" id="detailAddress" class="mt05" value="" placeholder="상세주소" />
-							</td>
-						</tr> -->
 					</tbody>
 				</table>
 				<div class="btn_wrap text_center">
@@ -99,13 +90,12 @@
 		<form name="authForm" action="<c:url value="" />" method="post" onsubmit="checkAuthForm(this)">
 			<!-- Step2 -->
 			<div class="inner signup text_center form_write">
-				<h1>메일로 발송된 8자리 인증번호를 입력해 주세요.</h1><br />
-				<input type="text" name="authKey" class="type2" placeholder="인증번호 입력" style="text-align: center;" />
-				
+				<h1>메일로 발송된 8자리 인증번호를 10분 이내에 입력해 주세요.</h1><br />
+				<input type="text" name="authKey" class="type2" maxlength="8" placeholder="인증번호 입력" style="text-align: center;" />
+
 				<div class="btn_wrap text_center">
 					<a href="javascript:void(0)" class="btn btn_jade" onclick="checkAuthKey()">다음</a>
 					<!-- <button type="submit" class="btn btn_jade">다음</button> -->
-					<!-- <a href="javascript:void(0)" class="btn btn_gray ml05" onclick="movePrevStep()">이전</a> -->
 				</div>
 			</div>
 			<!-- //. Step2 -->
@@ -153,55 +143,87 @@
 					  && checkValidation(joinForm.memberPhone, null, null, "phone");
 
 			if ( status == true ) {
-				$(joinForm).hide();
-				$(authForm).show();
-
-				var uri = '<c:url value="/member/sendMail.do" />';
-				console.log(joinForm.memberId.value);
-				$.ajax({
-					url : uri,
-					type : "post",
-// 					dataType : "json",
-					headers : {
-// 						"Content-type" : "application/json",
-						"X-HTTP-Method-Override" : "post",
-						"${_csrf.headerName}" : "${_csrf.token}"
-					},
-					data : { "memberId" : joinForm.memberId.value },
-					async : false,
-					success : function(response) {
-						console.log(response);
-						console.log("결과");
-					},
-					error : function(request, status, error) {
-                        console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-                        alert("다시 시도해 주세요.");
-                        return false;
-                    }
-				});
+				sendAuthMail();
 			}
 
 			return status;
 		}
 
-		function checkAuthKey() {
-			var uri = '<c:url value="/member/checkAuthKey.do" />';
-			console.log(authForm.authKey.value);
-			return false;
+		/**
+		 * 인증 메일 발송
+		 */
+		function sendAuthMail() {
+			var uri = '<c:url value="/member/sendAuthMail.do" />';
 
 			$.ajax({
 				url : uri,
 				type : "post",
-				data : { "authKey" : authForm.authKey.value },
-				async : false
+				dataType : "json",
+				headers : {
+// 					"Content-type" : "application/json",
+					"X-HTTP-Method-Override" : "post",
+					"${_csrf.headerName}" : "${_csrf.token}"
+				},
+				data : { "memberId" : joinForm.memberId.value },
+				async : false,
+				success : function(response) {
+					if (isEmpty(response) == false && response.result === "SUCCESS") {
+						Swal.fire(response.message);
+
+						$(joinForm).hide();
+						$(authForm).show();
+					} else {
+						Swal.fire("오류가 발생했습니다. 다시 시도해 주세요.");
+					}
+					return false;
+				},
+				error : function(response, status, error) {
+					console.log(response);
+					console.log("==================");
+					console.log(response.responseJSON.message);
+					return false;
+				}
 			});
 		}
-		
 
-// 		function movePrevStep() {
-// 			$(authForm).hide();
-// 			$(joinForm).show();
-// 		}
+		/**
+		 * 인증번호 체크
+		 */
+		function checkAuthKey() {
+			var uri = '<c:url value="/member/checkAuthKey.do" />';
+			var params = {
+					"authKey" : authForm.authKey.value,
+					"memberId" : joinForm.memberId.value,
+					"memberPw" : joinForm.memberPw.value,
+					"memberName" : joinForm.memberName.value,
+					"memberPhone" : joinForm.memberPhone.value
+			};
+
+			$.ajax({
+				url : uri,
+				type : "post",
+				dataType : "json",
+				headers : {
+					"Content-type" : "application/json",
+					"X-HTTP-Method-Override" : "post",
+					"${_csrf.headerName}" : "${_csrf.token}"
+				},
+				data : JSON.stringify(params),
+				async : false,
+				success : function(response) {
+					if (isEmpty(response) == false && response.result === "SUCCESS") {
+						Swal.fire(response.message);
+					} else {
+						Swal.fire("오류가 발생했습니다. 다시 시도해 주세요.");
+					}
+					return false;
+				},
+				error : function(response, status, error) {
+					Swal.fire(response.responseJSON.message);
+					return false;
+				}
+			});
+		}
 	</script>
 
 <%@include file="/WEB-INF/include/footer.jsp"%>

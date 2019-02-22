@@ -2,18 +2,23 @@ package com.dy.controller;
 
 import java.util.HashMap;
 
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dy.common.domain.Result;
 import com.dy.common.service.CommonService;
 import com.dy.common.utils.CommonUtils;
 import com.dy.domain.MemberVO;
@@ -31,35 +36,106 @@ public class MemberController extends CommonUtils {
 	private MemberService memberService;
 
 	/**
-	 * 회원가입 페이지
+	 * 회원가입 인증 메일 발송
 	 * 
-	 * @return String - 페이지
+	 * @param memberId - 회원가입 아이디 (이메일을 발송할 주소)
+	 * @return JSON - 결과 / 메시지
 	 */
-	@RequestMapping(value = "/member/write.do")
-	public String openJoinPage(@RequestParam(value = "memberId", required = false) String memberId, Model model) {
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/member/sendAuthMail.do", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<JSONObject> sendAuthenticationMail(
+			@RequestParam(value = "memberId", required = false) String memberId) {
 
-		if (StringUtils.isEmpty(memberId) == false) {
-			MemberVO member = memberService.selectMemberDetail(memberId);
+		ResponseEntity<JSONObject> entity = null;
 
-			if (ObjectUtils.isEmpty(member)) {
-				return showMessageAndRedirect("잘못된 접근입니다.", "/member/list.do", null, model);
+		/* 오류 및 예외의 경우 리턴할 인스턴스(객체) */
+		JSONObject json = new JSONObject();
+		json.put("result", Result.FAIL);
+		json.put("message", "오류가 발생했습니다. 다시 시도해 주세요.");
+
+		if (StringUtils.isEmpty(memberId)) {
+			entity = new ResponseEntity<>(json, HttpStatus.BAD_REQUEST);
+		} else {
+			try {
+				/* 인증키 저장 & 이메일 발송 */
+				boolean status = commonService.registerAuthKeyAndSendMail(memberId);
+
+				if (status == false) {
+					entity = new ResponseEntity<>(json, HttpStatus.BAD_REQUEST);
+				} else {
+					json = new JSONObject();
+					json.put("result", Result.SUCCESS);
+					json.put("message", "메일로 발송된 인증번호를 입력해 주세요.");
+					entity = new ResponseEntity<>(json, HttpStatus.OK);
+				}
+
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+				entity = new ResponseEntity<>(json, HttpStatus.BAD_REQUEST);
+			} catch (Exception e) {
+				e.printStackTrace();
+				entity = new ResponseEntity<>(json, HttpStatus.BAD_REQUEST);
 			}
-
-			model.addAttribute("member", member);
 		}
 
-		return "/member/write";
+		return entity;
 	}
 
-	@RequestMapping(value = "/member/sendMail.do", method = RequestMethod.POST)
+	/**
+	 * 인증 키 유효성 체크
+	 * 
+	 * @param params - MemberVO 인스턴스 (객체)
+	 * @return JSON - 결과 / 메시지
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/member/checkAuthKey.do")
 	@ResponseBody
-	public String sendAuthenticationMail(@RequestParam(value = "memberId", required = false) String memberId) {
+	public ResponseEntity<JSONObject> checkAuthKeyValidation(@RequestBody MemberVO params) {
 
-		boolean status = commonService.registerAuthKeyAndSendMail(memberId);
-		System.out.println(status);
-		System.out.println(status);
-		System.out.println(status);
-		return null;
+		ResponseEntity<JSONObject> entity = null;
+
+		/* 오류 및 예외의 경우 리턴할 인스턴스(객체) */
+		JSONObject json = new JSONObject();
+		json.put("result", Result.FAIL);
+		json.put("message", "오류가 발생했습니다. 다시 시도해 주세요.");
+
+		if (ObjectUtils.isEmpty(params) || StringUtils.isEmpty(params.getAuthKey()) || StringUtils.isEmpty(params.getMemberId())) {
+			entity = new ResponseEntity<>(json, HttpStatus.BAD_REQUEST);
+		} else {
+			try {
+				/* 인증 키, 회원가입 아이디 */
+				String authKey = params.getAuthKey();
+				String memberId = params.getMemberId();
+
+				/* 인증번호 유효성 체크 */
+				boolean status = commonService.checkAuthKeyValidation(authKey, memberId);
+				if (status == false) {
+					json = new JSONObject();
+					json.put("result", Result.FAIL);
+					json.put("message", "유효하지 않은 인증번호입니다.");
+					entity = new ResponseEntity<>(json, HttpStatus.BAD_REQUEST);
+				} else {
+					/* 회원 등록 */
+					status = memberService.registerMember(params);
+					if (status == true) {
+						json = new JSONObject();
+						json.put("result", Result.SUCCESS);
+						json.put("message", "가입이 완료되었습니다.");
+						entity = new ResponseEntity<>(json, HttpStatus.OK);
+					}
+				}
+
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+				entity = new ResponseEntity<>(json, HttpStatus.BAD_REQUEST);
+			} catch (Exception e) {
+				e.printStackTrace();
+				entity = new ResponseEntity<>(json, HttpStatus.BAD_REQUEST);
+			}
+		}
+
+		return entity;
 	}
 
 	/**
@@ -72,8 +148,8 @@ public class MemberController extends CommonUtils {
 	 */
 	@RequestMapping(value = "/member/processing.do", method = RequestMethod.POST)
 	public String processingMember(@RequestParam(value = "type", required = false) String type,
-								   @RequestParam(value = "memberId", required = false) String memberId,
-								   @RequestParam(value = "params", required = false) MemberVO params, Model model) {
+			@RequestParam(value = "memberId", required = false) String memberId,
+			@RequestParam(value = "params", required = false) MemberVO params, Model model) {
 
 		String failureResult = showMessageAndRedirect("오류가 발생했습니다. 다시 시도해 주세요.", "/member/list.do", null, model);
 

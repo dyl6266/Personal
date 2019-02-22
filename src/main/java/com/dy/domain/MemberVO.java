@@ -17,7 +17,7 @@ public class MemberVO extends CommonVO {
 	/* 회원 휴대폰 번호 */
 	private String memberPhone;
 
-	/* 회원가입 인증번호 */
+	/* 회원가입 인증 키 */
 	private String authKey;
 
 	public Integer getIdx() {

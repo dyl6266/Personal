@@ -46,18 +46,10 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public boolean registerMember(MemberVO params) {
 
-		boolean result = false;
-
-		if (ObjectUtils.isEmpty(params)) {
-			return false;
-		}
+		boolean status = false;
 
 		/* 등록의 경우 */
 		if (params.getIdx() == null) {
-			/* 회원가입 인증키 저장 */
-			String authKey = CommonUtils.getRandomNumber(8, YesNo.Y);
-			params.setAuthKey(authKey);
-
 			/* 패스워드 암호화 */
 			String encodedPw = passwordEncoder.encode(params.getMemberPw());
 			params.setMemberPw(encodedPw);
@@ -65,54 +57,29 @@ public class MemberServiceImpl implements MemberService {
 			/* 쿼리 실행 횟수 */
 			int queryCnt = memberDAO.insertMember(params);
 			if (queryCnt > 0) {
-				/* 시퀀스 테이블 업데이트 */
-				HashMap<String, Object> hashMap = new HashMap<>();
-				hashMap.put("tableName", String.valueOf("member"));
-				hashMap.put("nextIdx", params.getIdx() + 1);
-				commonDAO.updateNextIdx(hashMap);
-
-				/* 이메일 발송 */
-				try {
-					MailUtils sendMail = new MailUtils(mailSender);
-					sendMail.setSubject("회원가입 인증 이메일");
-					StringBuffer sb = new StringBuffer();
-					sb.append("<span>아이디 : " + params.getMemberId() + "</span>").append("<span>인증번호 : " + authKey + "</span>");
-
-//					sb.append("<h2>[이메일 인증]</h2>").append("<p>아래 링크를 클릭하시면 인증이 완료됩니다.</p>")
-//							.append("<a href=\"http://127.0.0.1:8080/member/joinOK.do")
-//							.append("?memberId=" + params.getMemberId()).append("&authKey=" + authKey)
-//							.append("\"target=_blank\">인증 확인</a>");
-
-					sendMail.setText(sb.toString());
-					sendMail.setFrom("dyl6266", "관리자명");
-					sendMail.setTo(params.getMemberId());
-					sendMail.send();
-				} catch (MessagingException e) {
-					e.printStackTrace();
-					result = false;
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-					result = false;
-				} catch (Exception e) {
-					e.printStackTrace();
-					result = false;
+				/* 정상 처리된 인증 키 삭제 */
+				int resultNum = commonDAO.changeStatusOfAuthKey(params.getAuthKey());
+				if (resultNum > 0) {
+					status = true;
 				}
-				result = true;
 			}
 
 		/* 수정의 경우 */
 		} else {
 			if ( StringUtils.isEmpty(params.getMemberPw()) == false ) {
+				/* 패스워드 암호화 */
 				String encodedPw = passwordEncoder.encode(params.getMemberPw());
 				params.setMemberPw(encodedPw);
 			}
+
 			/* 쿼리 실행 횟수 */
 			int queryCnt = memberDAO.updateMember(params);
 			if (queryCnt > 0) {
-				result = true;
+				status = true;
 			}
 		}
-		return result;
+
+		return status;
 	}
 
 	/**

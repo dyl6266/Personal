@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.dy.domain.AttachVO;
-import com.dy.domain.BoardVO;
 
 @Repository("commonDAO")
 public class CommonDAO extends AbstractDAO {
@@ -82,7 +81,7 @@ public class CommonDAO extends AbstractDAO {
 	}
 
 	/**
-	 * 인증번호 등록
+	 * 인증 키 등록
 	 * 
 	 * @param params
 	 * @return int - 쿼리 실행 횟수
@@ -92,13 +91,23 @@ public class CommonDAO extends AbstractDAO {
 	}
 
 	/**
-	 * 입력한 인증번호가 유효한 번호인지 확인 (10분 기준)
+	 * 입력한 인증 키가 유효한 번호인지 확인 (10분 초과 시 select 결과에서 제외)
 	 * 
-	 * @param params - HashMap (인증번호, 아이디)
+	 * @param params - (인증 키, 아이디)
 	 * @return int - 결과 수
 	 */
 	public int checkValidTime(HashMap<String, Object> params) {
 		return (int) selectOne(namespace + ".checkValidTime", params);
+	}
+
+	/**
+	 * 정상적으로 처리된 인증 키 삭제 (상태 'N')
+	 * 
+	 * @param params - 인증 키
+	 * @return int - 결과 수
+	 */
+	public int changeStatusOfAuthKey(String authKey) {
+		return update(namespace + ".changeStatusOfAuthKey", authKey);
 	}
 
 }

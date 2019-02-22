@@ -122,7 +122,7 @@
 			board_idx = #{boardIdx}
 	</select>
 
-	<!-- 인증번호 등록 -->
+	<!-- 인증 키 등록 -->
 	<insert id="insertAuthKey" parameterType="hashmap">
 		INSERT INTO authentication (
 			auth_key
@@ -131,11 +131,11 @@
 		) VALUES(
 			#{authKey}
 		  , #{memberId}
-		  , 'N'
+		  , 'Y'
 		)
 	</insert>
 
-	<!-- 입력한 인증번호가 유효한 번호인지 확인 (10분 기준) -->
+	<!-- 입력한 인증 키가 유효한 번호인지 확인 (10분 초과 시 select 결과에서 제외) -->
 	<select id="checkValidTime" parameterType="hashmap" resultType="int">
 		SELECT
 			COUNT(*)
@@ -144,7 +144,22 @@
 		WHERE
 			status = 'Y'
 		AND
+			auth_key = #{authKey}
+		AND
+			member_id = #{memberId}
+		AND
 			insert_time BETWEEN SUBDATE(NOW(), INTERVAL 10 MINUTE) AND NOW()
 	</select>
+
+	<!-- 정상적으로 처리된 인증 키 삭제 (상태 'N') -->
+	<update id="changeStatusOfAuthKey" parameterType="string">
+		UPDATE authentication
+		SET
+			status = 'N'
+		WHERE
+			status = 'Y'
+		AND
+			auth_key = #{authKey}
+	</update>
 
 </mapper>
