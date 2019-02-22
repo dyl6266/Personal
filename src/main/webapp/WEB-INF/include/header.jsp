@@ -24,9 +24,9 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 		<!-- 다음 주소 API CDN -->
+		<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 		<!-- Sweet Alert CDN -->
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-		<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 		<script src="/resources/js/ui.js" /></script>
 		<script src="/resources/js/jquery.bxslider.js" /></script>
 		<script src="/resources/js/common.js" /></script>

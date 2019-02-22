@@ -212,7 +212,15 @@
 				async : false,
 				success : function(response) {
 					if (isEmpty(response) == false && response.result === "SUCCESS") {
-						Swal.fire(response.message);
+						Swal.fire({
+							title: response.message + '\n' + ' 로그인 페이지로 이동합니다.',
+							confirmButtonColor: '#3085d6',
+							confirmButtonText: '로그인하기'
+						}).then((result) => {
+							if (result.value) {
+								location.href = '<c:url value="/login.do" />';
+							}
+						})
 					} else {
 						Swal.fire("오류가 발생했습니다. 다시 시도해 주세요.");
 					}
