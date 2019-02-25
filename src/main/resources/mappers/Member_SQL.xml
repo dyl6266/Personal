@@ -11,6 +11,7 @@
 		<result property="memberPw" 	column="member_pw" />
 		<result property="memberName" 	column="member_name" />
 		<result property="memberPhone" 	column="member_phone" />
+		<result property="authority" 	column="authority"		typeHandler="org.apache.ibatis.type.EnumTypeHandler" />
 		<result property="status" 		column="status" />
 		<result property="insertTime" 	column="insert_time" />
 		<result property="updateTime" 	column="update_time" />
@@ -23,6 +24,7 @@
 		, member_pw
 		, member_name
 		, member_phone
+		, authority
 		, status
 		, insert_time
 		, update_time
@@ -50,7 +52,8 @@
 			, #{memberPw}
 			, #{memberName}
 			, #{memberPhone}
-			, 'N'
+			, #{authority.value}
+			, 'Y'
 			, NOW()
 			, NULL
 		)

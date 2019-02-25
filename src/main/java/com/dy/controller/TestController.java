@@ -9,17 +9,17 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class TestController {
 	
-	@RequestMapping(value = "/test.do")
-	public ModelAndView test() {
-		ModelAndView mav = new ModelAndView("jsonView");
-		
-		HashMap<String, Object> hashMap = new HashMap<>();
-		for (int i = 0; i < 10; i++) {
-			hashMap.put("key" + i, "value" + i);
-		}
-
-		mav.addObject(hashMap);
-		return mav;
-	}
+//	@RequestMapping(value = "/test.do")
+//	public ModelAndView test() {
+//		ModelAndView mav = new ModelAndView("jsonView");
+//		
+//		HashMap<String, Object> hashMap = new HashMap<>();
+//		for (int i = 0; i < 10; i++) {
+//			hashMap.put("key" + i, "value" + i);
+//		}
+//
+//		mav.addObject(hashMap);
+//		return mav;
+//	}
 
 }

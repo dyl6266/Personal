@@ -130,7 +130,7 @@
 
 		function moveNextStepAndSendMail() {
 			/* 아이디 hidden */
-			joinForm.memberId.value = joinForm.frontAddr.value + "@" + joinForm.backAddr.value;
+			joinForm.memberId.value = joinForm.frontAddr.value + '@' + joinForm.backAddr.value;
 
 			var status = checkValidation(joinForm.frontAddr, "아이디", null, null)
 					  && checkValidation(joinForm.backAddr, "도메인", null, null)
@@ -178,9 +178,7 @@
 					return false;
 				},
 				error : function(response, status, error) {
-					console.log(response);
-					console.log("==================");
-					console.log(response.responseJSON.message);
+					Swal.fire(response.responseJSON.message);
 					return false;
 				}
 			});

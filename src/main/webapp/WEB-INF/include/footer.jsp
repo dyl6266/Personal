@@ -42,6 +42,19 @@
 					pager: false
 				});
 			});
+
+			/**
+			 * 로그아웃을 처리하는 form을 생성하여 submit 실행
+			 */
+			function logout() {
+				var html = "";
+				html += '<form name="logoutForm" action="/logout.do" method="post">';
+					html += '<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />';
+				html += '</form>';
+
+				$("body").append(html);
+				document.logoutForm.submit();
+			}
 		</script>
 	</body>
 </html>

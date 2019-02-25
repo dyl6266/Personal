@@ -24,7 +24,7 @@ header {position: absolute; top: 0; left: 0; right: 0; z-index: 10;}
 .header_wrap .gnb_wrap .depth1>li.artAvenue>a {padding: 0 40px; color: #2b9a9d; border-left: 1px solid rgba(255, 255, 252, 0.3);}
 .header_wrap .gnb_wrap .depth1>li.utill>a {width: 80px; height: 80px; padding: 0;}
 .header_wrap .gnb_wrap .depth1>li.utill>a.login {background: #2b9a9d url('/resources/images/common/ic_people.png') center center no-repeat;} /* login */
-.header_wrap .gnb_wrap .depth1>li.utill>a.logout {background: #2b9a9d url(/resources/images/common/ic_lock.png') center center no-repeat;} /* logout */
+.header_wrap .gnb_wrap .depth1>li.utill>a.logout {background: #2b9a9d url('/resources/images/common/ic_lock.png') center center no-repeat;} /* logout */
 
 .header_wrap.main_header .gnb_wrap .depth1>li>a,
 .header_wrap.main_header .gnb_wrap .depth1>li>a  {color: #fff;}

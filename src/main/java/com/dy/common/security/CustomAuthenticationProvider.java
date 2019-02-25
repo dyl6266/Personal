@@ -22,6 +22,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	/**
+	 * 인즐 절차가 시작되면 가장 먼저 실행되는 메서드
+	 * 
+	 * @param authentication - 화면에서 입력한 로그인 정보
+	 */
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
@@ -31,8 +36,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		UserDetails user = memberAuthService.loadUserByUsername(authToken.getName());
 		String rawPw = (String) authentication.getCredentials();
 		String encodedPw = (String) passwordEncoder.encode(user.getPassword());
+		System.out.println(rawPw);
+		System.out.println(encodedPw);
 
 		if (passwordEncoder.matches(rawPw, encodedPw) == false) {
+			System.out.println("다르다...");
+			System.out.println("다르다...");
+			System.out.println("다르다...");
 			throw new BadCredentialsException("Passwords do not match");
 		}
 

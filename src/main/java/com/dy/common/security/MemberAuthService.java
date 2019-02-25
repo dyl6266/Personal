@@ -20,6 +20,11 @@ public class MemberAuthService implements UserDetailsService {
 	@Autowired
 	private MemberDAO memberDAO;
 
+	/**
+	 * DB에 있는 이용자의 정보를 UserDetails 타입으로 반환
+	 * 
+	 * @param memberId - 회원 아이디
+	 */
 	@Override
 	public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
 

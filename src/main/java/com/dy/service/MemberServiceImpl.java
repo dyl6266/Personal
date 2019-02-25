@@ -1,23 +1,14 @@
 package com.dy.service;
 
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.List;
 
-import javax.mail.MessagingException;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import com.dy.common.dao.CommonDAO;
-import com.dy.common.domain.YesNo;
-import com.dy.common.utils.CommonUtils;
-import com.dy.common.utils.MailUtils;
 import com.dy.dao.MemberDAO;
 import com.dy.domain.MemberVO;
 
@@ -32,9 +23,6 @@ public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
-	@Autowired
-	private JavaMailSender mailSender;
 
 	/**
 	 * 회원 등록
@@ -64,9 +52,9 @@ public class MemberServiceImpl implements MemberService {
 				}
 			}
 
-		/* 수정의 경우 */
+			/* 수정의 경우 */
 		} else {
-			if ( StringUtils.isEmpty(params.getMemberPw()) == false ) {
+			if (StringUtils.isEmpty(params.getMemberPw()) == false) {
 				/* 패스워드 암호화 */
 				String encodedPw = passwordEncoder.encode(params.getMemberPw());
 				params.setMemberPw(encodedPw);
@@ -90,14 +78,7 @@ public class MemberServiceImpl implements MemberService {
 	 */
 	@Override
 	public MemberVO selectMemberDetail(String memberId) {
-
-		MemberVO member = null;
-
-		if (!StringUtils.isEmpty(memberId)) {
-			member = memberDAO.selectMemberDetail(memberId);
-		}
-
-		return member;
+		return memberDAO.selectMemberDetail(memberId);
 	}
 
 	/**

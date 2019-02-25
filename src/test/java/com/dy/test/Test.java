@@ -2,14 +2,19 @@ package com.dy.test;
 
 import java.util.Random;
 
+import com.dy.common.domain.Authority;
 import com.dy.common.domain.YesNo;
-import com.dy.common.utils.CommonUtils;
 
 public class Test {
-
+	
 	public static void main(String[] args) {
-		System.out.println(CommonUtils.getRandomNumber(8, YesNo.Y));
-		System.out.println(CommonUtils.getRandomNumber(8, YesNo.N));
+//		System.out.println(CommonUtils.getRandomNumber(8, YesNo.Y));
+//		System.out.println(CommonUtils.getRandomNumber(8, YesNo.N));
+		
+		for ( Authority auth : Authority.values() ) {
+			System.out.println(auth);
+			System.out.println(auth.getValue());
+		}
 	}
 	
 	public static String getRandomNumber(int length, YesNo useYn) {

@@ -36,6 +36,7 @@
 						<input type="submit" class="btn btn_jade" value="로그인" />
 					</div>
 				</form>
+				<span>${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message }</span>
 				<ul>
 					<li><a href="javascript:void(0)" title="아이디 찾기">아이디 찾기</a></li>
 					<li><a href="javascript:void(0)" title="비밀번호 찾기">비밀번호 찾기</a></li>

@@ -82,6 +82,9 @@ public class CommonServiceImpl implements CommonService {
 				sendMail.setTo(memberId);
 				sendMail.send();
 
+				/* 상태 변경 */
+				status = true;
+
 			} catch (MessagingException e) {
 				e.printStackTrace();
 			} catch (UnsupportedEncodingException e) {
@@ -89,9 +92,6 @@ public class CommonServiceImpl implements CommonService {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
-			/* 상태 변경 */
-			status = true;
 		}
 
 		return status;

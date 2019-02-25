@@ -83,7 +83,7 @@
 										</ul>
 									</li>
 									<li class="artAvenue">
-										<a href="artavenue/artavenue_info.html" title="아트에비뉴27" class="mobile_none">아트에비뉴27</a>
+										<a href="artavenue/artavenue_info.html" title="아트에비뉴27" class="mobile_none">아트에비뉴27<sec:authentication property="principal.username" /></a>
 										<a href="#none" title="아트에비뉴27" class="mobile_block">아트에비뉴27</a>
 										<ul class="depth2">
 											<li><a href="artavenue/artavenue_info.html" title="소개">소개</a></li>
@@ -92,13 +92,21 @@
 										</ul>
 									</li>
 									<li class="utill fl_wrap">
-										<a href="/login.do" title="로그인" class="text_blind login">로그인</a> <!-- 아이콘변경 class => login(로그인) / logout(로그아웃) -->
-										<a href="/member/join.do" title="회원가입" class="text_blind mobile_block join">회원가입</a> <!-- 아이콘변경 class => join(회원가입) / mypage(마이페이지) -->
+										<sec:authorize access="isAnonymous()">
+											<a href="/login.do" title="로그인" class="text_blind login">로그인</a>
+										</sec:authorize>
+										<sec:authorize access="isAuthenticated()">
+											<a href="javascript:logout()" title="로그아웃" class="text_blind logout">로그아웃</a>
+										</sec:authorize>
 										<ul class="depth2">
-											<li><a href="/login.do" title="로그인">로그인</a></li>
-											<li><a href="/member/join.do" title="회원가입">회원가입</a></li>
-											<li><a href="member/logout.html" title="로그아웃">로그아웃</a></li>
-											<li><a href="mypage/mypage.html" title="마이페이지">마이페이지</a></li>
+											<sec:authorize access="isAnonymous()">
+												<li><a href="/login.do" title="로그인">로그인</a></li>
+												<li><a href="/join.do" title="회원가입">회원가입</a></li>
+											</sec:authorize>
+											<sec:authorize access="isAuthenticated()">
+												<li><a href="javascript:logout()" title="로그아웃">로그아웃</a></li>
+												<li><a href="mypage/mypage.html" title="마이페이지">마이페이지</a></li>
+											</sec:authorize>
 										</ul>
 									</li>
 								</ul>

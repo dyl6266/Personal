@@ -1,5 +1,7 @@
 package com.dy.domain;
 
+import com.dy.common.domain.Authority;
+
 public class MemberVO extends CommonVO {
 
 	/* PK */
@@ -16,6 +18,9 @@ public class MemberVO extends CommonVO {
 
 	/* 회원 휴대폰 번호 */
 	private String memberPhone;
+
+	/* 회원 권한 */
+	private Authority authority;
 
 	/* 회원가입 인증 키 */
 	private String authKey;
@@ -58,6 +63,14 @@ public class MemberVO extends CommonVO {
 
 	public void setMemberPhone(String memberPhone) {
 		this.memberPhone = memberPhone;
+	}
+
+	public Authority getAuthority() {
+		return authority;
+	}
+
+	public void setAuthority(Authority authority) {
+		this.authority = authority;
 	}
 
 	public String getAuthKey() {

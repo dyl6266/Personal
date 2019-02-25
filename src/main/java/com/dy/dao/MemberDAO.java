@@ -67,7 +67,7 @@ public class MemberDAO extends AbstractDAO {
 	 * 전체 회원수 조회
 	 * 
 	 * @param params - VO 클래스
-	 * @return int - 회원수
+	 * @return int - 회원 수
 	 */
 	public int selectTotalCount(MemberVO params) {
 		return (int) selectOne(namespace + ".selectTotalCount", params);

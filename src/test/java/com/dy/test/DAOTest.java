@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.ObjectUtils;
 
+import com.dy.common.domain.Authority;
 import com.dy.common.domain.YesNo;
 import com.dy.dao.MemberDAO;
 import com.dy.domain.MemberVO;
@@ -37,28 +39,29 @@ public class DAOTest {
 	public void testInsert() {
 //		for (int i=2; i < 20; i++) {
 			MemberVO vo = new MemberVO();
-			vo.setMemberId("dyl2436");
-			vo.setMemberPw(passwordEncoder.encode("ehdud123"));
+			vo.setMemberId("dyl6266@naver.com");
+			vo.setMemberPw(passwordEncoder.encode("vpsxk123!@#"));
 			vo.setMemberName("도영");
-			vo.setMemberPhone("01033282436");
+			vo.setMemberPhone("01033280000");
 			vo.setStatus(YesNo.Y);
+			vo.setAuthority(Authority.MEMBER);
 			dao.insertMember(vo);
 //		}
 	}
 	
 	@Test
 	public void selectDetail() {
-		MemberVO member = dao.selectMemberDetail("dyl2436");
-		
-		
-		String test1 = "ehdud123";
-		String test2 = passwordEncoder.encode(test1);
-		
-		
-		System.out.println(passwordEncoder.matches(test1, test1));
-		System.out.println(passwordEncoder.matches(test1, test2));
-		System.out.println(passwordEncoder.matches(test2, test1));
-		System.out.println(passwordEncoder.matches(test2, test2));
+		MemberVO member = dao.selectMemberDetail("dyl6266@naver.com");
+//		
+//		
+//		String test1 = "ehdud123";
+//		String test2 = passwordEncoder.encode(test1);
+//		
+//		
+//		System.out.println(passwordEncoder.matches(test1, test1));
+//		System.out.println(passwordEncoder.matches(test1, test2));
+//		System.out.println(passwordEncoder.matches(test2, test1));
+//		System.out.println(passwordEncoder.matches(test2, test2));
 	}
 	
 	@Test
