@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace를 통해 Query ID 매핑 -->
+<mapper namespace="user">
+
+	<!-- User 테이블 프로퍼티, 컬럼 결과 매핑 -->
+	<resultMap id="userResultMap" 		type="CustomUserDetails">
+		<id 	property="idx" 			column="idx" />
+		<result property="userId" 		column="user_id" />
+		<result property="userPw" 		column="user_pw" />
+		<result property="userName" 	column="user_name" />
+		<result property="userPhone" 	column="user_phone" />
+		<result property="authority" 	column="authority"		typeHandler="org.apache.ibatis.type.EnumTypeHandler" />
+		<result property="status" 		column="status"			typeHandler="org.apache.ibatis.type.EnumTypeHandler" />
+		<result property="insertTime" 	column="insert_time" />
+		<result property="updateTime" 	column="update_time" />
+	</resultMap>
+
+	<!-- User 테이블 컬럼 리스트 -->
+	<sql id="userColumns">
+		  idx
+		, user_id
+		, user_pw
+		, user_name
+		, user_phone
+		, authority
+		, status
+		, insert_time
+		, update_time
+	</sql>
+
+	<!-- 사용자 등록 -->
+	<!-- 오라클과 같이 auto_increment 기능이 없는 경우엔, selectKey 구문을 사용해야 함 -->
+	<!-- Member_SQL.xml을 참조하자 -->
+	<insert id="insertUser" parameterType="CustomUserDetails" useGeneratedKeys="true" keyProperty="idx">
+		INSERT INTO user (
+			<include refid="userColumns" />
+		) VALUES (
+			  #{idx}
+			, #{userId}
+			, #{userPw}
+			, #{userName}
+			, #{userPhone}
+			, #{authority.value}
+			, 'Y'
+			, NOW()
+			, NULL
+		)
+	</insert>
+
+	<!-- 사용자 정보 상세 조회 -->
+	<select id="selectUserDetail" parameterType="string" resultMap="userResultMap">
+		SELECT
+			<include refid="userColumns" />
+		FROM
+			user
+		WHERE
+			user_id = #{userId}
+	</select>
+
+	<!-- 사용자 정보 수정 -->
+	<update id="updateUser" parameterType="CustomUserDetails">
+		UPDATE user
+		SET
+			<if test="!@com.dy.common.utils.MyBatisUtils@isEmpty(userPw)">user_pw = #{userPw}</if>
+		  ,	<if test="!@com.dy.common.utils.MyBatisUtils@isEmpty(userName)">user_name = #{username}</if>
+		  ,	<if test="!@com.dy.common.utils.MyBatisUtils@isEmpty(userPhone)">user_phone = #{userPhone}</if>
+		  ,	<if test="!@com.dy.common.utils.MyBatisUtils@isEmpty(userPhone)">authority = #{authority}</if>
+		  , update_time = NOW()
+		WHERE
+			user_id = #{userId}
+	</update>
+
+	<!-- 사용자 계정 비활성화 -->
+	<update id="deleteUser" parameterType="string">
+		UPDATE user
+		SET
+			status = 'N'
+		WHERE
+			user_id = #{userId}
+	</update>
+
+	<!-- 사용자 리스트 조회 -->
+	<select id="selectUserList" parameterType="CustomUserDetails" resultMap="userResultMap">
+		SELECT
+			<include refid="userColumns" />
+		FROM
+			user
+		WHERE
+			status = 'Y'
+		ORDER BY
+			idx DESC,
+			authority ASC,
+			insert_time DESC
+	</select>
+
+	<!-- 전체 사용자 수 조회 -->
+	<select id="selectTotalCount" parameterType="CustomUserDetails" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			user
+		WHERE
+			status = 'Y'
+	</select>
+
+</mapper>

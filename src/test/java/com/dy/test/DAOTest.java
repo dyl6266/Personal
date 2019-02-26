@@ -8,11 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.util.ObjectUtils;
 
 import com.dy.common.domain.Authority;
 import com.dy.common.domain.YesNo;
 import com.dy.dao.MemberDAO;
+import com.dy.dao.UserDAO;
+import com.dy.domain.CustomUserDetails;
 import com.dy.domain.MemberVO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -28,6 +29,9 @@ public class DAOTest {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
+	@Autowired
+	private UserDAO userDAO;
+	
 	public void test() {
 		Random random = new Random();
 		int test = random.nextInt(100);
@@ -38,20 +42,29 @@ public class DAOTest {
 	@Test
 	public void testInsert() {
 //		for (int i=2; i < 20; i++) {
-			MemberVO vo = new MemberVO();
-			vo.setMemberId("dyl6266@naver.com");
-			vo.setMemberPw(passwordEncoder.encode("vpsxk123!@#"));
-			vo.setMemberName("도영");
-			vo.setMemberPhone("01033280000");
-			vo.setStatus(YesNo.Y);
-			vo.setAuthority(Authority.MEMBER);
-			dao.insertMember(vo);
+			CustomUserDetails user = new CustomUserDetails();
+			user.setUserId("dyl6266@naver.com");
+			user.setUserPw(passwordEncoder.encode("vpsxk123!@#"));
+			user.setUserName("도영");
+			user.setUserPhone("01033282436");
+			user.setAuthority(Authority.valueOf(2));
+			user.setStatus(YesNo.Y);
+			userDAO.insertUser(user);
+		
+//			MemberVO vo = new MemberVO();
+//			vo.setMemberId("dyl6266@naver.com");
+//			vo.setMemberPw(passwordEncoder.encode("vpsxk123!@#"));
+//			vo.setMemberName("도영");
+//			vo.setMemberPhone("01033280000");
+//			vo.setStatus(YesNo.Y);
+//			vo.setAuthority(Authority.MEMBER);
+//			dao.insertMember(vo);
 //		}
 	}
 	
 	@Test
 	public void selectDetail() {
-		MemberVO member = dao.selectMemberDetail("dyl6266@naver.com");
+//		MemberVO member = dao.selectMemberDetail("dyl6266@naver.com");
 //		
 //		
 //		String test1 = "ehdud123";

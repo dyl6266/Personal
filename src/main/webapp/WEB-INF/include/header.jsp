@@ -83,7 +83,7 @@
 										</ul>
 									</li>
 									<li class="artAvenue">
-										<a href="artavenue/artavenue_info.html" title="아트에비뉴27" class="mobile_none">아트에비뉴27<sec:authentication property="principal.username" /></a>
+										<a href="artavenue/artavenue_info.html" title="아트에비뉴27" class="mobile_none">아트에비뉴27</a>
 										<a href="#none" title="아트에비뉴27" class="mobile_block">아트에비뉴27</a>
 										<ul class="depth2">
 											<li><a href="artavenue/artavenue_info.html" title="소개">소개</a></li>
@@ -97,6 +97,9 @@
 										</sec:authorize>
 										<sec:authorize access="isAuthenticated()">
 											<a href="javascript:logout()" title="로그아웃" class="text_blind logout">로그아웃</a>
+											<span><sec:authentication property="principal.userId" />ㅋㅋㅋ</span>
+											<span><sec:authentication property="principal.username" />ㅎㅎㅎ</span>
+											<span><sec:authentication property="principal.userName" />ㅍㅍㅍ</span>
 										</sec:authorize>
 										<ul class="depth2">
 											<sec:authorize access="isAnonymous()">

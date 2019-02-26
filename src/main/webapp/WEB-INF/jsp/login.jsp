@@ -31,8 +31,8 @@
 					<!-- csrf 토큰(?) -->
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<div class="login_form">
-						<input type="text" name="memberId" class="" value="" placeholder="아이디를 입력해 주세요." />
-						<input type="password" name="memberPw" class="" value="" placeholder="비밀번호를 입력해 주세요." />
+						<input type="text" name="userId" class="" value="" placeholder="아이디를 입력해 주세요." />
+						<input type="password" name="userPw" class="" value="" placeholder="비밀번호를 입력해 주세요." />
 						<input type="submit" class="btn btn_jade" value="로그인" />
 					</div>
 				</form>
@@ -72,8 +72,8 @@
 
 <script>
 	function checkForm(obj) {
-		return (checkField(obj.memberId, "아이디")
-			 && checkField(obj.memberPw, "패스워드"));
+		return (checkField(obj.userId, "아이디")
+			 && checkField(obj.userPw, "패스워드"));
 	}
 </script>
 

@@ -28,8 +28,8 @@
             login-page="/login.do"
             login-processing-url="/auth.do"
             authentication-success-handler-ref="loginSuccessHandler"
-            username-parameter="memberId"
-            password-parameter="memberPw"
+            username-parameter="userId"
+            password-parameter="userPw"
             authentication-failure-url="/login.do?status=error"
         />
 
@@ -42,10 +42,10 @@
 
     <!-- 인증 처리를 위한 최상위 태그 -->
     <security:authentication-manager alias="authenticationManager">
-    	<security:authentication-provider ref="customAuthenticationProvider" />
+    	<security:authentication-provider ref="authenticationProvider" />
 
         <!-- username, password를 제공해줄 서비스 등록 -->
-    	<security:authentication-provider user-service-ref="memberAuthService">
+    	<security:authentication-provider user-service-ref="userDetailsService">
     		<security:password-encoder ref="passwordEncoder" />
     	</security:authentication-provider>
     </security:authentication-manager>
@@ -61,7 +61,8 @@
 		<beans:property name="errorPage" value="/member/accessDenied.do" />
 	</beans:bean>
 
-    <beans:bean id="memberAuthService" class="com.dy.common.security.MemberAuthService" />
+    <beans:bean id="userDetailsService" class="com.dy.common.security.CustomUserDetailsService" />
+    <beans:bean id="authenticationProvider" class="com.dy.common.security.CustomAuthenticationProvider" />
     <beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
 </beans:beans>
