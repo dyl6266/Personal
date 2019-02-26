@@ -30,8 +30,9 @@
             authentication-success-handler-ref="loginSuccessHandler"
             username-parameter="userId"
             password-parameter="userPw"
-            authentication-failure-url="/login.do?status=error"
+            authentication-failure-handler-ref="loginFailureHandler"
         />
+           <!-- authentication-failure-url="/login.do?status=error" -->
 
         <!-- 로그아웃 시 세션 초기화 -->
         <security:logout invalidate-session="true" logout-url="/logout.do" logout-success-url="/login.do?status=logout" />
@@ -51,13 +52,22 @@
     </security:authentication-manager>
 
 	<!-- Login Success Handler -->
-	<beans:bean id="loginSuccessHandler" class="com.dy.common.security.LoginSuccessHandler">
+	<beans:bean id="loginSuccessHandler" class="com.dy.common.security.handler.LoginSuccessHandler">
 		<beans:property name="defaultTargetUrl" value="/index.do" />
 		<beans:property name="alwaysUseDefaultTargetUrl" value="true" />
 	</beans:bean>
 
+	<!-- Login Failure Handler -->
+	<beans:bean id="loginFailureHandler" class="com.dy.common.security.handler.LoginFailureHandler">
+		<!-- 로그인 요청 정보를 담는 프로퍼티(인스턴스 변수) -->
+		<beans:property name="userId" value="userId" />
+		<beans:property name="userPw" value="userPw" />
+		<beans:property name="errorMsg" value="errorMsg" />
+		<!-- <beans:property name="failureUri" value="/login.do?status=fail" /> -->
+	</beans:bean>
+
 	<!-- Access Denied Handler -->
-	<beans:bean id="customAccessDeniedHandler" class="com.dy.common.security.CustomAccessDeniedHandler">
+	<beans:bean id="customAccessDeniedHandler" class="com.dy.common.security.handler.CustomAccessDeniedHandler">
 		<beans:property name="errorPage" value="/member/accessDenied.do" />
 	</beans:bean>
 

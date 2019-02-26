@@ -1,14 +1,17 @@
 package com.dy.common.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.ObjectUtils;
 
 import com.dy.domain.CustomUserDetails;
 
@@ -39,13 +42,17 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 		/* CustomUserDetailsService에서 구현한 DB에 저장된 사용자 정보 */
 		CustomUserDetails userDetails = (CustomUserDetails) userDetailsService.loadUserByUsername(userId);
+		if (ObjectUtils.isEmpty(userDetails)) {
+			throw new InternalAuthenticationServiceException("존재하지 않는 아이디입니다.");
+		}
 
 		if (passwordEncoder.matches(rawPw, userDetails.getUserPw()) == false) {
 			throw new BadCredentialsException("Passwords do not match");
 		}
 
-		if (userDetails.isEnabled() == false) {
-			throw new DisabledException("계정이 비활성화 되었습니다. 관리자에게 문의해 주세요.");
+		if (userDetails.isCredentialsNonExpired() == false || userDetails.isEnabled() == false) {
+			throw new AuthenticationCredentialsNotFoundException("계정이 비활성화 되었습니다. 관리자에게 문의해 주세요.");
+//			throw new DisabledException("계정이 비활성화 되었습니다. 관리자에게 문의해 주세요.");
 		}
 
 		/* 사용자가 입력한 정보와 DB에 저장된 사용자 권한을 담아 리턴 */

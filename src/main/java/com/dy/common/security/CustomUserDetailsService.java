@@ -1,6 +1,7 @@
 package com.dy.common.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -39,6 +40,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 		if (ObjectUtils.isEmpty(userDetails)) {
 			throw new UsernameNotFoundException("There are no users for the user ID : " + userId);
+			/* 이걸 Provider에서 사용해야 하는건지? 여기서 사용해야 하는건지? */
+//			throw new InternalAuthenticationServiceException("존재하지 않는 아이디입니다.");
 		}
 
 		return userDetails;

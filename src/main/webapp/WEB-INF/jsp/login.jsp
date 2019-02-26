@@ -31,12 +31,11 @@
 					<!-- csrf 토큰(?) -->
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<div class="login_form">
-						<input type="text" name="userId" class="" value="" placeholder="아이디를 입력해 주세요." />
-						<input type="password" name="userPw" class="" value="" placeholder="비밀번호를 입력해 주세요." />
+						<input type="text" name="userId" class="" value="${userId }" placeholder="아이디를 입력해 주세요." />
+						<input type="password" name="userPw" class="" placeholder="********" />
 						<input type="submit" class="btn btn_jade" value="로그인" />
 					</div>
 				</form>
-				<span>${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message }</span>
 				<ul>
 					<li><a href="javascript:void(0)" title="아이디 찾기">아이디 찾기</a></li>
 					<li><a href="javascript:void(0)" title="비밀번호 찾기">비밀번호 찾기</a></li>
@@ -48,33 +47,18 @@
 	</div>
 	<!-- // contents -->
 
-<%-- <form name="loginForm" action="/auth.do" method="post"
-	onsubmit="checkForm(this)">
-	<input type="hidden" name="${_csrf.parameterName}"
-		value="${_csrf.token}" />
-	<table>
-		<thead>
-			<tr>
-				<th>아이디</th>
-				<th>패스워드</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td><input type="text" name="memberId" /></td>
-				<td><input type="password" name="memberPw" /></td>
-			</tr>
-		</tbody>
-	</table>
-
-	<input type="submit" class="btn" value="로그인" />
-</form> --%>
-
-<script>
-	function checkForm(obj) {
-		return (checkField(obj.userId, "아이디")
-			 && checkField(obj.userPw, "패스워드"));
-	}
-</script>
+	<script>
+		$(function() {
+			if ( isEmpty("${errorMsg }") == false ) {
+				Swal.fire("${errorMsg }");
+				return false;
+			}
+		});
+	
+		function checkForm(obj) {
+			return (checkField(obj.userId, "아이디")
+				 && checkField(obj.userPw, "패스워드"));
+		}
+	</script>
 
 <%@include file="/WEB-INF/include/footer.jsp"%>

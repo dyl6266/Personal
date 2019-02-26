@@ -32,6 +32,21 @@
 		<beans:property name="cacheSeconds" value="0" />
 	</beans:bean>
 
+	<!-- messageSource를 사용하기 위한 Accessor 설정 -->
+	<beans:bean id="messageSourceAccessor" class="org.springframework.context.support.MessageSourceAccessor">
+		<beans:constructor-arg ref="messageSource" />
+	</beans:bean>
+
+	<!-- messageSource를 사용하기 위한 MessageUtils 매핑 -->
+	<beans:bean id="message" class="com.dy.common.utils.MessageUtils">
+		<beans:property name="messageSourceAccessor" ref="messageSourceAccessor" />
+	</beans:bean>
+
+	<!-- 기본 로케일 설정 -->
+	<beans:bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<beans:property name="defaultLocale" value="ko" />
+	</beans:bean>
+
 	<!-- Mail 전송 처리 객체 -->
 	<beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<beans:property name="host" value="smtp.gmail.com" />
