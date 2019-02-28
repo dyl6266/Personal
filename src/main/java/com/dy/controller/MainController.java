@@ -1,12 +1,13 @@
 package com.dy.controller;
 
+import java.security.Principal;
+
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.dy.common.utils.CommonUtils;
 
 @Controller
 public class MainController {
@@ -37,12 +38,13 @@ public class MainController {
 
 	/**
 	 * 로그인 페이지
-	 * 
+	 * TODO : principal, authentication은 비슷한(?) 형태의 오브젝트인데 어떤걸 사용해야 할지
 	 * @param status - 상태 (로그인 실패, 로그아웃 등)
 	 * @return
 	 */
 	@RequestMapping(value = "/login.do")
-	public String openLoginPage(@RequestParam(value = "status", required = false) String status, Model model) {
+	public String openLoginPage(Principal principal, Authentication authentication,
+			@RequestParam(value = "status", required = false) String status, Model model) {
 
 		if (StringUtils.isEmpty(status) == false) {
 			model.addAttribute("status", status);
@@ -50,28 +52,28 @@ public class MainController {
 
 		return "/login";
 	}
-	
+
 	@RequestMapping(value = "/admin/test.do")
 	public String testAdmin() {
-		
+
 		return "/admin/test";
 	}
-	
+
 	@RequestMapping(value = "/member/test.do")
 	public String testMember() {
-		
+
 		return "/member/test";
 	}
-	
+
 	@RequestMapping(value = "/board/test.do")
 	public String testGuest() {
-		
+
 		return "/board/test";
 	}
-	
+
 	@RequestMapping(value = "/test.do")
 	public String testLogin() {
-		
+
 		return "/test";
 	}
 
