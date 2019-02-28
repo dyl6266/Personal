@@ -16,6 +16,13 @@ import org.springframework.util.StringUtils;
 
 import com.dy.common.domain.Result;
 
+/**
+ * TODO : AccessDeniedHandlerImpl 클래스를 extends하여 처리해보기
+ * TODO : AccessDeniedHandlerImpl 클래스를 extends하여 처리해보기
+ * TODO : AccessDeniedHandlerImpl 클래스를 extends하여 처리해보기
+ * @author for
+ *
+ */
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
 	private String errorPage;
@@ -30,7 +37,6 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
 		/* Ajax 호출 확인용 변수 */
 		String ajaxHeader = request.getHeader("X-Ajax-call");
-		String resultStr = "";
 
 		response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 		response.setCharacterEncoding("UTF-8");
@@ -42,13 +48,17 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			Object principal = authentication.getPrincipal();
+
 			if (principal instanceof UserDetails) {
 				String memberId = ((UserDetails) principal).getUsername();
 				request.setAttribute("memberId", memberId);
 			}
 			request.setAttribute("errorMsg", accessDeniedException);
 			request.getRequestDispatcher(errorPage).forward(request, response);
+
 		} else {
+			String resultStr = "";
+
 			if ("true".equals(ajaxHeader)) {
 				resultStr = "{\"result\" : \"" + Result.FAIL + "\", \"message\" : \"" + accessDeniedException.getMessage() + "\"}";
 			} else {
@@ -61,7 +71,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 	}
 
 	public void setErrorPage(String errorPage) {
-		if ((errorPage != null) && !errorPage.startsWith("/")) {
+		if ((StringUtils.isEmpty(errorPage) == false) && !errorPage.startsWith("/")) {
 			throw new IllegalArgumentException("errorPage must begin with '/'");
 		}
 
