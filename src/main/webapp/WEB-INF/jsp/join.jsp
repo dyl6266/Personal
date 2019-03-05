@@ -32,7 +32,7 @@
 						<tr>
 							<th><b>*</b> 아이디</th>
 							<td>
-								<input type="hidden" name="memberId" />
+								<input type="hidden" name="userId" />
 								<input type="text" name="frontAddr" class="type2" maxlength="15" />
 								<span>@</span>
 								<input type="text" name="backAddr" class="type2" readonly />
@@ -63,19 +63,19 @@
 						</tr>
 						<tr>
 							<th><b>*</b> 비밀번호</th>
-							<td><input type="password" name="memberPw" maxlength="20" placeholder="영문자, 숫자, 특수문자 조합 8~20자리로 입력해 주세요." /></td>
+							<td><input type="password" name="userPw" maxlength="20" placeholder="영문자, 숫자, 특수문자 조합 8~20자리로 입력해 주세요." /></td>
 						</tr>
 						<tr>
 							<th><b>*</b> 비밀번호 재입력</th>
-							<td><input type="password" name="memberPwCheck" maxlength="20" placeholder="비밀번호를 다시 입력해 주세요." /></td>
+							<td><input type="password" name="userPwCheck" maxlength="20" placeholder="비밀번호를 다시 입력해 주세요." /></td>
 						</tr>
 						<tr>
 							<th><b>*</b> 이름</th>
-							<td><input type="text" name="memberName" class="type2" placeholder="이름을 입력해 주세요." /></td>
+							<td><input type="text" name="userName" class="type2" placeholder="이름을 입력해 주세요." /></td>
 						</tr>
 						<tr>
 							<th><b>*</b> 연락처</th>
-							<td><input type="text" name="memberPhone" maxlength="11" placeholder="'ㅡ' 없이 숫자만 입력해 주세요." /></td>
+							<td><input type="text" name="userPhone" maxlength="11" placeholder="'ㅡ' 없이 숫자만 입력해 주세요." /></td>
 						</tr>
 					</tbody>
 				</table>
@@ -130,17 +130,17 @@
 
 		function moveNextStepAndSendMail() {
 			/* 아이디 hidden */
-			joinForm.memberId.value = joinForm.frontAddr.value + '@' + joinForm.backAddr.value;
+			joinForm.userId.value = joinForm.frontAddr.value + '@' + joinForm.backAddr.value;
 
 			var status = checkValidation(joinForm.frontAddr, "아이디", null, null)
 					  && checkValidation(joinForm.backAddr, "도메인", null, null)
-					  && checkValidation(joinForm.memberId, null, joinForm.frontAddr, "email")
-					  && checkValidation(joinForm.memberPw, "비밀번호", null, null)
-					  && checkValidation(joinForm.memberPw, null, null, "password")
-					  && checkEquals(joinForm.memberPw, joinForm.memberPwCheck, "비밀번호와 재입력한 비밀번호")
-					  && checkValidation(joinForm.memberName, "이름", null, null)
-					  && checkValidation(joinForm.memberPhone, "연락처", null, null)
-					  && checkValidation(joinForm.memberPhone, null, null, "phone");
+					  && checkValidation(joinForm.userId, null, joinForm.userId, "email")
+					  && checkValidation(joinForm.userPw, "비밀번호", null, null)
+					  && checkValidation(joinForm.userPw, null, null, "password")
+					  && checkEquals(joinForm.userPw, joinForm.userPwCheck, "비밀번호와 재입력한 비밀번호")
+					  && checkValidation(joinForm.userName, "이름", null, null)
+					  && checkValidation(joinForm.userPhone, "연락처", null, null)
+					  && checkValidation(joinForm.userPhone, null, null, "phone");
 
 			if ( status == true ) {
 				sendAuthMail();
@@ -164,7 +164,7 @@
 					"X-HTTP-Method-Override" : "post",
 					"${_csrf.headerName}" : "${_csrf.token}"
 				},
-				data : { "memberId" : joinForm.memberId.value },
+				data : { "userId" : joinForm.userId.value },
 				async : false,
 				success : function(response) {
 					if (isEmpty(response) == false && response.result === "SUCCESS") {
@@ -191,10 +191,10 @@
 			var uri = '<c:url value="/member/checkAuthKey.do" />';
 			var params = {
 					"authKey" : authForm.authKey.value,
-					"memberId" : joinForm.memberId.value,
-					"memberPw" : joinForm.memberPw.value,
-					"memberName" : joinForm.memberName.value,
-					"memberPhone" : joinForm.memberPhone.value
+					"userId" : joinForm.userId.value,
+					"userPw" : joinForm.userPw.value,
+					"userName" : joinForm.userName.value,
+					"userPhone" : joinForm.userPhone.value
 			};
 
 			$.ajax({

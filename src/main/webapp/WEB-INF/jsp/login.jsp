@@ -39,7 +39,7 @@
 				<ul>
 					<li><a href="javascript:void(0)" title="아이디 찾기">아이디 찾기</a></li>
 					<li><a href="javascript:void(0)" title="비밀번호 찾기">비밀번호 찾기</a></li>
-					<li><a href="/member/join.do" title="회원가입">회원가입</a></li>
+					<li><a href="<c:url value="/join.do" />" title="회원가입">회원가입</a></li>
 				</ul>
 			</div>
 		</div>

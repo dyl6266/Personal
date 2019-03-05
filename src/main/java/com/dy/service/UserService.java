@@ -1,36 +1,41 @@
-//package com.dy.service;
-//
-//import java.util.ArrayList;
-//import java.util.Collection;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.core.authority.SimpleGrantedAuthority;
-//import org.springframework.security.core.userdetails.User;
-//import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.security.core.userdetails.UserDetailsService;
-//import org.springframework.security.core.userdetails.UsernameNotFoundException;
-//
-//import com.dy.domain.MemberVO;
-//
-//public class UserService implements UserDetailsService {
-//
-//	@Autowired
-//	private MemberService memberService;
-//
-//	@Override
-//	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//
-//		MemberVO member = memberService.selectMemberDetail(username);
-//
-//		if (member == null) {
-//			throw new UsernameNotFoundException("No user found with username" + member.getMemberId());
-//		}
-//
-//		Collection<SimpleGrantedAuthority> roles = new ArrayList<>();
-//		roles.add(new SimpleGrantedAuthority("ROLE_USER"));
-//
-//		UserDetails user = new User(username, member.getMemberPw(), roles);
-//		return user;
-//	}
-//
-//}
+package com.dy.service;
+
+import java.util.List;
+
+import com.dy.domain.CustomUserDetails;
+
+public interface UserService {
+
+	/**
+	 * 사용자 등록
+	 * 
+	 * @param params - VO
+	 * @return boolean - true or false
+	 */
+	public boolean registerUser(CustomUserDetails params);
+
+	/**
+	 * 사용자 정보 상세 조회
+	 * 
+	 * @param userId - PK
+	 * @return CustomUserDetails - VO
+	 */
+	public CustomUserDetails selectUserDetail(String userId);
+
+	/**
+	 * 사용자 계정 비활성화
+	 * 
+	 * @param userId - PK
+	 * @return boolean - true or false
+	 */
+	public boolean deleteUser(String userId);
+
+	/**
+	 * 사용자 리스트 조회
+	 * 
+	 * @param params - VO
+	 * @return List - 사용자 리스트
+	 */
+	public List<CustomUserDetails> selectUserList(CustomUserDetails params);
+
+}

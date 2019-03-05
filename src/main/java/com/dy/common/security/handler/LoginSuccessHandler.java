@@ -11,8 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.util.ObjectUtils;
 
-import com.dy.service.MemberService;
-
 public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
 	@Autowired
@@ -22,8 +20,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 	private static final int TIME = 60 * 10;
 
 	/**
-	 * 로그인 성공 시 실행되는 메서드
-	 * TODO : 권한에 따라 다른 Redirect 페이지 설정해보기
+	 * 로그인 성공 시 실행되는 메서드 TODO : 권한에 따라 다른 Redirect 페이지 설정해보기
 	 * TODO : 로그인 실패 카운트 업데이트 처리
 	 */
 	@Override
