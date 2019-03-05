@@ -15,7 +15,7 @@
 
 	<!-- 애노테이션을 사용 가능하도록 해주는 설정 -->
 	<annotation-driven />
-	<!-- AspectJ 라이브러리를 통해 Proxy 객체를 새엇ㅇ하는 용도로 사용 -->
+	<!-- AspectJ 라이브러리를 통해 Proxy 객체를 생성하는 용도로 사용 -->
 	<aop:aspectj-autoproxy />
 	<!-- AOP 객체 생성 -->
 	<beans:bean id="loggerAspect" class="com.dy.common.LoggerAspect" />

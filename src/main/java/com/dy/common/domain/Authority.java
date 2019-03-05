@@ -24,7 +24,7 @@ public enum Authority {
 		case 3:
 			return Authority.ADMIN;
 		default:
-			throw new AssertionError("Unknown gender : " + value);
+			throw new AssertionError("Unknown Authority : " + value);
 		}
 	}
 

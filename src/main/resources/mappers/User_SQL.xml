@@ -33,6 +33,19 @@
 	<!-- 사용자 등록 -->
 	<!-- 오라클과 같이 auto_increment 기능이 없는 경우엔, selectKey 구문을 사용해야 함 -->
 	<!-- Member_SQL.xml을 참조하자 -->
+	<!-- 예시
+			<selectKey keyProperty="idx" resultType="integer" order="BEFORE">
+				SELECT 
+				    CASE COUNT(next_seq)
+				        WHEN 0 THEN 1
+				        ELSE MAX(next_seq) + 1
+				    END AS next_seq
+				FROM
+				    sequence
+				WHERE
+				    table_name = 'member'
+			</selectKey>
+	 -->
 	<insert id="insertUser" parameterType="CustomUserDetails" useGeneratedKeys="true" keyProperty="idx">
 		INSERT INTO user (
 			<include refid="userColumns" />
