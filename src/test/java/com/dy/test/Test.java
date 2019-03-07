@@ -2,8 +2,8 @@ package com.dy.test;
 
 import java.util.Random;
 
-import com.dy.common.domain.Authority;
 import com.dy.common.domain.YesNo;
+//import com.dy.domain.Pay;
 
 public class Test {
 	
@@ -11,10 +11,19 @@ public class Test {
 //		System.out.println(CommonUtils.getRandomNumber(8, YesNo.Y));
 //		System.out.println(CommonUtils.getRandomNumber(8, YesNo.N));
 		
-		for ( Authority auth : Authority.values() ) {
-			System.out.println(auth);
-			System.out.println(auth.getValue());
-		}
+//		for ( Authority auth : Authority.values() ) {
+//			System.out.println(auth);
+//			System.out.println(auth.getValue());
+//		}
+		
+//		for ( Pay pay : Pay.values() ) {
+//			System.out.println(Pay.test("페이코"));
+//			System.out.println(Pay.test("카"));C
+//		}
+		
+//		Pay pay = Pay.valueOf("TOSS");
+//		System.out.println(pay);
+//		System.out.println(pay.toString());
 	}
 	
 	public static String getRandomNumber(int length, YesNo useYn) {

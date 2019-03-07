@@ -65,6 +65,7 @@ public class DAOTest {
 	@Test
 	public void selectDetail() {
 //		MemberVO member = dao.selectMemberDetail("dyl6266@naver.com");
+		userDAO.selectUserDetail("dyl6266@naver.com");
 //		
 //		
 //		String test1 = "ehdud123";

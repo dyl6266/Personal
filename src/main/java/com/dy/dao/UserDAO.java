@@ -64,7 +64,7 @@ public class UserDAO extends AbstractDAO {
 	}
 
 	/**
-	 * 전체 사용자수 조회
+	 * 전체 사용자 수 조회
 	 * 
 	 * @param params - VO
 	 * @return int - 전체 사용자 수
