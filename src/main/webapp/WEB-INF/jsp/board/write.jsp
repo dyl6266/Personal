@@ -93,9 +93,11 @@
 				obj.secretYn.value = 'N';
 			}
 
-			return (checkField(obj.title, "제목")
+			return (
+					checkField(obj.title, "제목")
 				 && checkField(obj.writer, "작성자")
-				 && checkField(obj.content, "내용"));
+				 && checkField(obj.content, "내용")
+			);
 		}
 
 		/**

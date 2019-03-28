@@ -8,6 +8,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+/**
+ * 로그를 담당하는 인터셉터
+ * 
+ * @author for
+ *
+ */
 public class LoggerInterceptor extends HandlerInterceptorAdapter {
 
 	private static final Logger logger = LoggerFactory.getLogger(LoggerInterceptor.class);

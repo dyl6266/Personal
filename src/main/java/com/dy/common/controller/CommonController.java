@@ -40,6 +40,7 @@ public class CommonController {
 		/* 첨부 파일 상세 정보 */
 		AttachVO attach = commonService.selectAttachDetail(idx);
 		/* 업로드된 파일 경로 */
+		// TODO : File seperator 메서드로 수정하기
 		final String uploadedPath = "C:\\workspace\\upload\\" + attach.getStoredName();
 
 		if (ObjectUtils.isEmpty(attach)) {

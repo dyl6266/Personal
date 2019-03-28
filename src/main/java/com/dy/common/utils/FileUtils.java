@@ -22,6 +22,7 @@ public class FileUtils {
 //	private static final String currentTime = CommonUtils.getCurrentTime().substring(2, 10);
 	
 	/* 업로드 경로 */
+	// TODO : File.separator를 사욯아면 OS에 상관 없이 Path를 가지고 옴
 	private static final String filePath = "C:\\workspace\\upload\\";
 
 	/**
